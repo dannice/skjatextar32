@@ -169,8 +169,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\Request.cs" />
+    <Compile Include="Models\SrtData.cs" />
+    <Compile Include="Models\SrtFile.cs" />
+    <Compile Include="Models\TvShow.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegisteredUser.cs">
