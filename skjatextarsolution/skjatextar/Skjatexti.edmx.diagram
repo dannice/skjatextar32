@@ -6,7 +6,25 @@
     <edmx:Diagrams>
       <Diagram DiagramId="14c28a668fe04fef920ba16ca1b686c2" Name="Diagram1">
         <EntityTypeShape EntityType="SkjatextiModel.RegisteredUser" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SkjatextiModel.Request" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SkjatextiModel.Request" Width="1.5" PointX="0.875" PointY="3.125" />
+        <EntityTypeShape EntityType="SkjatextiModel.C__MigrationHistory" Width="1.5" PointX="12" PointY="5" />
+        <EntityTypeShape EntityType="SkjatextiModel.AspNetRoles" Width="1.5" PointX="8.25" PointY="0.875" />
+        <EntityTypeShape EntityType="SkjatextiModel.AspNetUserClaims" Width="1.5" PointX="12.25" PointY="0.875" />
+        <EntityTypeShape EntityType="SkjatextiModel.AspNetUserLogins" Width="1.5" PointX="10.25" PointY="3.75" />
+        <EntityTypeShape EntityType="SkjatextiModel.AspNetUsers" Width="1.5" PointX="10.25" PointY="0.875" />
+        <EntityTypeShape EntityType="SkjatextiModel.Comment" Width="1.5" PointX="4.125" PointY="0.75" />
+        <EntityTypeShape EntityType="SkjatextiModel.Movie" Width="1.5" PointX="5.375" PointY="5.25" />
+        <EntityTypeShape EntityType="SkjatextiModel.SrtData" Width="1.5" PointX="3" PointY="3.875" />
+        <EntityTypeShape EntityType="SkjatextiModel.SrtFile" Width="1.5" PointX="6.375" PointY="0.875" />
+        <EntityTypeShape EntityType="SkjatextiModel.TvShow" Width="1.5" PointX="7.375" PointY="5.25" />
+        <AssociationConnector Association="SkjatextiModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" />
+        <AssociationConnector Association="SkjatextiModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SkjatextiModel.FK__Comment__strId__1367E606" />
+        <AssociationConnector Association="SkjatextiModel.FK__Comment__userId__1273C1CD" />
+        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0" />
+        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__dataId__0F975522" />
+        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" />
+        <AssociationConnector Association="SkjatextiModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -12,19 +12,16 @@ namespace skjatextar
     using System;
     using System.Collections.Generic;
     
-    public partial class RegisteredUser
+    public partial class AspNetRoles
     {
-        public RegisteredUser()
+        public AspNetRoles()
         {
-            this.Comment = new HashSet<Comment>();
+            this.AspNetUsers = new HashSet<AspNetUsers>();
         }
     
-        public int regId { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string userName { get; set; }
-        public string password { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     
-        public virtual ICollection<Comment> Comment { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

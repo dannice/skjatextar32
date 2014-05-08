@@ -12,19 +12,16 @@ namespace skjatextar
     using System;
     using System.Collections.Generic;
     
-    public partial class RegisteredUser
+    public partial class Comment
     {
-        public RegisteredUser()
-        {
-            this.Comment = new HashSet<Comment>();
-        }
+        public int commentId { get; set; }
+        public string comment1 { get; set; }
+        public Nullable<int> report { get; set; }
+        public Nullable<System.DateTime> commentDate { get; set; }
+        public Nullable<int> userId { get; set; }
+        public Nullable<int> strId { get; set; }
     
-        public int regId { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string userName { get; set; }
-        public string password { get; set; }
-    
-        public virtual ICollection<Comment> Comment { get; set; }
+        public virtual SrtFile SrtFile { get; set; }
+        public virtual RegisteredUser RegisteredUser { get; set; }
     }
 }

@@ -12,19 +12,11 @@ namespace skjatextar
     using System;
     using System.Collections.Generic;
     
-    public partial class RegisteredUser
+    public partial class C__MigrationHistory
     {
-        public RegisteredUser()
-        {
-            this.Comment = new HashSet<Comment>();
-        }
-    
-        public int regId { get; set; }
-        public string name { get; set; }
-        public string email { get; set; }
-        public string userName { get; set; }
-        public string password { get; set; }
-    
-        public virtual ICollection<Comment> Comment { get; set; }
+        public string MigrationId { get; set; }
+        public string ContextKey { get; set; }
+        public byte[] Model { get; set; }
+        public string ProductVersion { get; set; }
     }
 }
