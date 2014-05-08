@@ -1,7 +1,16 @@
-﻿@{
-    ViewBag.Title = "About";
+﻿@model List<skjatextar.Models.RequestModel>
+@{
+    ViewBag.Title = "Beiðnir";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<div>
+    <h2>Listi yfir beiðnir</h2>
+    @foreach (var item in Model)
+    {
+        <a href="/Home/Beiðnir/@item.reqId">
+            <div class="well">
+                <h4>@item.requestText</h4>
+            </div>
+        </a>
+    }
+</div>
