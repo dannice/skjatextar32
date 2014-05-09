@@ -5,7 +5,7 @@ using System.Web;
 
 namespace skjatextar.BLL
 {
-    public class UserRepository
+    public class SkjatextiRepository
     {
 
     }
