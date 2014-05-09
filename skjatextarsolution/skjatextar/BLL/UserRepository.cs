@@ -7,6 +7,7 @@ namespace skjatextar.BLL
 {
     public class UserRepository
     {
+        // Gets lists of all users.
         public List<Models.User> GetUsers()
         {
             SkjatextiEntities context = new SkjatextiEntities();
