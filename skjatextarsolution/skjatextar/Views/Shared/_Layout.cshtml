@@ -33,16 +33,7 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <div>
-            @foreach (var item in Model)
-            {
-                 //<a href="/Home/Users/@item.title">
-                <div class="dropdown">
-                    <p>@item.title</p>
-                </div>
-                 //</a>
-            }
-        </div>
+                 
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
