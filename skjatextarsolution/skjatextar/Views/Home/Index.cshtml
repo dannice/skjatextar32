@@ -5,16 +5,15 @@
 
 <html>
 <body>
-    <div>
-     
-            <form action="veldu">
-                <select name="cars">
-                    @foreach (var item in Model)
-                    {
-                        <option value="#">@item.title</option>
-                    }
-                </select>
-            </form>
+    <div id="drop" class="drop">
+            <select name="drop">
+                <option>Veldu sjónvarpsþátt</option>
+                @foreach (var item in Model)
+                {
+                    <option value="#">@item.title</option>
+                }
+            </select>
+        
     </div>
 </body>
 </html>
