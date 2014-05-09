@@ -12,19 +12,38 @@ namespace skjatextar.BLL
         {
             SkjatextiEntities context = new SkjatextiEntities();
 
-            var list = new List<Models.SrtFileModel>();
+            var listTitle = new List<Models.SrtFileModel>();
+            
             var query = from it in context.SrtFile
                         orderby it.title
-                        select it;
-           
+                        select it;      
+
             foreach (var item in query)
             {
                 var tvName = new Models.SrtFileModel();
                 tvName.title = item.title;
-                list.Add(tvName);
+                listTitle.Add(tvName);
             }
-            return list;
+            return listTitle;
         }
 
+        public List<Models.TvShowModel> GetTvShowModel()
+        {
+            SkjatextiEntities context = new SkjatextiEntities();
+
+            var listSeason = new List<Models.TvShowModel>();
+
+            var query = from it in context.TvShow
+                             orderby it.season
+                             select it;
+
+            foreach(var item in query)
+            {
+                    var tvSeason = new Models.TvShowModel();
+                    tvSeason.season = item.season;
+                    listSeason.Add(tvSeason);
+            }
+            return listSeason;
+        }
     }
 }
