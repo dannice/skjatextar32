@@ -17,6 +17,14 @@ namespace skjatextar.Controllers
             var srt = new SkjatextiRepository();
             var list = srt.GetTvShow();
             return View(list);
+
+            //SkjatextiEntities context = new SkjatextiEntities();
+
+            //ViewBag.ListOfTvShows = new SelectList (context.SrtFile,"title");
+
+            //ViewData["dropdown"] = list;
+
+           // return View();
 		}
 
 		public ActionResult About()
