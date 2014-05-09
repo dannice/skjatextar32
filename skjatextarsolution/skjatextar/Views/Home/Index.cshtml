@@ -1,19 +1,16 @@
-﻿@model List<skjatextar.Models.User>
+﻿@model <skjatextar.Models.ListModel>
+
 @{
-    ViewBag.Title = "Notandi";
+    ViewBag.Title = "Home Page";
 }
 
 <div>
-    <h2>Users</h2>
-    @foreach (var item in Model)
-    {
-        <a href="/Home/Users/@item.regId">
-            <div class="well">
-                <h4>@item.email</h4>
-                <h3>@item.name</h3>
-                <p>@item.username</p>
-                <h5>@item.password</h5>
-            </div>
-        </a>
-    }
+    <h2>10.Nyjustu</h2>
+  
+     @foreach (var item in Model)
+     {
+         
+        <h3>@item.</h3>
+     }
+
 </div>

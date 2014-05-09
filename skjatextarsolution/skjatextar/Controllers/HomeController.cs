@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using skjatextar.BLL;
+using skjatextar.Models;
 
 namespace skjatextar.Controllers
 {
@@ -12,18 +13,34 @@ namespace skjatextar.Controllers
 		public ActionResult Index()
 		{
             var bll = new SkjatextiBLL();
-            var users = bll.GetUsers();
-            return View(users);
+            var both = bll.GetBothTvshowsAndMovies();
+      
+            //return View(users);
+            return View(both);
+           
 		}
+        
+        public ActionResult ViewModelTest()
+        {
+            var test = new SkjatextiBLL();
+            ListModel ts = new ListModel();
+            ts.AllSrtFile = test.GetBothTvshowsAndMovies();
+ 
+           
+
+            return View(ts);
+        }
+
+        
 
 		public ActionResult About()
 		{
 			//ViewBag.Message = "Your application description page.";
-            var bll = new SkjatextiBLL();
-            var request = bll.GetRequests();
-            return View(request);
+            //var bll = new SkjatextiBLL();
+            //var request = bll.GetRequests();
+            //return View(request);
 
-			//return View();
+			return View();
 		}
 
 		public ActionResult Contact()
