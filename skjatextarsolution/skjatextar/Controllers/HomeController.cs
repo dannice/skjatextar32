@@ -11,11 +11,10 @@ namespace skjatextar.Controllers
 	{
 		public ActionResult Index()
 		{
-            //var bll = new UserRepository();
-            //var users = bll.GetUsers();
 
             var srt = new SkjatextiRepository();
             var list = srt.GetTvShow();
+           // var list = srt.GetTvShowModel();
             return View(list);
 
             //SkjatextiEntities context = new SkjatextiEntities();
