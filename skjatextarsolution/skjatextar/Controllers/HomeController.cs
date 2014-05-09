@@ -11,9 +11,12 @@ namespace skjatextar.Controllers
 	{
 		public ActionResult Index()
 		{
-            var bll = new UserRepository();
-            var users = bll.GetUsers();
-            return View(users);
+            //var bll = new UserRepository();
+            //var users = bll.GetUsers();
+
+            var srt = new SkjatextiRepository();
+            var list = srt.GetTvShow();
+            return View(list);
 		}
 
 		public ActionResult About()
