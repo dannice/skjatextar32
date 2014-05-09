@@ -174,12 +174,13 @@
     <Compile Include="AspNetUsers.cs">
       <DependentUpon>Skjatexti.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\UserRepository.cs" />
     <Compile Include="Comment.cs">
       <DependentUpon>Skjatexti.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="BLL\SkjatextiBLL.cs" />
+    <Compile Include="BLL\SkjatextiRepository.cs" />
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>Skjatexti.tt</DependentUpon>
     </Compile>

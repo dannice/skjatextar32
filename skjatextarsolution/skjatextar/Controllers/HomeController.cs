@@ -11,7 +11,7 @@ namespace skjatextar.Controllers
 	{
 		public ActionResult Index()
 		{
-            var bll = new SkjatextiBLL();
+            var bll = new SkjatextiRepository();
             var users = bll.GetUsers();
             return View(users);
 		}
@@ -19,7 +19,7 @@ namespace skjatextar.Controllers
 		public ActionResult About()
 		{
 			//ViewBag.Message = "Your application description page.";
-            var bll = new SkjatextiBLL();
+            var bll = new SkjatextiRepository();
             var request = bll.GetRequests();
             return View(request);
 
