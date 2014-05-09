@@ -3,12 +3,18 @@
     ViewBag.Title = "Notandi";
 }
 
-
-<div>
-    <select>
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="opel">Opel</option>
-        <option value="audi">Audi</option>
-    </select>
-</div>
+<html>
+<body>
+    <div>
+     
+            <form action="veldu">
+                <select name="cars">
+                    @foreach (var item in Model)
+                    {
+                        <option value="#">@item.title</option>
+                    }
+                </select>
+            </form>
+    </div>
+</body>
+</html>
