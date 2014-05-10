@@ -14,10 +14,11 @@ namespace skjatextar.Controllers
 		{
            
             var bll = new SkjatextiRepository();
-            var both = bll.GetBothTvshowsAndMovies();
+            var query = new BLL.SkjatextiRepository().GetTopTenSrt();
+           
       
             //return View(users);
-            return View(both);
+            return View(query);
 		}
         
        
