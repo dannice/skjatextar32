@@ -1,13 +1,13 @@
 ﻿@model List<skjatextar.Models.RequestModel>
 @{
-    ViewBag.Title = "Beiðnir";
+    ViewBag.Title = "About ";
 }
 
 <div>
     <h2>Listi yfir beiðnir</h2>
     @foreach (var item in Model)
     {
-        <a href="/Home/Beiðnir/@item.reqId">
+        <a href="/Home/About/@item.reqId">
             <div class="well">
                 <h4>@item.reqDate</h4>
                 <h4>@item.requestText</h4>
