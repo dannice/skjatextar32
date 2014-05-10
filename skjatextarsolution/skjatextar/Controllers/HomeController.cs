@@ -12,24 +12,15 @@ namespace skjatextar.Controllers
 	{
 		public ActionResult Index()
 		{
+           
             var bll = new SkjatextiBLL();
             var both = bll.GetBothTvshowsAndMovies();
       
             //return View(users);
             return View(both);
-           
 		}
         
-        public ActionResult ViewModelTest()
-        {
-            var test = new SkjatextiBLL();
-            ListModel ts = new ListModel();
-            ts.AllSrtFile = test.GetBothTvshowsAndMovies();
- 
-           
-
-            return View(ts);
-        }
+       
 
         
 
