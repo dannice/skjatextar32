@@ -13,7 +13,7 @@ namespace skjatextar.Controllers
 		public ActionResult Index()
 		{
            
-            var bll = new SkjatextiBLL();
+            var bll = new SkjatextiRepository();
             var both = bll.GetBothTvshowsAndMovies();
       
             //return View(users);
