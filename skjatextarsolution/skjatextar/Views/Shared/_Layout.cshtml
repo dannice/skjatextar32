@@ -31,10 +31,35 @@
             </div>
         </div>
     </div>
+
+    <div id="drop" class="drop">
+        <select name="dropTvShow">
+            <option>Veldu sjónvarpsþátt</option>
+            @foreach (var item in Model)
+            {
+                <option value="#">@item.title</option>
+
+            }
+        </select>
+        <select name="dropSeason">
+            <option>Veldu tímabil</option>
+            @foreach (var item in Model)
+            {
+                <option value="#">@item.title</option>
+            }
+        </select>
+        <select name="dropEpisode">
+            <option>Veldu nr þáttar</option>
+            @foreach (var item in Model)
+            {
+                <option value="#">@item.title</option>
+            }
+        </select>
+    </div>
+
     <div class="container body-content">
         @RenderBody()
         
-        <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
