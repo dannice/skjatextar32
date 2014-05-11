@@ -1,4 +1,5 @@
-﻿using System;
+﻿using skjatextar.Models.Upload;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,18 @@ namespace skjatextar.Controllers
 {
 	public class AdminController : Controller
 	{
-		
+		//
+		// GET: /Admin/
+		X_UploadFile _DB = new X_UploadFile();
+		public ActionResult Index()
+		{
+			return View();
+		}
+
+		public ActionResult UploadFile()
+		{
+			ViewData["Success"] = "";
+			return View();
+		}
 	}
 }
