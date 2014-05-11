@@ -299,7 +299,8 @@
       <DependentUpon>Skjatexti.edmx</DependentUpon>
       <LastGenOutput>Skjatexti.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Home\Upload.cshtml" />
+    <Content Include="Views\Home\UploadFile.cshtml" />
+    <Content Include="Views\Admin\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

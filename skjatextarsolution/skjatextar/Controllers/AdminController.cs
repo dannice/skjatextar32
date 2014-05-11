@@ -13,7 +13,7 @@ namespace skjatextar.Controllers
 		//
 		// GET: /Admin/
 		X_UploadFile _DB = new X_UploadFile();
-		public ActionResult Index()
+		public ActionResult Upload()
 		{
 			return View();
 		}
