@@ -18,6 +18,8 @@ namespace skjatextar.Controllers
         
         public ApplicationController()
         {
+            // Tilraun
+            //
             var bll = new SkjatextiRepository();
             var both = bll.GetBothTvshowsAndMovies();
             ViewData["shows"] = both;
