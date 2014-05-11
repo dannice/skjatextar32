@@ -179,6 +179,7 @@
       <DependentUpon>Skjatexti.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="BLL\SkjatextiRepository.cs" />
     <Compile Include="C__MigrationHistory.cs">
@@ -196,6 +197,8 @@
     <Compile Include="Models\SrtData.cs" />
     <Compile Include="Models\SrtFile.cs" />
     <Compile Include="Models\TvShow.cs" />
+    <Compile Include="Models\Upload\upload.cs" />
+    <Compile Include="Models\Upload\X_UploadFile.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Movie.cs">
       <DependentUpon>Skjatexti.tt</DependentUpon>
@@ -299,6 +302,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Documents\Files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
