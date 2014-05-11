@@ -1,17 +1,14 @@
-﻿@model List<skjatextar.Models.CollectionOfSrt>
-
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
 
 <h1>10.N&#253;justu</h1>
 <div>
-    @foreach(var item in Model)
+    @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
     {
-        <h3>@item.title</h3>
-        <h3>@item.episodeAbout</h3>
-        <h3>@item.year</h3>
+            <h3>@show.title</h3>
+            <h3>@show.episodeAbout</h3>
+            <h3>@show.year</h3>
     }
-
 
 </div>

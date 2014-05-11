@@ -8,37 +8,22 @@ using skjatextar.Models;
 
 namespace skjatextar.Controllers
 {
-	public class HomeController : Controller
+	public class HomeController : ApplicationController
 	{
 		public ActionResult Index()
 		{
-           
-            var bll = new SkjatextiRepository();
-            var both = bll.GetBothTvshowsAndMovies();
-      
-            //return View(users);
-            return View(both);
+             return View();
 		}
-        
-       
-
-        
-
+ 
 		public ActionResult About()
 		{
-			//ViewBag.Message = "Your application description page.";
-            //var bll = new SkjatextiBLL();
-            //var request = bll.GetRequests();
-            //return View(request);
-
-			return View();
+ 			return View();
 		}
 
 		public ActionResult Contact()
 		{
-			ViewBag.Message = "Your contact page.";
-
-			return View();
+            return View();
 		}
+
 	}
 }

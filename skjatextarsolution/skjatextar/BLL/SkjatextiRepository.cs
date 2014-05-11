@@ -28,7 +28,7 @@ namespace skjatextar.BLL
                 show.season = item.TvShow.season;
                 show.episode = item.TvShow.episode;
                 show.year = item.Movie.year;
-
+                show.episodeTitle = item.TvShow.episodeTitle;
                 list.Add(show);
 
             }
