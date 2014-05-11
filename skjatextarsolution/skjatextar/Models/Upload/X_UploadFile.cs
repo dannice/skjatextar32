@@ -8,7 +8,6 @@ namespace skjatextar.Models.Upload
 {
 	public class X_UploadFile : DbContext
 	{
-		
-		//public DbSet<upload> Upload { get; set; }
+	//	public DbSet<upload> Upload { get; set; }
 	}
 }
