@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace skjatextar.Models.Upload
 {
-	class upload
+	public class upload
 	{
 		[Key]
 		public virtual int Upload_id { get; set; }
