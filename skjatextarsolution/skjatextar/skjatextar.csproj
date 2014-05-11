@@ -193,6 +193,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="BLL\SkjatextiRepository.cs" />
     <Compile Include="C__MigrationHistory.cs">
@@ -310,6 +311,7 @@
       <DependentUpon>Skjatexti.edmx</DependentUpon>
       <LastGenOutput>Skjatexti.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Home\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

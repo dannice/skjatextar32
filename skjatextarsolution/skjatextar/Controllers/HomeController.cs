@@ -12,18 +12,35 @@ namespace skjatextar.Controllers
 	{
 		public ActionResult Index()
 		{
-             return View();
+           
+            var bll = new SkjatextiRepository();
+            var query = new BLL.SkjatextiRepository().GetTopTenSrt();
+           
+      
+            //return View(users);
+            return View(query);
 		}
- 
+        
 		public ActionResult About()
 		{
- 			return View();
+			//ViewBag.Message = "Your application description page.";
+            //var bll = new SkjatextiBLL();
+            //var request = bll.GetRequests();
+            //return View(request);
+
+			return View();
 		}
 
 		public ActionResult Contact()
 		{
-            return View();
+			ViewBag.Message = "Your contact page.";
+
+			return View();
 		}
 
+        public ActionResult Upload()
+        {
+            return View();
+        }
 	}
 }
