@@ -20,10 +20,6 @@ namespace skjatextar.Controllers
             //return View(users);
             return View(query);
 		}
-        
-       
-
-        
 
 		public ActionResult About()
 		{
@@ -41,5 +37,10 @@ namespace skjatextar.Controllers
 
 			return View();
 		}
+
+        public ActionResult Upload()
+        {
+            return View();
+        }
 	}
 }
