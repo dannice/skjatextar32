@@ -54,20 +54,23 @@
                             Þáttur nr: <span id="episode"></span><br />
                             Nafn: <span id="episodeTitle"></span><br />
                             Söguþráður: <span id="episodeAbout"></span><br />
+                            <hr/>
+                            <button class="btn btn-success" onclick="alert('download ')">Saekja texta</button>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-9" id="mainContent">
+                @RenderBody()
             </div>
         </div>
     </div>
 
     <div class="container body-content">
         
-        @RenderBody()
+       
 
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")
