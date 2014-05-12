@@ -8,22 +8,19 @@ using skjatextar.Models;
 
 namespace skjatextar.Controllers
 {
-	public class HomeController : Controller
+	public class HomeController : ApplicationController
 	{
 		public ActionResult Index()
 		{
            
             var bll = new SkjatextiRepository();
-            var both = bll.GetBothTvshowsAndMovies();
+            var query = new BLL.SkjatextiRepository().GetTopTenSrt();
+           
       
             //return View(users);
-            return View(both);
+            return View(query);
 		}
         
-       
-
-        
-
 		public ActionResult About()
 		{
 			//ViewBag.Message = "Your application description page.";
@@ -40,5 +37,10 @@ namespace skjatextar.Controllers
 
 			return View();
 		}
+
+        public ActionResult Upload()
+        {
+            return View();
+        }
 	}
 }
