@@ -21,8 +21,8 @@ namespace skjatextar.Controllers
             // Tilraun x
             //
             var bll = new SkjatextiRepository();
-            var both = bll.GetBothTvshowsAndMovies();
-            ViewData["shows"] = both;
+            var query = bll.GetBothTvshowsAndMovies();
+            ViewData["shows"] = query;
            
         }
 	}

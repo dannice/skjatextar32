@@ -12,13 +12,8 @@ namespace skjatextar
     using System;
     using System.Collections.Generic;
     
-    public partial class SrtFile
+    public partial class SrtCollection
     {
-        public SrtFile()
-        {
-            this.Comment = new HashSet<Comment>();
-        }
-    
         public int srtId { get; set; }
         public string title { get; set; }
         public Nullable<System.DateTime> srtDate { get; set; }
@@ -29,10 +24,12 @@ namespace skjatextar
         public Nullable<int> movieId { get; set; }
         public Nullable<int> tvId { get; set; }
         public Nullable<int> dataId { get; set; }
-    
-        public virtual Movie Movie { get; set; }
-        public virtual SrtData SrtData { get; set; }
-        public virtual TvShow TvShow { get; set; }
-        public virtual ICollection<Comment> Comment { get; set; }
+        public Nullable<int> Expr1 { get; set; }
+        public Nullable<int> episode { get; set; }
+        public Nullable<int> season { get; set; }
+        public string episodeTitle { get; set; }
+        public string episodeAbout { get; set; }
+        public Nullable<int> Expr2 { get; set; }
+        public Nullable<int> year { get; set; }
     }
 }
