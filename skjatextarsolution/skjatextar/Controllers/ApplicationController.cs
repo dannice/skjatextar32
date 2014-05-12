@@ -18,6 +18,8 @@ namespace skjatextar.Controllers
         
         public ApplicationController()
         {
+            // Tilraun x
+            //
             var bll = new SkjatextiRepository();
             var query = bll.GetTopTenSrt();
             ViewData["shows"] = query;

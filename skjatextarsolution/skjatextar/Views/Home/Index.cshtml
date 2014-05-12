@@ -1,19 +1,85 @@
-﻿@model List<skjatextar.Models.CollectionOfSrt>
-
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
 
-<h1></h1>
-<div>
-    <h2>Nýjustu skrárnar:</h2>
-    <div>
-        @foreach (var item in Model)
-        {
-            <h3>@item.title</h3>
-            <h3>@item.episodeAbout</h3>
-            <h3>@item.year</h3>
-        }
-    </div>
 
+
+
+<!-- Begin Body -->
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-9">
+            <h2 id="sec0">Content</h2>
+            At Bootply we like to build simple Bootstrap templates that utilize the code Bootstap CSS without a lot of customization. Sure you can
+            find a lot of Bootstrap themes and inspiration, but these templates tend to be heavy on customiz
+        </div>
+    </div>
 </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>10 Nýjustu</h3></div>
+                        <div class="panel-body">
+                            
+                            <div>
+                                @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
+                                {
+                                    <h3>@show.title</h3>
+                                    <h3>@show.episodeAbout</h3>
+                                    <h3>@show.year</h3>
+                                }
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Hello.</h3></div>
+                        <div class="panel-body">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+                            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+                            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+                            Aliquam in felis sit amet augue.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+ 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>10 Nýjustu</h3></div>
+                        <div class="panel-body">
+
+                            <div>
+                                @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
+                                {
+                                    <h3>@show.title</h3>
+                                    <h3>@show.episodeAbout</h3>
+                                    <h3>@show.year</h3>
+                                }
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h3>Hello.</h3></div>
+                        <div class="panel-body">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra varius quam sit amet vulputate.
+                            Quisque mauris augue, molestie tincidunt condimentum vitae, gravida a libero. Aenean sit amet felis
+                            dolor, in sagittis nisi. Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan.
+                            Aliquam in felis sit amet augue.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            
