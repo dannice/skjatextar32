@@ -63,12 +63,12 @@
           <Key>
             <PropertyRef Name="commentId" />
           </Key>
-          <Property Name="commentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="comment" Type="varchar" MaxLength="400" Nullable="false" />
+          <Property Name="commentId" Type="int" Nullable="false" />
+          <Property Name="comment" Type="nvarchar" MaxLength="400" Nullable="false" />
           <Property Name="report" Type="int" />
           <Property Name="commentDate" Type="datetime" />
-          <Property Name="userId" Type="int" />
-          <Property Name="strId" Type="int" />
+          <Property Name="strId" Type="int" Nullable="false" />
+          <Property Name="AspNetUsersId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Movie">
           <Key>
@@ -76,16 +76,6 @@
           </Key>
           <Property Name="movieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="year" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="RegisteredUser">
-          <Key>
-            <PropertyRef Name="regId" />
-          </Key>
-          <Property Name="regId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="150" />
-          <Property Name="email" Type="nvarchar" MaxLength="150" />
-          <Property Name="userName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Request">
           <Key>
@@ -101,8 +91,9 @@
             <PropertyRef Name="dataId" />
           </Key>
           <Property Name="dataId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="datatime" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="dataText" Type="varchar" MaxLength="200" />
+          <Property Name="dataSize" Type="int" />
+          <Property Name="dataName" Type="nvarchar" MaxLength="250" />
+          <Property Name="dataFile" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="SrtFile">
           <Key>
@@ -129,8 +120,33 @@
           <Property Name="episodeTitle" Type="nvarchar" MaxLength="40" />
           <Property Name="episodeAbout" Type="nvarchar" MaxLength="400" />
         </EntityType>
-        <Association Name="FK__Comment__strId__1367E606">
-          <End Role="SrtFile" Type="Self.SrtFile" Multiplicity="0..1" />
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SrtCollection">
+          <Key>
+            <PropertyRef Name="srtId" />
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="srtId" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="srtDate" Type="datetime" />
+          <Property Name="srtReady" Type="int" />
+          <Property Name="rdDate" Type="datetime" />
+          <Property Name="srtCounter" Type="int" />
+          <Property Name="srtLike" Type="int" />
+          <Property Name="movieId" Type="int" />
+          <Property Name="tvId" Type="int" />
+          <Property Name="dataId" Type="int" />
+          <Property Name="Expr1" Type="int" />
+          <Property Name="episode" Type="int" />
+          <Property Name="season" Type="int" />
+          <Property Name="episodeTitle" Type="nvarchar" MaxLength="40" />
+          <Property Name="episodeAbout" Type="nvarchar" MaxLength="400" />
+          <Property Name="Expr2" Type="int" />
+          <Property Name="year" Type="int" />
+        </EntityType>
+        <Association Name="FK__Comment__strId__30F848ED">
+          <End Role="SrtFile" Type="Self.SrtFile" Multiplicity="1" />
           <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SrtFile">
@@ -138,18 +154,6 @@
             </Principal>
             <Dependent Role="Comment">
               <PropertyRef Name="strId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Comment__userId__1273C1CD">
-          <End Role="RegisteredUser" Type="Self.RegisteredUser" Multiplicity="0..1" />
-          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RegisteredUser">
-              <PropertyRef Name="regId" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -186,6 +190,18 @@
             </Principal>
             <Dependent Role="SrtFile">
               <PropertyRef Name="tvId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="AspNetUsersId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -254,17 +270,33 @@
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Movie" EntityType="Self.Movie" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RegisteredUser" EntityType="Self.RegisteredUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SrtData" EntityType="Self.SrtData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SrtFile" EntityType="Self.SrtFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TvShow" EntityType="Self.TvShow" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Comment__strId__1367E606" Association="Self.FK__Comment__strId__1367E606">
+          <EntitySet Name="SrtCollection" EntityType="Self.SrtCollection" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SrtCollection].[srtId] AS [srtId], 
+    [SrtCollection].[title] AS [title], 
+    [SrtCollection].[srtDate] AS [srtDate], 
+    [SrtCollection].[srtReady] AS [srtReady], 
+    [SrtCollection].[rdDate] AS [rdDate], 
+    [SrtCollection].[srtCounter] AS [srtCounter], 
+    [SrtCollection].[srtLike] AS [srtLike], 
+    [SrtCollection].[movieId] AS [movieId], 
+    [SrtCollection].[tvId] AS [tvId], 
+    [SrtCollection].[dataId] AS [dataId], 
+    [SrtCollection].[Expr1] AS [Expr1], 
+    [SrtCollection].[episode] AS [episode], 
+    [SrtCollection].[season] AS [season], 
+    [SrtCollection].[episodeTitle] AS [episodeTitle], 
+    [SrtCollection].[episodeAbout] AS [episodeAbout], 
+    [SrtCollection].[Expr2] AS [Expr2], 
+    [SrtCollection].[year] AS [year]
+    FROM [dbo].[SrtCollection] AS [SrtCollection]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Comment__strId__30F848ED" Association="Self.FK__Comment__strId__30F848ED">
             <End Role="SrtFile" EntitySet="SrtFile" />
-            <End Role="Comment" EntitySet="Comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__userId__1273C1CD" Association="Self.FK__Comment__userId__1273C1CD">
-            <End Role="RegisteredUser" EntitySet="RegisteredUser" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
           <AssociationSet Name="FK__SrtFile__dataId__0F975522" Association="Self.FK__SrtFile__dataId__0F975522">
@@ -278,6 +310,10 @@
           <AssociationSet Name="FK__SrtFile__tvId__0EA330E9" Association="Self.FK__SrtFile__tvId__0EA330E9">
             <End Role="TvShow" EntitySet="TvShow" />
             <End Role="SrtFile" EntitySet="SrtFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_AspNetUsers" Association="Self.FK_Comment_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -301,14 +337,12 @@
     <edmx:ConceptualModels>
       <Schema Namespace="SkjatextiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SkjatextiEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="RegisteredUser" EntityType="SkjatextiModel.RegisteredUser" />
           <EntitySet Name="Request" EntityType="SkjatextiModel.Request" />
           <EntitySet Name="C__MigrationHistory" EntityType="SkjatextiModel.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="SkjatextiModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="SkjatextiModel.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="SkjatextiModel.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="SkjatextiModel.AspNetUsers" />
-          <EntitySet Name="Comment" EntityType="SkjatextiModel.Comment" />
           <EntitySet Name="Movie" EntityType="SkjatextiModel.Movie" />
           <EntitySet Name="SrtData" EntityType="SkjatextiModel.SrtData" />
           <EntitySet Name="SrtFile" EntityType="SkjatextiModel.SrtFile" />
@@ -320,14 +354,6 @@
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="SkjatextiModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__strId__1367E606" Association="SkjatextiModel.FK__Comment__strId__1367E606">
-            <End Role="SrtFile" EntitySet="SrtFile" />
-            <End Role="Comment" EntitySet="Comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__userId__1273C1CD" Association="SkjatextiModel.FK__Comment__userId__1273C1CD">
-            <End Role="RegisteredUser" EntitySet="RegisteredUser" />
-            <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
           <AssociationSet Name="FK__SrtFile__movieId__0DAF0CB0" Association="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0">
             <End Role="Movie" EntitySet="Movie" />
@@ -345,18 +371,17 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Comment" EntityType="SkjatextiModel.Comment" />
+          <AssociationSet Name="FK_Comment_AspNetUsers" Association="SkjatextiModel.FK_Comment_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comment__strId__30F848ED" Association="SkjatextiModel.FK__Comment__strId__30F848ED">
+            <End Role="SrtFile" EntitySet="SrtFile" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <EntitySet Name="SrtCollection" EntityType="SkjatextiModel.SrtCollection" />
         </EntityContainer>
-        <EntityType Name="RegisteredUser">
-          <Key>
-            <PropertyRef Name="regId" />
-          </Key>
-          <Property Name="regId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="userName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Comment" Relationship="SkjatextiModel.FK__Comment__userId__1273C1CD" FromRole="RegisteredUser" ToRole="Comment" />
-        </EntityType>
         <EntityType Name="Request">
           <Key>
             <PropertyRef Name="reqId" />
@@ -417,19 +442,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="SkjatextiModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="SkjatextiModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="SkjatextiModel.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
-        </EntityType>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="commentId" />
-          </Key>
-          <Property Name="commentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="comment1" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="false" />
-          <Property Name="report" Type="Int32" />
-          <Property Name="commentDate" Type="DateTime" Precision="3" />
-          <Property Name="userId" Type="Int32" />
-          <Property Name="strId" Type="Int32" />
-          <NavigationProperty Name="SrtFile" Relationship="SkjatextiModel.FK__Comment__strId__1367E606" FromRole="Comment" ToRole="SrtFile" />
-          <NavigationProperty Name="RegisteredUser" Relationship="SkjatextiModel.FK__Comment__userId__1273C1CD" FromRole="Comment" ToRole="RegisteredUser" />
+          <NavigationProperty Name="Comment" Relationship="SkjatextiModel.FK_Comment_AspNetUsers" FromRole="AspNetUsers" ToRole="Comment" />
         </EntityType>
         <EntityType Name="Movie">
           <Key>
@@ -444,9 +457,10 @@
             <PropertyRef Name="dataId" />
           </Key>
           <Property Name="dataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="datatime" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="dataText" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SrtFile" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtData" ToRole="SrtFile" />
+          <Property Name="dataSize" Type="Int32" />
+          <Property Name="dataName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dataFile" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="SrtFile">
           <Key>
@@ -462,10 +476,10 @@
           <Property Name="movieId" Type="Int32" />
           <Property Name="tvId" Type="Int32" />
           <Property Name="dataId" Type="Int32" />
-          <NavigationProperty Name="Comment" Relationship="SkjatextiModel.FK__Comment__strId__1367E606" FromRole="SrtFile" ToRole="Comment" />
           <NavigationProperty Name="Movie" Relationship="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0" FromRole="SrtFile" ToRole="Movie" />
           <NavigationProperty Name="SrtData" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtFile" ToRole="SrtData" />
           <NavigationProperty Name="TvShow" Relationship="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" FromRole="SrtFile" ToRole="TvShow" />
+          <NavigationProperty Name="Comment" Relationship="SkjatextiModel.FK__Comment__strId__30F848ED" FromRole="SrtFile" ToRole="Comment" />
         </EntityType>
         <EntityType Name="TvShow">
           <Key>
@@ -503,30 +517,6 @@
             </Principal>
             <Dependent Role="AspNetUserLogins">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Comment__strId__1367E606">
-          <End Type="SkjatextiModel.SrtFile" Role="SrtFile" Multiplicity="0..1" />
-          <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SrtFile">
-              <PropertyRef Name="srtId" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="strId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Comment__userId__1273C1CD">
-          <End Type="SkjatextiModel.RegisteredUser" Role="RegisteredUser" Multiplicity="0..1" />
-          <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RegisteredUser">
-              <PropertyRef Name="regId" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -570,23 +560,72 @@
           <End Type="SkjatextiModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
           <End Type="SkjatextiModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
         </Association>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="Int32" Nullable="false" />
+          <Property Name="comment1" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="report" Type="Int32" />
+          <Property Name="commentDate" Type="DateTime" Precision="3" />
+          <Property Name="strId" Type="Int32" Nullable="false" />
+          <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="SkjatextiModel.FK_Comment_AspNetUsers" FromRole="Comment" ToRole="AspNetUsers" />
+          <NavigationProperty Name="SrtFile" Relationship="SkjatextiModel.FK__Comment__strId__30F848ED" FromRole="Comment" ToRole="SrtFile" />
+        </EntityType>
+        <Association Name="FK_Comment_AspNetUsers">
+          <End Type="SkjatextiModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="AspNetUsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comment__strId__30F848ED">
+          <End Type="SkjatextiModel.SrtFile" Role="SrtFile" Multiplicity="1" />
+          <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SrtFile">
+              <PropertyRef Name="srtId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="strId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SrtCollection">
+          <Key>
+            <PropertyRef Name="srtId" />
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="srtId" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="srtDate" Type="DateTime" Precision="3" />
+          <Property Name="srtReady" Type="Int32" />
+          <Property Name="rdDate" Type="DateTime" Precision="3" />
+          <Property Name="srtCounter" Type="Int32" />
+          <Property Name="srtLike" Type="Int32" />
+          <Property Name="movieId" Type="Int32" />
+          <Property Name="tvId" Type="Int32" />
+          <Property Name="dataId" Type="Int32" />
+          <Property Name="Expr1" Type="Int32" />
+          <Property Name="episode" Type="Int32" />
+          <Property Name="season" Type="Int32" />
+          <Property Name="episodeTitle" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="episodeAbout" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Expr2" Type="Int32" />
+          <Property Name="year" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SkjatextiModelStoreContainer" CdmEntityContainer="SkjatextiEntities">
-          <EntitySetMapping Name="RegisteredUser">
-            <EntityTypeMapping TypeName="SkjatextiModel.RegisteredUser">
-              <MappingFragment StoreEntitySet="RegisteredUser">
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="userName" ColumnName="userName" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="regId" ColumnName="regId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Request">
             <EntityTypeMapping TypeName="SkjatextiModel.Request">
               <MappingFragment StoreEntitySet="Request">
@@ -645,18 +684,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Comment">
-            <EntityTypeMapping TypeName="SkjatextiModel.Comment">
-              <MappingFragment StoreEntitySet="Comment">
-                <ScalarProperty Name="strId" ColumnName="strId" />
-                <ScalarProperty Name="userId" ColumnName="userId" />
-                <ScalarProperty Name="commentDate" ColumnName="commentDate" />
-                <ScalarProperty Name="report" ColumnName="report" />
-                <ScalarProperty Name="comment1" ColumnName="comment" />
-                <ScalarProperty Name="commentId" ColumnName="commentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Movie">
             <EntityTypeMapping TypeName="SkjatextiModel.Movie">
               <MappingFragment StoreEntitySet="Movie">
@@ -668,8 +695,9 @@
           <EntitySetMapping Name="SrtData">
             <EntityTypeMapping TypeName="SkjatextiModel.SrtData">
               <MappingFragment StoreEntitySet="SrtData">
-                <ScalarProperty Name="dataText" ColumnName="dataText" />
-                <ScalarProperty Name="datatime" ColumnName="datatime" />
+                <ScalarProperty Name="dataFile" ColumnName="dataFile" />
+                <ScalarProperty Name="dataName" ColumnName="dataName" />
+                <ScalarProperty Name="dataSize" ColumnName="dataSize" />
                 <ScalarProperty Name="dataId" ColumnName="dataId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -709,6 +737,41 @@
               <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="SkjatextiModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="AspNetUsersId" ColumnName="AspNetUsersId" />
+                <ScalarProperty Name="strId" ColumnName="strId" />
+                <ScalarProperty Name="commentDate" ColumnName="commentDate" />
+                <ScalarProperty Name="report" ColumnName="report" />
+                <ScalarProperty Name="comment1" ColumnName="comment" />
+                <ScalarProperty Name="commentId" ColumnName="commentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SrtCollection">
+            <EntityTypeMapping TypeName="SkjatextiModel.SrtCollection">
+              <MappingFragment StoreEntitySet="SrtCollection">
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+                <ScalarProperty Name="episodeAbout" ColumnName="episodeAbout" />
+                <ScalarProperty Name="episodeTitle" ColumnName="episodeTitle" />
+                <ScalarProperty Name="season" ColumnName="season" />
+                <ScalarProperty Name="episode" ColumnName="episode" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="dataId" ColumnName="dataId" />
+                <ScalarProperty Name="tvId" ColumnName="tvId" />
+                <ScalarProperty Name="movieId" ColumnName="movieId" />
+                <ScalarProperty Name="srtLike" ColumnName="srtLike" />
+                <ScalarProperty Name="srtCounter" ColumnName="srtCounter" />
+                <ScalarProperty Name="rdDate" ColumnName="rdDate" />
+                <ScalarProperty Name="srtReady" ColumnName="srtReady" />
+                <ScalarProperty Name="srtDate" ColumnName="srtDate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="srtId" ColumnName="srtId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -25,17 +25,17 @@ namespace skjatextar
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<RegisteredUser> RegisteredUser { get; set; }
         public virtual DbSet<Request> Request { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<Movie> Movie { get; set; }
         public virtual DbSet<SrtData> SrtData { get; set; }
         public virtual DbSet<SrtFile> SrtFile { get; set; }
         public virtual DbSet<TvShow> TvShow { get; set; }
+        public virtual DbSet<Comment> Comment { get; set; }
+        public virtual DbSet<SrtCollection> SrtCollection { get; set; }
     }
 }

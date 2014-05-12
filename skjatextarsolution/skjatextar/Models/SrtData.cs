@@ -10,8 +10,8 @@ namespace skjatextar.Models
     {
         public int dataId { get; set; }
         [Required]
-        public string dataTime { get; set; }
-        [Required]
-        public string dataText { get; set; }
+        public string dataFile { get; set; }
+        public int dataSize { get; set; }
+        public string dataName { get; set; }
     }
 }

@@ -20,8 +20,9 @@ namespace skjatextar
         }
     
         public int dataId { get; set; }
-        public string datatime { get; set; }
-        public string dataText { get; set; }
+        public Nullable<int> dataSize { get; set; }
+        public string dataName { get; set; }
+        public byte[] dataFile { get; set; }
     
         public virtual ICollection<SrtFile> SrtFile { get; set; }
     }

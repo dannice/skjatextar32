@@ -12,17 +12,17 @@ namespace skjatextar.BLL
         {
             SkjatextiEntities context = new SkjatextiEntities();
             var list = new List<Models.User>();
-            var query = from it in context.RegisteredUser
-                        orderby it.userName
+            var query = from it in context.AspNetUsers
+                        orderby it.UserName
                         select it;
             foreach (var item in query)
             {
                 var user = new Models.User();
-                user.email = item.email;
-                user.name = item.name;
-                user.password = item.password;
-                user.regId = item.regId;
-                user.username = item.userName;
+                //user.email = item;
+                //user.name = item.name;
+                user.password = item.PasswordHash;
+                user.regId = item.Id;
+                user.username = item.UserName;
                 list.Add(user);
             }
             return list;
@@ -45,11 +45,6 @@ namespace skjatextar.BLL
                 list.Add(request);
             }
             return list;
-        }
-
-
-    
-
-        
-        }
+        } 
+    }
 }

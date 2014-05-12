@@ -4,10 +4,9 @@
 
 <div>
     <h2>Upload</h2>
-    @using (Html.BeginForm("", "home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("", "Home/Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-
-        <input type="file" name="FileUpload1" /><br />
+        <input type="file" name="file" /><br />
         <input type="submit" name="Submit" id="Submit" value="Upload" />
     }
 </div>

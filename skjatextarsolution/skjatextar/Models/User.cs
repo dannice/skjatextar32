@@ -8,7 +8,7 @@ namespace skjatextar.Models
 {
     public class User
     {
-        public int regId { get; set; }
+        public string regId { get; set; }
         [Required]
         public string username { get; set; }
         public string name { get; set; }
