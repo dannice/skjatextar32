@@ -38,33 +38,22 @@
             <div class="col-md-3" id="leftCol">
                 <div class="well">
                     <div id="droplist" class="droplist">
-                        <div id="tvShow" class="drop">
-
-                            <select name="dropTvShow">
-                                <option>Veldu sjónvarpsþátt</option>
-                                @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
-                                {
-                                    <option value="@show.title">@show.title</option>
-                                }
-                            </select>
-                        </div>
-                        <div id="serie" class="serie">
-                            <select name="dropSeason">
-                                <option>Veldu seríu</option>
-                                @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
-                                {
-                                    <option value="@show.season">@show.season</option>
-                                }
-                            </select>
-                        </div>
-                        <div id="episode" class="serie">
-                            <select name="dropEpisode">
-                                <option>Veldu nr þáttar</option>
-                                @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
-                                {
-                                    <option value="@show.episodeTitle"> @show.episodeTitle</option>
-                                }
-                            </select>
+                        <select id="selectShow">
+                            <option value="">Veldu sjónvarpsþátt</option>
+                            @foreach (var show in (List<skjatextar.Models.SrtFileModel>)ViewData["tvshows"])
+                            {
+                                <option value="@show.srtId">@show.title</option>
+                            }
+                        </select>
+                        <select id="selectEpisode">
+                            <option value="">Veldu seríu og þátt</option>
+                        </select>
+                        <div id="episodeInfo">
+                            <h4>Titill</h4>
+                            Þáttaröð: <span id="season"></span><br/>
+                            Þáttur nr: <span id="episode"></span><br />
+                            Nafn: <span id="episodeTitle"></span><br />
+                            Söguþráður: <span id="episodeAbout"></span><br />
                         </div>
                     </div>
                 </div>
