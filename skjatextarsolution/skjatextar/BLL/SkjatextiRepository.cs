@@ -7,17 +7,18 @@ namespace skjatextar.BLL
 {
     public class SkjatextiRepository
     {
+        // Gets all tvshows and movies
         public List<Models.CollectionOfSrt> GetBothTvshowsAndMovies()
         {
             SkjatextiEntities contex = new SkjatextiEntities();
             var list = new List<Models.CollectionOfSrt>();
-           /*var query = (from item in contex.SrtFile
+           /*var query = from item in contex.SrtFile
                          join elem in contex.TvShow
                          on item.tvId equals elem.tvId
                          join melem in contex.Movie
                          on item.movieId equals melem.movieId
                          orderby item.title
-                         select item).Take(10);*/
+                         select item;*/
             var query = from item in contex.SrtCollection
                          orderby item.title
                          select item;
