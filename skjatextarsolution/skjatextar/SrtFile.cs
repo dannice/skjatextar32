@@ -30,9 +30,9 @@ namespace skjatextar
         public Nullable<int> tvId { get; set; }
         public Nullable<int> dataId { get; set; }
     
+        public virtual ICollection<Comment> Comment { get; set; }
         public virtual Movie Movie { get; set; }
         public virtual SrtData SrtData { get; set; }
         public virtual TvShow TvShow { get; set; }
-        public virtual ICollection<Comment> Comment { get; set; }
     }
 }

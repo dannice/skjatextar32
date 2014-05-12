@@ -13,5 +13,6 @@ namespace skjatextar.Models
         public string dataFile { get; set; }
         public int dataSize { get; set; }
         public string dataName { get; set; }
+        public string dataCont { get; set; }
     }
 }
