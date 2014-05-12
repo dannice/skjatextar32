@@ -45,11 +45,6 @@ namespace skjatextar.BLL
                 list.Add(request);
             }
             return list;
-        }
-
-
-    
-
-        
-        }
+        } 
+    }
 }

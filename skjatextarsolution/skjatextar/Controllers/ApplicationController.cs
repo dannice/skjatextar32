@@ -19,8 +19,8 @@ namespace skjatextar.Controllers
         public ApplicationController()
         {
             var bll = new SkjatextiRepository();
-            var both = bll.GetBothTvshowsAndMovies();
-            ViewData["shows"] = both;
+            var query = bll.GetTopTenSrt();
+            ViewData["shows"] = query;
            
         }
 	}

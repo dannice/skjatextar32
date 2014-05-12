@@ -234,6 +234,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Skjatexti.edmx</DependentUpon>
     </Compile>
+    <Compile Include="SrtCollection.cs">
+      <DependentUpon>Skjatexti.tt</DependentUpon>
+    </Compile>
     <Compile Include="SrtData.cs">
       <DependentUpon>Skjatexti.tt</DependentUpon>
     </Compile>

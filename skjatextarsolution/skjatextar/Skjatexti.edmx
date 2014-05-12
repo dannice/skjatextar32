@@ -91,8 +91,9 @@
             <PropertyRef Name="dataId" />
           </Key>
           <Property Name="dataId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="datatime" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="dataText" Type="varchar(max)" />
+          <Property Name="dataSize" Type="int" />
+          <Property Name="dataName" Type="nvarchar" MaxLength="250" />
+          <Property Name="dataFile" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="SrtFile">
           <Key>
@@ -118,6 +119,31 @@
           <Property Name="season" Type="int" Nullable="false" />
           <Property Name="episodeTitle" Type="nvarchar" MaxLength="40" />
           <Property Name="episodeAbout" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SrtCollection">
+          <Key>
+            <PropertyRef Name="srtId" />
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="srtId" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="srtDate" Type="datetime" />
+          <Property Name="srtReady" Type="int" />
+          <Property Name="rdDate" Type="datetime" />
+          <Property Name="srtCounter" Type="int" />
+          <Property Name="srtLike" Type="int" />
+          <Property Name="movieId" Type="int" />
+          <Property Name="tvId" Type="int" />
+          <Property Name="dataId" Type="int" />
+          <Property Name="Expr1" Type="int" />
+          <Property Name="episode" Type="int" />
+          <Property Name="season" Type="int" />
+          <Property Name="episodeTitle" Type="nvarchar" MaxLength="40" />
+          <Property Name="episodeAbout" Type="nvarchar" MaxLength="400" />
+          <Property Name="Expr2" Type="int" />
+          <Property Name="year" Type="int" />
         </EntityType>
         <Association Name="FK__Comment__strId__30F848ED">
           <End Role="SrtFile" Type="Self.SrtFile" Multiplicity="1" />
@@ -248,6 +274,27 @@
           <EntitySet Name="SrtData" EntityType="Self.SrtData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SrtFile" EntityType="Self.SrtFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TvShow" EntityType="Self.TvShow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SrtCollection" EntityType="Self.SrtCollection" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SrtCollection].[srtId] AS [srtId], 
+    [SrtCollection].[title] AS [title], 
+    [SrtCollection].[srtDate] AS [srtDate], 
+    [SrtCollection].[srtReady] AS [srtReady], 
+    [SrtCollection].[rdDate] AS [rdDate], 
+    [SrtCollection].[srtCounter] AS [srtCounter], 
+    [SrtCollection].[srtLike] AS [srtLike], 
+    [SrtCollection].[movieId] AS [movieId], 
+    [SrtCollection].[tvId] AS [tvId], 
+    [SrtCollection].[dataId] AS [dataId], 
+    [SrtCollection].[Expr1] AS [Expr1], 
+    [SrtCollection].[episode] AS [episode], 
+    [SrtCollection].[season] AS [season], 
+    [SrtCollection].[episodeTitle] AS [episodeTitle], 
+    [SrtCollection].[episodeAbout] AS [episodeAbout], 
+    [SrtCollection].[Expr2] AS [Expr2], 
+    [SrtCollection].[year] AS [year]
+    FROM [dbo].[SrtCollection] AS [SrtCollection]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Comment__strId__30F848ED" Association="Self.FK__Comment__strId__30F848ED">
             <End Role="SrtFile" EntitySet="SrtFile" />
             <End Role="Comment" EntitySet="Comment" />
@@ -333,6 +380,7 @@
             <End Role="SrtFile" EntitySet="SrtFile" />
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
+          <EntitySet Name="SrtCollection" EntityType="SkjatextiModel.SrtCollection" />
         </EntityContainer>
         <EntityType Name="Request">
           <Key>
@@ -409,9 +457,10 @@
             <PropertyRef Name="dataId" />
           </Key>
           <Property Name="dataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="datatime" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="dataText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SrtFile" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtData" ToRole="SrtFile" />
+          <Property Name="dataSize" Type="Int32" />
+          <Property Name="dataName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dataFile" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="SrtFile">
           <Key>
@@ -548,6 +597,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SrtCollection">
+          <Key>
+            <PropertyRef Name="srtId" />
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="srtId" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="srtDate" Type="DateTime" Precision="3" />
+          <Property Name="srtReady" Type="Int32" />
+          <Property Name="rdDate" Type="DateTime" Precision="3" />
+          <Property Name="srtCounter" Type="Int32" />
+          <Property Name="srtLike" Type="Int32" />
+          <Property Name="movieId" Type="Int32" />
+          <Property Name="tvId" Type="Int32" />
+          <Property Name="dataId" Type="Int32" />
+          <Property Name="Expr1" Type="Int32" />
+          <Property Name="episode" Type="Int32" />
+          <Property Name="season" Type="Int32" />
+          <Property Name="episodeTitle" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="episodeAbout" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Expr2" Type="Int32" />
+          <Property Name="year" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -623,8 +695,9 @@
           <EntitySetMapping Name="SrtData">
             <EntityTypeMapping TypeName="SkjatextiModel.SrtData">
               <MappingFragment StoreEntitySet="SrtData">
-                <ScalarProperty Name="dataText" ColumnName="dataText" />
-                <ScalarProperty Name="datatime" ColumnName="datatime" />
+                <ScalarProperty Name="dataFile" ColumnName="dataFile" />
+                <ScalarProperty Name="dataName" ColumnName="dataName" />
+                <ScalarProperty Name="dataSize" ColumnName="dataSize" />
                 <ScalarProperty Name="dataId" ColumnName="dataId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -673,6 +746,29 @@
                 <ScalarProperty Name="report" ColumnName="report" />
                 <ScalarProperty Name="comment1" ColumnName="comment" />
                 <ScalarProperty Name="commentId" ColumnName="commentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SrtCollection">
+            <EntityTypeMapping TypeName="SkjatextiModel.SrtCollection">
+              <MappingFragment StoreEntitySet="SrtCollection">
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="Expr2" ColumnName="Expr2" />
+                <ScalarProperty Name="episodeAbout" ColumnName="episodeAbout" />
+                <ScalarProperty Name="episodeTitle" ColumnName="episodeTitle" />
+                <ScalarProperty Name="season" ColumnName="season" />
+                <ScalarProperty Name="episode" ColumnName="episode" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="dataId" ColumnName="dataId" />
+                <ScalarProperty Name="tvId" ColumnName="tvId" />
+                <ScalarProperty Name="movieId" ColumnName="movieId" />
+                <ScalarProperty Name="srtLike" ColumnName="srtLike" />
+                <ScalarProperty Name="srtCounter" ColumnName="srtCounter" />
+                <ScalarProperty Name="rdDate" ColumnName="rdDate" />
+                <ScalarProperty Name="srtReady" ColumnName="srtReady" />
+                <ScalarProperty Name="srtDate" ColumnName="srtDate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="srtId" ColumnName="srtId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
