@@ -20,8 +20,6 @@ namespace skjatextar.Controllers
         {
             var bll = new SkjatextiRepository();
             ViewData["tvshows"] = bll.GetTvShows();
-            ViewData["seasons"] = bll.GetEpisodes(1);  
-            ViewData["episodes"] = bll.GetEpisodes(1);
             ViewData["shows"] = bll.GetBothTvshowsAndMovies();
            
         }
