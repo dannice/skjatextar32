@@ -1,8 +1,13 @@
-﻿@{
+﻿
+@model List<skjatextar.Models.CollectionOfSrt>
+@{
     ViewBag.Title = "Home Page";
 }
 
-
+@foreach(var item in Model)
+{
+    <p>@item.episodeTitle</p>
+}
 
 
 <!-- Begin Body -->
