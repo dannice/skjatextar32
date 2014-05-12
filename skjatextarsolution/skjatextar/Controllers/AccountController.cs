@@ -10,10 +10,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using skjatextar.Models;
 
-namespace skjatextar.Controllers
+namespace skjatextar.Controllers 
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : ApplicationController
     {
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
