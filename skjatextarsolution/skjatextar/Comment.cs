@@ -18,10 +18,10 @@ namespace skjatextar
         public string comment1 { get; set; }
         public Nullable<int> report { get; set; }
         public Nullable<System.DateTime> commentDate { get; set; }
-        public Nullable<int> userId { get; set; }
-        public Nullable<int> strId { get; set; }
+        public int strId { get; set; }
+        public string AspNetUsersId { get; set; }
     
+        public virtual AspNetUsers AspNetUsers { get; set; }
         public virtual SrtFile SrtFile { get; set; }
-        public virtual RegisteredUser RegisteredUser { get; set; }
     }
 }
