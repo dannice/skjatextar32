@@ -63,26 +63,25 @@ namespace skjatextar.Controllers
             if (file != null && file.ContentLength > 0)
             {
 
-                /*// extract only the fielname
+                //extract only the fielname
                 var fileName = Path.GetFileName(file.FileName);
                 // store the file inside ~/App_Data/uploads folder
-                StreamReader streamReader = new StreamReader(fileName);
+                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                file.SaveAs(path);
+                StreamReader streamReader = new StreamReader(path);
                 string text = streamReader.ReadToEnd();
-                /*var db = new SkjatextiRepository()
                 
+                using (var db = new SkjatextiEntities())
+                {
+                    var dataItem = new SrtData();
+                    dataItem.dataName = fileName;
+                    dataItem.dataText = text;
 
-                
-                newsitem.title = query.Title;
-                newsitem.date = query.Date;
-                newsitem.texti = query.Name;
-                newsitem.category = query.Category;
-                newsitem.blogId = query.BlogId;*/
+                    db.SrtData.Add(dataItem);
+                    db.SaveChanges();
+                }
+                streamReader.Close();
             }
-
-            //streamReader.Close();
-            //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-            //file.SaveAs(path);
-
 
             // redirect back to the index action to show the form once again
             return RedirectToAction("Index");
