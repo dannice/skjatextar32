@@ -9,16 +9,17 @@ using skjatextar.Models;
 
 namespace skjatextar.Controllers
 {
-	public class HomeController : Controller
+	public class HomeController : ApplicationController
 	{
-		public ActionResult Index()
+		public ActionResult Index() 
 		{
            
             var bll = new SkjatextiRepository();
-            var both = bll.GetBothTvshowsAndMovies();
+            var topten = bll.GetTopTenSrt();
+            //var both = bll.GetBothTvshowsAndMovies(); var með þetta 
 
             //return View(users);
-            return View(both);
+            return View(topten);
 		}
        
        [HttpGet]
