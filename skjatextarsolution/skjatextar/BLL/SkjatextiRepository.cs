@@ -24,15 +24,37 @@ namespace skjatextar.BLL
                 //var movie = new Models.MovieModel();
                 //var both = new Models.SrtFileModel();
                 show.title = item.title;
+                show.episodeTitle = item.TvShow.episodeTitle;
                 show.episodeAbout = item.TvShow.episodeAbout;
                 show.season = item.TvShow.season;
                 show.episode = item.TvShow.episode;
                 show.year = item.Movie.year;
+                show.srtId = item.srtId;
+                show.tvId = item.TvShow.tvId;
+              
 
                 list.Add(show);
 
             }
             return list;
         }
+
+        public List<Models.CollectionOfSrt> TestAlex()
+        {
+            SkjatextiEntities contex = new SkjatextiEntities();
+            var list = new List<Models.CollectionOfSrt>();
+
+            var query = from item in contex.SrtFile
+                        join elem in contex.TvShow
+                        on item.tvId equals elem.tvId
+                        join melem in contex.Movie
+                        on item.movieId equals melem.movieId
+                        select item;
+            return list;
+        }
+
+
     }
+
+
 }

@@ -5,13 +5,17 @@
 }
 
 <h1>10.N&#253;justu</h1>
-<div>
-    @foreach(var item in Model)
-    {
-        <h3>@item.title</h3>
-        <h3>@item.episodeAbout</h3>
-        <h3>@item.year</h3>
-    }
 
+<div class="jumbotron">
+    <table>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
+                </tr>
+            }
 
+        </tbody>
+    </table>
 </div>

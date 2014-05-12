@@ -296,6 +296,7 @@
       <DependentUpon>Skjatexti.edmx</DependentUpon>
       <LastGenOutput>Skjatexti.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
