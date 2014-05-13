@@ -6,7 +6,55 @@
     <h2>Upload</h2>
     @using (Html.BeginForm("", "Home/Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+        
         <input type="file" name="file" /><br />
+    <form role="form">
+        <div class="form-group">
+            <label for="title">Titill</label>
+            <input type="text" class="form-control" id="srtId" placeholder="Sláðu inn titil">
+        </div>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios1"
+                       value="option1" checked> Kvikmynd
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="year">Útgáfuár</label>
+            <input type="text" class="form-control" id="movieId" placeholder="Sláðu inn ártal kvikmyndar">
+        </div>
+
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios2"
+                       value="option2"> Þáttaröð
+            </label>
+        </div>
+
+        <div class="form-group">
+             <label for="episodeTitle">Titill þáttar</label>
+             <input type="text" class="form-control" id="tvId" placeholder="Sláðu inn titil þáttar">
+        </div>
+        
+        <div class="form-group">
+            <label for="season">Númer þáttaseríu</label>
+            <input type="number" class="form-control" id="tvId" placeholder="Veldu númer þáttaseríu">
+        </div>
+
+        <div class="form-group">
+            <label for="episode">Númer þáttar</label>
+            <input type="number" class="form-control" id="movieId" placeholder="Veldu númer þáttar">
+        </div>
+
+        <div>
+        <label for="episodeAbout">Athugasemd</label>
+        <textarea class="form-control" rows="3"></textarea>
+        </div>
+
+    </form>
+
+
         <input type="submit" name="Submit" id="Submit" value="Upload" />
     }
 </div>
