@@ -22,45 +22,26 @@ namespace skjatextar.Controllers
             return View(topten);
 		}
        
-       [HttpGet]
+
        public ActionResult Details(int? id)
         {
            SkjatextiEntities context = new SkjatextiEntities();
            var bll = new SkjatextiRepository();
-           var both = bll.GetBothTvshowsAndMovies();
-           var query = (from item in both
+           var test = bll.TvShowAndSrtFileJoin();
+           var query = (from item in test
                         where item.tvId == id
-                        select item).SingleOrDefault();
-                                                       
+                        select item).FirstOrDefault();
            if (query != null)
-            { 
+           {
                return View(query);
-             }
-                    
-          return View("error");
+           }
+           return View("Error");
+                                                     
+
         }
 
-       [HttpPost]
-       public ActionResult Details(int? id, FormCollection form)
-       {
-           SkjatextiEntities context = new SkjatextiEntities();
-           var bll = new SkjatextiRepository();
-           var both = bll.GetBothTvshowsAndMovies();
-           var query = (from item in both
-                          where item.tvId == id
-                          select item).SingleOrDefault();
-
-           if (ModelState.IsValid)
-           {
-               UpdateModel(query);
-
-               context.SaveChanges();
-               return RedirectToAction("Index");
-
-           }
-
-           return View(query);
-       }
+      
+       
 
        private ActionResult View(Func<int?, ActionResult> Details)
        {

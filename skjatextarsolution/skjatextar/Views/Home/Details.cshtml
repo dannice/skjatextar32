@@ -3,10 +3,33 @@
 @{
     ViewBag.Title = "Details";
 }
-<h1>@Model.title</h1>
-<h1>@Model.episodeTitle</h1>
-<div class="jumbotron">
-    <h3>@Model.episodeAbout</h3>
 
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+      
+
+        <h1>@Model.title</h1>
+
+        <p>Season: @Model.season</p>
+        <p>Episode: @Model.episode</p><p>@Model.episodeTitle</p>
+
+        <p>@Model.episodeAbout</p>
+        
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval/")
+}
+
 
