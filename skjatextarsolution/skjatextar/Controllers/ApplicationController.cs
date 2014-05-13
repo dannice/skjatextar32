@@ -20,9 +20,13 @@ namespace skjatextar.Controllers
         {
             var bll = new SkjatextiRepository();
             ViewData["tvshows"] = bll.GetTvShows();
+
+             //?ma taka thetta
             ViewData["shows"] = bll.GetBothTvshowsAndMovies();
            
         }
+
+     
 
         [HttpGet]
         public JsonResult GetEpisodeDataByShow()
