@@ -41,14 +41,6 @@ namespace skjatextar.Controllers
             return View();
         }
 
-       
-
-        /*public ActionResult Upload()
-        {
-            
-            return View();
-        }*/
-
         [HttpGet]
         public ActionResult Upload()
         {
