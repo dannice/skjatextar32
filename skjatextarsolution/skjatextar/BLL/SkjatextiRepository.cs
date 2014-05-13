@@ -143,6 +143,18 @@ namespace skjatextar.BLL
             return list;
         }
 
+        // Search tables of TvShows and Movies
+        public List<Models.CollectionOfSrt> Search()
+        {
+            SkjatextiEntities contex = new SkjatextiEntities();
+            var searchResult = new List<Models.CollectionOfSrt>();
+            var query = (from item in contex.SrtFile
+                         where item.title == "Big"
+                         select item).ToList();
+
+            return searchResult;
+        }
+
         /*public List<Models.CollectionOfSrt> GetSrtData()
         {
             SkjatextiEntities contex = new SkjatextiEntities();
@@ -162,5 +174,18 @@ namespace skjatextar.BLL
                 }
         }*/
 
+        public SrtCollection GetMovieEpisodeById(int? id)
+        {
+            SkjatextiEntities contex = new SkjatextiEntities();
+            var result = (from c in contex.SrtCollection
+                          where c.tvId == id
+                          select c).SingleOrDefault();
+            var tvItem = new SrtCollection();
+            tvItem.tvId = result.tvId;
+            tvItem.title = result.title;
+                
+
+            return tvItem;
+        }
     }
 }
