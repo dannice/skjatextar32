@@ -53,9 +53,9 @@ namespace skjatextar.Controllers
             
 
    
-            ViewData["results"] = results;
+            ViewData["query"] = query;
 
-            return View();
+            return View(results);
         }
 
         /*public ActionResult Upload()
