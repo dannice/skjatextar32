@@ -178,8 +178,12 @@ namespace skjatextar.BLL
             var result = (from c in contex.SrtCollection
                           where c.tvId == id
                           select c).SingleOrDefault();
+            var tvItem = new SrtCollection();
+            tvItem.tvId = result.tvId;
+            tvItem.title = result.title;
+                
 
-            return result;
+            return tvItem;
         }
     }
 }
