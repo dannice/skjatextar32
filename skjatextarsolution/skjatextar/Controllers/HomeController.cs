@@ -41,6 +41,29 @@ namespace skjatextar.Controllers
             return View();
         }
 
+        // showing search result from text box
+        [HttpPost]
+       public ActionResult SearchResult()
+        {
+            string query = Request.Params.Get("srch-term");
+
+            var bll = new SkjatextiRepository();
+            var results =  bll.Search(query);
+
+            
+
+   
+            ViewData["results"] = results;
+
+            return View();
+        }
+
+        /*public ActionResult Upload()
+        {
+            
+            return View();
+        }*/
+
         [HttpGet]
         public ActionResult Upload()
         {
@@ -81,8 +104,6 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        // Gets file from database and displays it on page
         public ActionResult EditFile(int id)
         {
             var model = new SrtData();
@@ -97,23 +118,11 @@ namespace skjatextar.Controllers
             return View("EditFile",srtModel);
         }
 
-        [HttpPost]
-        // Takes changes made in textbox, pushes it to db and overwrites current data
-        public ActionResult EditFile(FormCollection col, int id)
+        /*[HttpPost]
+        public ActionResult EditFile()
         {
-            string dataText = col["dataText"];
-            using (var db = new SkjatextiEntities())
-            {
-                var edit = (from sr in db.SrtData
-                           where sr.dataId == id
-                           select sr).FirstOrDefault();
 
-                edit.dataText = dataText;
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index");
-        }
-
+        }*/
         public ActionResult Search(string searchString)
         {
             // framkvæmir search í sql 
@@ -129,11 +138,11 @@ namespace skjatextar.Controllers
             var result = (from elem in getDetails
                           where elem.tvId == id
                           select elem).SingleOrDefault();
-            if (result != null)
+            if(result != null)
             {
                 return View(result);
             }
             return View("error");
-        }
+          }
     }
 }

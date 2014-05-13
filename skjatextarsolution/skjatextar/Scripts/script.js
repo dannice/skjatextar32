@@ -16,6 +16,7 @@
         }else
         {
             $("#selectEpisode").hide().find('option:selected').removeAttr("selected");
+            $("#episodeInfo").hide();
         }
     });
 
@@ -29,9 +30,37 @@
         };
     });
 
+    
+    $("#srch-term").keypress(function (event) {
+        var query = $("#srch-term").val();
+       if (event.which == 13 && (!query || query.length == 0)) {
+           event.preventDefault();
+           console.log(query);
+           return false;
+            
+        }
+        
+    });
+    
+
 });
 
+/*function search(movieShow) {
 
+    console.log("search");
+    var list = getAll();
+};*/
+// gets list of everything in database
+/*function getAll() {
+    console.log("jo");
+    $.ajax({
+        type: "GET",
+        url: "/Home/GetBothTvshowsAndMovies/",
+        success: function (data) {
+            return data;
+        },
+    });
+};*/
 function getEpisodes(srtId){  
     $.ajax({
         type: "GET",

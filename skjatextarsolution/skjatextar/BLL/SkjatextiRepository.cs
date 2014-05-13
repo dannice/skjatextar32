@@ -77,8 +77,6 @@ namespace skjatextar.BLL
             SkjatextiEntities contex = new SkjatextiEntities();
             var list = new Models.TvShowModel();
 
-           
-
             var result = (from item in contex.TvShow
                          where item.tvId == epId
                          select item).FirstOrDefault();
@@ -93,7 +91,20 @@ namespace skjatextar.BLL
             return episode;
         }
 
+        // Search from inputbox
+        public List<Models.CollectionOfSrt> Search(string s)
+        {
+            // Connect to db through Skjatexti.context.cs
+            SkjatextiEntities contex = new SkjatextiEntities();
+            // Creates new empty list using collectionofst
+            var list = new List<Models.CollectionOfSrt>();
 
+            // compares input string to database
+            List<Models.CollectionOfSrt> listOfAll = GetBothTvshowsAndMovies().Where(b => b.title.Contains(s)).ToList();
+            
+            
+            return listOfAll;
+        }
         // Gets all tvshows and movies
         public List<Models.CollectionOfSrt> GetBothTvshowsAndMovies()
         {
