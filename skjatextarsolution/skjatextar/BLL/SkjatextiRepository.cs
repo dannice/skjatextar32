@@ -142,6 +142,8 @@ namespace skjatextar.BLL
             }
             return list;
         }
+
+        // Search tables of TvShows and Movies
         public List<Models.CollectionOfSrt> Search()
         {
             SkjatextiEntities contex = new SkjatextiEntities();
