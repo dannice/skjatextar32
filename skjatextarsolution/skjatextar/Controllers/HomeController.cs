@@ -18,7 +18,7 @@ namespace skjatextar.Controllers
         {
 
             var bll = new SkjatextiRepository();
-            var query = new BLL.SkjatextiRepository().GetTopTenSrt();
+            var query = bll.GetTopTenSrt();
 
             //return View(users);
             return View(query);
@@ -123,5 +123,26 @@ namespace skjatextar.Controllers
         {
 
         }*/
+        public ActionResult Search(string searchString)
+        {
+            // framkvæmir search í sql
+            //returnar view með results
+            return null;
+        }
+
+        public ActionResult Details(int? id)
+        {
+            SkjatextiRepository bll = new SkjatextiRepository();
+            var getDetails = bll.GetBothTvshowsAndMovies();
+
+            var result = (from elem in getDetails
+                          where elem.tvId == id
+                          select elem).SingleOrDefault();
+            if(result != null)
+            {
+                return View(result);
+            }
+            return View("error");
+          }
     }
 }

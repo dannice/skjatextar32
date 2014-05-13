@@ -16,15 +16,19 @@ namespace skjatextar.Models
         public DateTime rdDate { get; set; }
         public int srtCounter { get; set; }
         public int srtLike { get; set; }
-        public int movieId { get; set; }
+        public int? movieId { get; set; }
         [Required]
         public int? year { get; set; }
-        public int tvId { get; set; }
+        public int? tvId { get; set; }
         [Required]
         public int? episode { get; set; }
         [Required]
         public int? season { get; set; }
         public string episodeTitle { get; set; }
         public string episodeAbout { get; set; }
+
+        public virtual TvShow TvShow { get; set; }
+        public virtual Movie Movie { get; set; }
+        public virtual SrtFile SrtFile { get; set; }
     }
 }
