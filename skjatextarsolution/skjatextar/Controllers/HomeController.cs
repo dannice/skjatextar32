@@ -61,18 +61,20 @@ namespace skjatextar.Controllers
             if (file != null && file.ContentLength > 0)
             {
 
-                //extract only the fielname
+                // Extract only the fielname
                 var fileName = Path.GetFileName(file.FileName);
-                // store the file inside ~/App_Data/uploads folder
-                var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                file.SaveAs(path);
-                StreamReader streamReader = new StreamReader(path);
+                // Starts to read file
+                StreamReader streamReader = new StreamReader(file.InputStream);
+                // Reads until end of the file.
                 string text = streamReader.ReadToEnd();
                 
+                // Connects to database
                 using (var db = new SkjatextiEntities())
                 {
                     var dataItem = new SrtData();
+                    // Puts filename into db
                     dataItem.dataName = fileName;
+                    // Puts all text from file to db
                     dataItem.dataText = text;
 
                     db.SrtData.Add(dataItem);
@@ -84,5 +86,25 @@ namespace skjatextar.Controllers
             // redirect back to the index action to show the form once again
             return RedirectToAction("Index");
         }
+
+        public ActionResult EditFile(int id)
+        {
+            var model = new SrtData();
+            using (var db = new SkjatextiEntities())
+            {
+                var query = (from s in db.SrtData
+                            where s.dataId == id
+                            select s).FirstOrDefault();
+                model.dataText = query.dataText;
+            }
+            var srtModel = new SrtDataModel { dataId = model.dataId, dataText = model.dataText, dataName = model.dataName, dataSize = model.dataSize };
+            return View("EditFile",srtModel);
+        }
+
+        /*[HttpPost]
+        public ActionResult EditFile()
+        {
+
+        }*/
     }
 }

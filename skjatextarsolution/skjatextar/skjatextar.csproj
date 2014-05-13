@@ -314,6 +314,7 @@
       <LastGenOutput>Skjatexti.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\Upload.cshtml" />
+    <Content Include="Views\Home\EditFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

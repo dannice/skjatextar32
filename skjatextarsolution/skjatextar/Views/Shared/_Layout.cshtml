@@ -1,6 +1,4 @@
-﻿@model List<skjatextar.Models.CollectionOfSrt>
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -33,45 +31,44 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3" id="leftCol">
-                <div class="well">
-                    <div id="droplist" class="droplist">
-                        <div id="tvShow" class="drop">
+       <div class="container">
+            <div class="row">
+                <div class="col-md-3" id="leftCol">
+                    <div class="well">
+                        <div id="droplist" class="droplist">
+                            <div id="tvShow" class="drop">
 
-                            <select name="dropTvShow">
-                                <option>Veldu sjónvarpsþátt</option>
-                                @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
-                                {
-                                    <option value="@show.title">@show.title</option>
-                                }
-                            </select>
-                        </div>
-                        <div id="serie" class="serie">
-                            <select name="dropSeason">
-                                <option>Veldu seríu</option>
-                                @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
-                                {
+                                <select name="dropTvShow">
+                                    <option>Veldu sjónvarpsþátt</option>
+                                    @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
+                                    {
+                                        <option value="@show.title">@show.title</option>
+                                    }
+                                </select>
+                            </div>
+                            <div id="serie" class="serie">
+                                <select name="dropSeason">
+                                    <option>Veldu seríu</option>
+                                    @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
+                                        {
                                     <option value="@show.season">@show.season</option>
                                 }
-                            </select>
-                        </div>
-                        <div id="episode" class="serie">
-                            <select name="dropEpisode">
-                                <option>Veldu nr þáttar</option>
-                                @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
-                                {
+                                </select>
+                            </div>
+                            <div id="episode" class="serie">
+                                <select name="dropEpisode">
+                                    <option>Veldu nr þáttar</option>
+                                    @foreach (var show in (List<skjatextar.Models.CollectionOfSrt>)ViewData["shows"])
+                                        {
                                     <option value="@show.episodeTitle"> @show.episodeTitle</option>
                                 }
-                            </select>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
     <div class="container body-content">
         
         @RenderBody()
