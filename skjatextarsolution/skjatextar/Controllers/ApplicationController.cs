@@ -18,12 +18,27 @@ namespace skjatextar.Controllers
         
         public ApplicationController()
         {
-            // Tilraun x
-            //
             var bll = new SkjatextiRepository();
-            var query = bll.GetBothTvshowsAndMovies();
-            ViewData["shows"] = query;
+            ViewData["tvshows"] = bll.GetTvShows();
+            ViewData["shows"] = bll.GetBothTvshowsAndMovies();
            
+        }
+
+        [HttpGet]
+        public JsonResult GetEpisodeDataByShow()
+        {
+            string srtId = Request.QueryString["srtId"];
+            var bll = new SkjatextiRepository();
+            return Json(bll.GetEpisodes(int.Parse(srtId)), JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public JsonResult GetEpisodeData()
+        {
+            string epId = Request.QueryString["epId"];
+            var bll = new SkjatextiRepository();
+            return Json(bll.GetEpisode(int.Parse(epId)), JsonRequestBehavior.AllowGet);
         }
 	}
 }
