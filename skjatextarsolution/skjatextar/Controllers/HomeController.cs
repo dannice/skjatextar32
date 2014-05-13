@@ -158,5 +158,22 @@ namespace skjatextar.Controllers
             }
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
         }
+
+        // showing search result from text box
+        [HttpPost]
+        public ActionResult SearchResult()
+        {
+            string query = Request.Params.Get("srch-term");
+
+            var bll = new SkjatextiRepository();
+            var results = bll.Search(query);
+
+
+
+
+            ViewData["results"] = results;
+
+            return View();
+        }
     }
 }
