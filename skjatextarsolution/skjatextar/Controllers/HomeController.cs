@@ -116,7 +116,7 @@ namespace skjatextar.Controllers
 
         public ActionResult Search(string searchString)
         {
-            // framkvæmir search í sql
+            // framkvæmir search í sql 
             //returnar view með results
             return null;
         }
