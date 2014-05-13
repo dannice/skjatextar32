@@ -46,6 +46,14 @@ namespace skjatextar.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "Nafn")]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Netfang")]
+        public string Email { get; set; }
+
+        [Required]
         [Display(Name = "Notandanafn")]
         public string UserName { get; set; }
 
