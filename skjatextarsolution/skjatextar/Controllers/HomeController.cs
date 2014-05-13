@@ -143,5 +143,20 @@ namespace skjatextar.Controllers
             }
             return View("error");
         }
+
+        public FileResult Download(int? id)
+        {
+            string text = "";
+            string filename = "";
+            using (var db = new SkjatextiEntities())
+            {
+                var query = (from s in db.SrtData
+                             where s.dataId == id
+                             select s).FirstOrDefault();
+                text = query.dataText;
+                filename = query.dataName;
+            }
+            return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
+        }
     }
 }
