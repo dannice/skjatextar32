@@ -41,22 +41,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
-        // showing search result from text box
-        [HttpPost]
-       public ActionResult SearchResult()
-        {
-            string query = Request.Params.Get("srch-term");
-
-            var bll = new SkjatextiRepository();
-            var results =  bll.Search(query);
-
-            
-
-   
-            ViewData["results"] = results;
-
-            return View();
-        }
+       
 
         /*public ActionResult Upload()
         {
@@ -104,6 +89,8 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        // Gets file from database and displays it on page
         public ActionResult EditFile(int id)
         {
             var model = new SrtData();
@@ -118,14 +105,26 @@ namespace skjatextar.Controllers
             return View("EditFile",srtModel);
         }
 
-        /*[HttpPost]
-        public ActionResult EditFile()
+        [HttpPost]
+        // Takes changes made in textbox, pushes it to db and overwrites current data
+        public ActionResult EditFile(FormCollection col, int id)
         {
+            string dataText = col["dataText"];
+            using (var db = new SkjatextiEntities())
+            {
+                var edit = (from sr in db.SrtData
+                           where sr.dataId == id
+                           select sr).FirstOrDefault();
 
-        }*/
+                edit.dataText = dataText;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Search(string searchString)
         {
-            // framkvæmir search í sql 
+            // framkvæmir search í sql
             //returnar view með results
             return null;
         }
@@ -138,11 +137,26 @@ namespace skjatextar.Controllers
             var result = (from elem in getDetails
                           where elem.tvId == id
                           select elem).SingleOrDefault();
-            if(result != null)
+            if (result != null)
             {
                 return View(result);
             }
             return View("error");
-          }
+        }
+
+        public FileResult Download(int? id)
+        {
+            string text = "";
+            string filename = "";
+            using (var db = new SkjatextiEntities())
+            {
+                var query = (from s in db.SrtData
+                             where s.dataId == id
+                             select s).FirstOrDefault();
+                text = query.dataText;
+                filename = query.dataName;
+            }
+            return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
+        }
     }
 }
