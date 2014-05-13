@@ -94,6 +94,7 @@
           <Property Name="dataSize" Type="int" />
           <Property Name="dataName" Type="nvarchar" MaxLength="250" />
           <Property Name="dataFile" Type="varbinary(max)" />
+          <Property Name="dataText" Type="text" />
         </EntityType>
         <EntityType Name="SrtFile">
           <Key>
@@ -345,7 +346,6 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <EntitySet Name="AspNetUsers" EntityType="SkjatextiModel.AspNetUsers" />
           <EntitySet Name="Movie" EntityType="SkjatextiModel.Movie" />
           <EntitySet Name="SrtData" EntityType="SkjatextiModel.SrtData" />
-          <EntitySet Name="SrtFile" EntityType="SkjatextiModel.SrtFile" />
           <EntitySet Name="TvShow" EntityType="SkjatextiModel.TvShow" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="SkjatextiModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -354,6 +354,21 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="SkjatextiModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="SkjatextiModel.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Comment" EntityType="SkjatextiModel.Comment" />
+          <AssociationSet Name="FK_Comment_AspNetUsers" Association="SkjatextiModel.FK_Comment_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <EntitySet Name="SrtCollection" EntityType="SkjatextiModel.SrtCollection" />
+          <EntitySet Name="SrtFile" EntityType="SkjatextiModel.SrtFile" />
+          <AssociationSet Name="FK__Comment__strId__30F848ED" Association="SkjatextiModel.FK__Comment__strId__30F848ED">
+            <End Role="SrtFile" EntitySet="SrtFile" />
+            <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
           <AssociationSet Name="FK__SrtFile__movieId__0DAF0CB0" Association="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0">
             <End Role="Movie" EntitySet="Movie" />
@@ -367,20 +382,6 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             <End Role="TvShow" EntitySet="TvShow" />
             <End Role="SrtFile" EntitySet="SrtFile" />
           </AssociationSet>
-          <AssociationSet Name="AspNetUserRoles" Association="SkjatextiModel.AspNetUserRoles">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <EntitySet Name="Comment" EntityType="SkjatextiModel.Comment" />
-          <AssociationSet Name="FK_Comment_AspNetUsers" Association="SkjatextiModel.FK_Comment_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Comment" EntitySet="Comment" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Comment__strId__30F848ED" Association="SkjatextiModel.FK__Comment__strId__30F848ED">
-            <End Role="SrtFile" EntitySet="SrtFile" />
-            <End Role="Comment" EntitySet="Comment" />
-          </AssociationSet>
-          <EntitySet Name="SrtCollection" EntityType="SkjatextiModel.SrtCollection" />
         </EntityContainer>
         <EntityType Name="Request">
           <Key>
@@ -457,29 +458,11 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             <PropertyRef Name="dataId" />
           </Key>
           <Property Name="dataId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="SrtFile" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtData" ToRole="SrtFile" />
           <Property Name="dataSize" Type="Int32" />
           <Property Name="dataName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="dataFile" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="SrtFile">
-          <Key>
-            <PropertyRef Name="srtId" />
-          </Key>
-          <Property Name="srtId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="srtDate" Type="DateTime" Precision="3" />
-          <Property Name="srtReady" Type="Int32" />
-          <Property Name="rdDate" Type="DateTime" Precision="3" />
-          <Property Name="srtCounter" Type="Int32" />
-          <Property Name="srtLike" Type="Int32" />
-          <Property Name="movieId" Type="Int32" />
-          <Property Name="tvId" Type="Int32" />
-          <Property Name="dataId" Type="Int32" />
-          <NavigationProperty Name="Movie" Relationship="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0" FromRole="SrtFile" ToRole="Movie" />
-          <NavigationProperty Name="SrtData" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtFile" ToRole="SrtData" />
-          <NavigationProperty Name="TvShow" Relationship="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" FromRole="SrtFile" ToRole="TvShow" />
-          <NavigationProperty Name="Comment" Relationship="SkjatextiModel.FK__Comment__strId__30F848ED" FromRole="SrtFile" ToRole="Comment" />
+          <Property Name="dataText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SrtFile" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtData" ToRole="SrtFile" />
         </EntityType>
         <EntityType Name="TvShow">
           <Key>
@@ -520,6 +503,89 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="SkjatextiModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
+          <End Type="SkjatextiModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="commentId" />
+          </Key>
+          <Property Name="commentId" Type="Int32" Nullable="false" />
+          <Property Name="comment1" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="report" Type="Int32" />
+          <Property Name="commentDate" Type="DateTime" Precision="3" />
+          <Property Name="strId" Type="Int32" Nullable="false" />
+          <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="SkjatextiModel.FK_Comment_AspNetUsers" FromRole="Comment" ToRole="AspNetUsers" />
+          <NavigationProperty Name="SrtFile" Relationship="SkjatextiModel.FK__Comment__strId__30F848ED" FromRole="Comment" ToRole="SrtFile" />
+        </EntityType>
+        <Association Name="FK_Comment_AspNetUsers">
+          <End Type="SkjatextiModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
+          <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="AspNetUsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SrtCollection">
+          <Key>
+            <PropertyRef Name="srtId" />
+            <PropertyRef Name="title" />
+          </Key>
+          <Property Name="srtId" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="srtDate" Type="DateTime" Precision="3" />
+          <Property Name="srtReady" Type="Int32" />
+          <Property Name="rdDate" Type="DateTime" Precision="3" />
+          <Property Name="srtCounter" Type="Int32" />
+          <Property Name="srtLike" Type="Int32" />
+          <Property Name="movieId" Type="Int32" />
+          <Property Name="tvId" Type="Int32" />
+          <Property Name="dataId" Type="Int32" />
+          <Property Name="Expr1" Type="Int32" />
+          <Property Name="episode" Type="Int32" />
+          <Property Name="season" Type="Int32" />
+          <Property Name="episodeTitle" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="episodeAbout" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Expr2" Type="Int32" />
+          <Property Name="year" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SrtFile">
+          <Key>
+            <PropertyRef Name="srtId" />
+          </Key>
+          <Property Name="srtId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="srtDate" Type="DateTime" Precision="3" />
+          <Property Name="srtReady" Type="Int32" />
+          <Property Name="rdDate" Type="DateTime" Precision="3" />
+          <Property Name="srtCounter" Type="Int32" />
+          <Property Name="srtLike" Type="Int32" />
+          <Property Name="movieId" Type="Int32" />
+          <Property Name="tvId" Type="Int32" />
+          <Property Name="dataId" Type="Int32" />
+          <NavigationProperty Name="Comment" Relationship="SkjatextiModel.FK__Comment__strId__30F848ED" FromRole="SrtFile" ToRole="Comment" />
+          <NavigationProperty Name="Movie" Relationship="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0" FromRole="SrtFile" ToRole="Movie" />
+          <NavigationProperty Name="SrtData" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtFile" ToRole="SrtData" />
+          <NavigationProperty Name="TvShow" Relationship="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" FromRole="SrtFile" ToRole="TvShow" />
+        </EntityType>
+        <Association Name="FK__Comment__strId__30F848ED">
+          <End Type="SkjatextiModel.SrtFile" Role="SrtFile" Multiplicity="1" />
+          <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SrtFile">
+              <PropertyRef Name="srtId" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="strId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SrtFile__movieId__0DAF0CB0">
           <End Type="SkjatextiModel.Movie" Role="Movie" Multiplicity="0..1" />
           <End Type="SkjatextiModel.SrtFile" Role="SrtFile" Multiplicity="*" />
@@ -556,70 +622,6 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="AspNetUserRoles">
-          <End Type="SkjatextiModel.AspNetRoles" Role="AspNetRoles" Multiplicity="*" />
-          <End Type="SkjatextiModel.AspNetUsers" Role="AspNetUsers" Multiplicity="*" />
-        </Association>
-        <EntityType Name="Comment">
-          <Key>
-            <PropertyRef Name="commentId" />
-          </Key>
-          <Property Name="commentId" Type="Int32" Nullable="false" />
-          <Property Name="comment1" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="report" Type="Int32" />
-          <Property Name="commentDate" Type="DateTime" Precision="3" />
-          <Property Name="strId" Type="Int32" Nullable="false" />
-          <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUsers" Relationship="SkjatextiModel.FK_Comment_AspNetUsers" FromRole="Comment" ToRole="AspNetUsers" />
-          <NavigationProperty Name="SrtFile" Relationship="SkjatextiModel.FK__Comment__strId__30F848ED" FromRole="Comment" ToRole="SrtFile" />
-        </EntityType>
-        <Association Name="FK_Comment_AspNetUsers">
-          <End Type="SkjatextiModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1" />
-          <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="AspNetUsersId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Comment__strId__30F848ED">
-          <End Type="SkjatextiModel.SrtFile" Role="SrtFile" Multiplicity="1" />
-          <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SrtFile">
-              <PropertyRef Name="srtId" />
-            </Principal>
-            <Dependent Role="Comment">
-              <PropertyRef Name="strId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="SrtCollection">
-          <Key>
-            <PropertyRef Name="srtId" />
-            <PropertyRef Name="title" />
-          </Key>
-          <Property Name="srtId" Type="Int32" Nullable="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="srtDate" Type="DateTime" Precision="3" />
-          <Property Name="srtReady" Type="Int32" />
-          <Property Name="rdDate" Type="DateTime" Precision="3" />
-          <Property Name="srtCounter" Type="Int32" />
-          <Property Name="srtLike" Type="Int32" />
-          <Property Name="movieId" Type="Int32" />
-          <Property Name="tvId" Type="Int32" />
-          <Property Name="dataId" Type="Int32" />
-          <Property Name="Expr1" Type="Int32" />
-          <Property Name="episode" Type="Int32" />
-          <Property Name="season" Type="Int32" />
-          <Property Name="episodeTitle" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="episodeAbout" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Expr2" Type="Int32" />
-          <Property Name="year" Type="Int32" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -695,26 +697,11 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <EntitySetMapping Name="SrtData">
             <EntityTypeMapping TypeName="SkjatextiModel.SrtData">
               <MappingFragment StoreEntitySet="SrtData">
+                <ScalarProperty Name="dataText" ColumnName="dataText" />
                 <ScalarProperty Name="dataFile" ColumnName="dataFile" />
                 <ScalarProperty Name="dataName" ColumnName="dataName" />
                 <ScalarProperty Name="dataSize" ColumnName="dataSize" />
                 <ScalarProperty Name="dataId" ColumnName="dataId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SrtFile">
-            <EntityTypeMapping TypeName="SkjatextiModel.SrtFile">
-              <MappingFragment StoreEntitySet="SrtFile">
-                <ScalarProperty Name="dataId" ColumnName="dataId" />
-                <ScalarProperty Name="tvId" ColumnName="tvId" />
-                <ScalarProperty Name="movieId" ColumnName="movieId" />
-                <ScalarProperty Name="srtLike" ColumnName="srtLike" />
-                <ScalarProperty Name="srtCounter" ColumnName="srtCounter" />
-                <ScalarProperty Name="rdDate" ColumnName="rdDate" />
-                <ScalarProperty Name="srtReady" ColumnName="srtReady" />
-                <ScalarProperty Name="srtDate" ColumnName="srtDate" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="srtId" ColumnName="srtId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -759,6 +746,22 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
                 <ScalarProperty Name="season" ColumnName="season" />
                 <ScalarProperty Name="episode" ColumnName="episode" />
                 <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="dataId" ColumnName="dataId" />
+                <ScalarProperty Name="tvId" ColumnName="tvId" />
+                <ScalarProperty Name="movieId" ColumnName="movieId" />
+                <ScalarProperty Name="srtLike" ColumnName="srtLike" />
+                <ScalarProperty Name="srtCounter" ColumnName="srtCounter" />
+                <ScalarProperty Name="rdDate" ColumnName="rdDate" />
+                <ScalarProperty Name="srtReady" ColumnName="srtReady" />
+                <ScalarProperty Name="srtDate" ColumnName="srtDate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="srtId" ColumnName="srtId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SrtFile">
+            <EntityTypeMapping TypeName="SkjatextiModel.SrtFile">
+              <MappingFragment StoreEntitySet="SrtFile">
                 <ScalarProperty Name="dataId" ColumnName="dataId" />
                 <ScalarProperty Name="tvId" ColumnName="tvId" />
                 <ScalarProperty Name="movieId" ColumnName="movieId" />

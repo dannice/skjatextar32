@@ -13,18 +13,18 @@
         <EntityTypeShape EntityType="SkjatextiModel.AspNetUsers" Width="1.5" PointX="10.25" PointY="0.875" />
         <EntityTypeShape EntityType="SkjatextiModel.Movie" Width="1.5" PointX="5.375" PointY="5.25" />
         <EntityTypeShape EntityType="SkjatextiModel.SrtData" Width="1.5" PointX="3" PointY="3.875" />
-        <EntityTypeShape EntityType="SkjatextiModel.SrtFile" Width="1.5" PointX="6.375" PointY="0.875" />
         <EntityTypeShape EntityType="SkjatextiModel.TvShow" Width="1.5" PointX="7.375" PointY="5.25" />
         <AssociationConnector Association="SkjatextiModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" />
         <AssociationConnector Association="SkjatextiModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
-        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0" />
-        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__dataId__0F975522" />
-        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" />
         <AssociationConnector Association="SkjatextiModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="SkjatextiModel.Comment" Width="1.5" PointX="14.5" PointY="1.5" />
         <AssociationConnector Association="SkjatextiModel.FK_Comment_AspNetUsers" />
-        <AssociationConnector Association="SkjatextiModel.FK__Comment__strId__30F848ED" />
         <EntityTypeShape EntityType="SkjatextiModel.SrtCollection" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SkjatextiModel.SrtFile" Width="1.5" PointX="9.625" PointY="6.75" />
+        <AssociationConnector Association="SkjatextiModel.FK__Comment__strId__30F848ED" />
+        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0" />
+        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__dataId__0F975522" />
+        <AssociationConnector Association="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

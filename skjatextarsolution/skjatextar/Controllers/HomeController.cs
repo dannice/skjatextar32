@@ -5,66 +5,137 @@ using System.Web;
 using System.Web.Mvc;
 using skjatextar.BLL;
 using skjatextar.Models;
-
+using System.IO;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace skjatextar.Controllers
 {
-	public class HomeController : ApplicationController
-	{
-		public ActionResult Index() 
-		{
-           
+    public class HomeController : ApplicationController
+    {
+
+        public ActionResult Index()
+        {
+
             var bll = new SkjatextiRepository();
-            var topten = bll.GetTopTenSrt();
-            //var both = bll.GetBothTvshowsAndMovies(); var með þetta 
+            var query = new BLL.SkjatextiRepository().GetTopTenSrt();
 
             //return View(users);
-            return View(topten);
-		}
-       
-
-       public ActionResult Details(int? id)
-        {
-           SkjatextiEntities context = new SkjatextiEntities();
-           var bll = new SkjatextiRepository();
-           var test = bll.TvShowAndSrtFileJoin();
-           var query = (from item in test
-                        where item.tvId == id
-                        select item).FirstOrDefault();
-           if (query != null)
-           {
-               return View(query);
-           }
-           return View("Error");
-                                                     
-
+            return View(query);
         }
 
-      
-       
-
-       private ActionResult View(Func<int?, ActionResult> Details)
-       {
-           throw new NotImplementedException();
-       }
-
-        
-
-		public ActionResult About()
-		{
-			//ViewBag.Message = "Your application description page.";
+        public ActionResult About()
+        {
+            //ViewBag.Message = "Your application description page.";
             //var bll = new SkjatextiBLL();
             //var request = bll.GetRequests();
             //return View(request);
 
-			return View();
-		}
+            return View();
+        }
 
-		public ActionResult Contact()
-		{
-			ViewBag.Message = "Your contact page.";
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
 
-			return View();
-		}
-	}
+            return View();
+        }
+
+       
+
+        /*public ActionResult Upload()
+        {
+            
+            return View();
+        }*/
+
+        [HttpGet]
+        public ActionResult Upload()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            // Verify that the user selected a file
+            if (file != null && file.ContentLength > 0)
+            {
+
+                // Extract only the fielname
+                var fileName = Path.GetFileName(file.FileName);
+                // Starts to read file
+                StreamReader streamReader = new StreamReader(file.InputStream);
+                // Reads until end of the file.
+                string text = streamReader.ReadToEnd();
+                
+                // Connects to database
+                using (var db = new SkjatextiEntities())
+                {
+                    var dataItem = new SrtData();
+                    // Puts filename into db
+                    dataItem.dataName = fileName;
+                    // Puts all text from file to db
+                    dataItem.dataText = text;
+
+                    db.SrtData.Add(dataItem);
+                    db.SaveChanges();
+                }
+                streamReader.Close();
+            }
+
+            // redirect back to the index action to show the form once again
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult EditFile(int id)
+        {
+            var model = new SrtData();
+            using (var db = new SkjatextiEntities())
+            {
+                var query = (from s in db.SrtData
+                            where s.dataId == id
+                            select s).FirstOrDefault();
+                model.dataText = query.dataText;
+            }
+            var srtModel = new SrtDataModel { dataId = model.dataId, dataText = model.dataText, dataName = model.dataName, dataSize = model.dataSize };
+            return View("EditFile",srtModel);
+        }
+
+        /*[HttpPost]
+        public ActionResult EditFile()
+        {
+
+        }*/
+        public ActionResult Search(string searchString)
+        {
+            // framkvæmir search í sql
+            //returnar view með results
+            return null;
+        }
+
+        public ActionResult Details(int? id)
+        {
+            SkjatextiRepository bll = new SkjatextiRepository();
+            var getDetails = bll.GetMovieEpisodeById(id);
+
+
+            /*
+            var model = new CollectionOfSrt();
+            using (var db = new SkjatextiEntities())
+            {
+                var query = (from c in db.SrtCollection
+                             where c.tvId == id
+                             select c).FirstOrDefault();
+                model.tvId = query.tvId;
+                model.title = query.title;
+                
+            }*/
+            //var srtModel = new CollectionOfSrt { tvId = model.tvId, title = model.title };
+            //return View("Details", srtModel);
+            //return View(model);
+            return View(getDetails);
+        }
+    }
 }
