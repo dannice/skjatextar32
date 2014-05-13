@@ -18,7 +18,7 @@ namespace skjatextar.Controllers
         {
 
             var bll = new SkjatextiRepository();
-            var query = new BLL.SkjatextiRepository().GetTopTenSrt();
+            var query = bll.GetTopTenSrt();
 
             //return View(users);
             return View(query);
@@ -118,24 +118,16 @@ namespace skjatextar.Controllers
         public ActionResult Details(int? id)
         {
             SkjatextiRepository bll = new SkjatextiRepository();
-            var getDetails = bll.GetMovieEpisodeById(id);
+            var getDetails = bll.GetBothTvshowsAndMovies();
 
-
-            /*
-            var model = new CollectionOfSrt();
-            using (var db = new SkjatextiEntities())
+            var result = (from elem in getDetails
+                          where elem.tvId == id
+                          select elem).SingleOrDefault();
+            if(result != null)
             {
-                var query = (from c in db.SrtCollection
-                             where c.tvId == id
-                             select c).FirstOrDefault();
-                model.tvId = query.tvId;
-                model.title = query.title;
-                
-            }*/
-            //var srtModel = new CollectionOfSrt { tvId = model.tvId, title = model.title };
-            //return View("Details", srtModel);
-            //return View(model);
-            return View(getDetails);
-        }
+                return View(result);
+            }
+            return View("error");
+          }
     }
 }

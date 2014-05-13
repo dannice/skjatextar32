@@ -115,6 +115,7 @@ namespace skjatextar.BLL
                 show.episode = item.episode;
                 show.year = item.year;
                 show.episodeTitle = item.episodeTitle;
+                show.tvId = item.tvId;
                 list.Add(show);
 
             }
@@ -136,6 +137,7 @@ namespace skjatextar.BLL
                 show.season = item.season;
                 show.episode = item.episode;
                 show.year = item.year;
+                show.tvId = item.tvId;
 
                 list.Add(show);
 
