@@ -18,7 +18,7 @@ namespace skjatextar.Controllers
         {
 
             var bll = new SkjatextiRepository();
-            var query = new BLL.SkjatextiRepository().GetTopTenSrt();
+            var query = bll.GetTopTenSrt();
 
             //return View(users);
             return View(query);
@@ -90,6 +90,7 @@ namespace skjatextar.Controllers
         }
 
         [HttpGet]
+        // Gets file from database and displays it on page
         public ActionResult EditFile(int id)
         {
             var model = new SrtData();
@@ -105,6 +106,7 @@ namespace skjatextar.Controllers
         }
 
         [HttpPost]
+        // Takes changes made in textbox, pushes it to db and overwrites current data
         public ActionResult EditFile(FormCollection col, int id)
         {
             string dataText = col["dataText"];
@@ -120,30 +122,6 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
-        /*[HttpPost]
-        public ActionResult CreateFile(FormCollection col)
-        {
-            if (ModelState.IsValid)
-            {
-                string dataText = col["dataText"];
-                
-                using (var db = new SkjatextiEntities())
-                {
-                    var model = new SrtData();
-                    model.dataText = dataText;
-
-                    db.SrtData.Add(model);
-                    db.SaveChanges();
-                }
-                return RedirectToAction("Index");
-            }
-            return View(col);
-        }*/
-        /*[HttpPost]
-        public ActionResult EditFile()
-        {
-
-        }*/
         public ActionResult Search(string searchString)
         {
             // framkvæmir search í sql
@@ -156,18 +134,14 @@ namespace skjatextar.Controllers
             SkjatextiRepository bll = new SkjatextiRepository();
             var getDetails = bll.GetBothTvshowsAndMovies();
 
-            var model = new CollectionOfSrt();
-            using (var db = new SkjatextiEntities())
+            var result = (from elem in getDetails
+                          where elem.tvId == id
+                          select elem).SingleOrDefault();
+            if (result != null)
             {
-                var query = (from c in db.SrtCollection
-                             where c.tvId == id
-                             select c).FirstOrDefault();
-                model.tvId = query.tvId;
-                model.title = query.title;
-                
+                return View(result);
             }
-            var srtModel = new CollectionOfSrt { tvId = model.tvId, title = model.title };
-            return View("Details", srtModel);
+            return View("error");
         }
     }
 }
