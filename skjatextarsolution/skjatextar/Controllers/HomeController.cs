@@ -41,7 +41,22 @@ namespace skjatextar.Controllers
             return View();
         }
 
-       
+        // showing search result from text box
+        [HttpPost]
+       public ActionResult SearchResult()
+        {
+            string query = Request.Params.Get("srch-term");
+
+            var bll = new SkjatextiRepository();
+            var results =  bll.Search(query);
+
+            
+
+   
+            ViewData["query"] = query;
+
+            return View(results);
+        }
 
         /*public ActionResult Upload()
         {
@@ -124,7 +139,7 @@ namespace skjatextar.Controllers
 
         public ActionResult Search(string searchString)
         {
-            // framkvæmir search í sql
+            // framkvæmir search í sql 
             //returnar view með results
             return null;
         }
@@ -142,7 +157,7 @@ namespace skjatextar.Controllers
                 return View(result);
             }
             return View("error");
-        }
+          }
 
         public FileResult Download(int? id)
         {

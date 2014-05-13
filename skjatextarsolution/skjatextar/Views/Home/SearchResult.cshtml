@@ -1,13 +1,24 @@
-﻿
+﻿@model List<skjatextar.Models.CollectionOfSrt> 
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Leit að '<b>@ViewData["query"]</b>'</h3></div>
+            <div class="panel-body">
+                <table class="table table-condensed table-striped">
 
-<div>
-  <h1>Leitarniðurstöður</h1>
- 
-
-    @foreach (var result in (List<skjatextar.Models.CollectionOfSrt>)ViewData["results"])
-    {
-        <span>Titill</span>
-         @result.episodeTitle <br/>
-    }
-
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="col-md-3">@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
+                                <td class="col-md-3">@item.episodeTitle</td>
+                                <td class="col-md-6">@item.episodeAbout</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
