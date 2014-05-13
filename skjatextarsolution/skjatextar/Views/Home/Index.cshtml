@@ -27,13 +27,13 @@
                     <div>
                         @foreach (var item in Model)
                         {
-                            <a href="/Home/Details/@item.tvId">
+                            @Html.ActionLink(item.title, "Details", new { id = item.tvId })
                                 <div>
                                     <h3>@item.title</h3>
                                     <h3>@item.episodeAbout</h3>
                                     <h3>@item.year</h3>
                                 </div>
-                            </a>
+                            
                         }
 
                     </div>

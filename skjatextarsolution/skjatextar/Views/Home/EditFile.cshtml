@@ -3,8 +3,27 @@
     ViewBag.Title = "EditFile";
 }
 
-<div>
-    <h2>Upload</h2>
-    <h3>@Model.dataName</h3>
-    <textarea rows="20" cols="100">@Model.dataText</textarea>
-</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Upload</h2>
+        <hr />
+        @Html.ValidationSummary(true)
+
+            <div class="form-horizontal">
+                <textarea name="SrtDataModel" rows="20" cols="300">@Model.dataText</textarea>
+            </div>
+   
+            <div>
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

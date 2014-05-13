@@ -89,6 +89,7 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
         public ActionResult EditFile(int id)
         {
             var model = new SrtData();
@@ -103,6 +104,41 @@ namespace skjatextar.Controllers
             return View("EditFile",srtModel);
         }
 
+        [HttpPost]
+        public ActionResult EditFile(FormCollection col, int id)
+        {
+            string dataText = col["dataText"];
+            using (var db = new SkjatextiEntities())
+            {
+                var edit = (from sr in db.SrtData
+                           where sr.dataId == id
+                           select sr).FirstOrDefault();
+
+                edit.dataText = dataText;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
+        /*[HttpPost]
+        public ActionResult CreateFile(FormCollection col)
+        {
+            if (ModelState.IsValid)
+            {
+                string dataText = col["dataText"];
+                
+                using (var db = new SkjatextiEntities())
+                {
+                    var model = new SrtData();
+                    model.dataText = dataText;
+
+                    db.SrtData.Add(model);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+            return View(col);
+        }*/
         /*[HttpPost]
         public ActionResult EditFile()
         {
@@ -118,10 +154,8 @@ namespace skjatextar.Controllers
         public ActionResult Details(int? id)
         {
             SkjatextiRepository bll = new SkjatextiRepository();
-            var getDetails = bll.GetMovieEpisodeById(id);
+            var getDetails = bll.GetBothTvshowsAndMovies();
 
-
-            /*
             var model = new CollectionOfSrt();
             using (var db = new SkjatextiEntities())
             {
@@ -131,11 +165,9 @@ namespace skjatextar.Controllers
                 model.tvId = query.tvId;
                 model.title = query.title;
                 
-            }*/
-            //var srtModel = new CollectionOfSrt { tvId = model.tvId, title = model.title };
-            //return View("Details", srtModel);
-            //return View(model);
-            return View(getDetails);
+            }
+            var srtModel = new CollectionOfSrt { tvId = model.tvId, title = model.title };
+            return View("Details", srtModel);
         }
     }
 }
