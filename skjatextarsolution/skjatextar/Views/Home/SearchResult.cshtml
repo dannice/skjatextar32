@@ -1,0 +1,13 @@
+﻿
+
+<div>
+  <h1>Leitarniðurstöður</h1>
+ 
+
+    @foreach (var result in (List<skjatextar.Models.CollectionOfSrt>)ViewData["results"])
+    {
+        <span>Titill</span>
+         @result.episodeTitle <br/>
+    }
+
+</div>

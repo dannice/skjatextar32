@@ -121,6 +121,7 @@ namespace skjatextar.BLL
             {
                 var show = new Models.CollectionOfSrt();
                 show.title = item.title;
+                show.tvId = item.tvId;
                 show.episodeAbout = item.episodeAbout;
                 show.season = item.season;
                 show.episode = item.episode;
@@ -144,6 +145,7 @@ namespace skjatextar.BLL
             {
                 var show = new Models.CollectionOfSrt();
                 show.title = item.title;
+                show.tvId = item.tvId;
                 show.episodeAbout = item.episodeAbout;
                 show.season = item.season;
                 show.episode = item.episode;
