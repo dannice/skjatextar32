@@ -1,0 +1,16 @@
+﻿@model skjatextar.SrtCollection
+
+<div>
+    <h4>CollectionOfSrt</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+           <h3>@Model.title</h3>
+        </dt>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

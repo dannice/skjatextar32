@@ -315,6 +315,8 @@
     </Content>
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Home\EditFile.cshtml" />
+    <Content Include="Views\Home\xxxDetails.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -108,5 +108,34 @@ namespace skjatextar.Controllers
         {
 
         }*/
+        public ActionResult Search(string searchString)
+        {
+            // framkvæmir search í sql
+            //returnar view með results
+            return null;
+        }
+
+        public ActionResult Details(int? id)
+        {
+            SkjatextiRepository bll = new SkjatextiRepository();
+            var getDetails = bll.GetMovieEpisodeById(id);
+
+
+            /*
+            var model = new CollectionOfSrt();
+            using (var db = new SkjatextiEntities())
+            {
+                var query = (from c in db.SrtCollection
+                             where c.tvId == id
+                             select c).FirstOrDefault();
+                model.tvId = query.tvId;
+                model.title = query.title;
+                
+            }*/
+            //var srtModel = new CollectionOfSrt { tvId = model.tvId, title = model.title };
+            //return View("Details", srtModel);
+            //return View(model);
+            return View(getDetails);
+        }
     }
 }

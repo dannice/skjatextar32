@@ -142,6 +142,16 @@ namespace skjatextar.BLL
             }
             return list;
         }
+        public List<Models.CollectionOfSrt> Search()
+        {
+            SkjatextiEntities contex = new SkjatextiEntities();
+            var searchResult = new List<Models.CollectionOfSrt>();
+            var query = (from item in contex.SrtFile
+                         where item.title == "Big"
+                         select item).ToList();
+
+            return searchResult;
+        }
 
         /*public List<Models.CollectionOfSrt> GetSrtData()
         {
@@ -162,5 +172,14 @@ namespace skjatextar.BLL
                 }
         }*/
 
+        public SrtCollection GetMovieEpisodeById(int? id)
+        {
+            SkjatextiEntities contex = new SkjatextiEntities();
+            var result = (from c in contex.SrtCollection
+                          where c.tvId == id
+                          select c).SingleOrDefault();
+
+            return result;
+        }
     }
 }
