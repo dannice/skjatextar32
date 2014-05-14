@@ -150,14 +150,15 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int? id2)
         {
             SkjatextiRepository bll = new SkjatextiRepository();
             var getDetails = bll.GetBothTvshowsAndMovies();
-
-            var result = (from elem in getDetails
-                          where elem.tvId == id
-                          select elem).SingleOrDefault();
+            var result = (from elem in getDetails.Where(elem => elem.movieId == id2 || elem.tvId == id)
+                          select elem).FirstOrDefault();
+            /*var result = (from elem in getDetails
+                          where elem.movieId == id 
+                          select elem).SingleOrDefault();*/
             if (result != null)
             {
                 return View(result);

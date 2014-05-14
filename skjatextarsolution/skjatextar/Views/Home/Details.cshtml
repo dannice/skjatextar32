@@ -2,50 +2,41 @@
 @{
     ViewBag.Title = "Details";
 }
+-
+@using (Html.BeginForm())
+{
+    
+    @Html.ValidationSummary(true)
 
+    <h1>@Model.title  - @Model.episodeTitle @Model.year</h1>
+    <div id="TvShowAbout">
+        <p class="text-left">
+            <blockquote>
+                <h4>Season:@Model.season</h4>
 
-@Html.ValidationSummary(true)
+                <h4>Epsisode: @Model.episode</h4>
+            </blockquote>
 
-<div id="TvShowDetails">
-    <h1>@Model.title  - @Model.episodeTitle</h1> 
+        </p>
 
+        <h3>Um Myndefnið</h3>
 
-    <table class="TvShowTable">
-        <tbody>
-            <tr>
-                <td>Season:</td>
-                <td>@Model.season,</td>
-                <td>Epsisode:</td>
-                <td>@Model.episode</td>
-            </tr>
-        </tbody>
-    </table>
-
-
-    <!--það er spurning með hvernig við ætlum að birta um kvikmynd en ekki þátt?-->
-    <h3>Um Myndefnið</h3>
-    <div class="AboutShow">
-        <p>@Model.episodeAbout</p>
+        <pre class="pre-scrollable">
+              @Model.episodeAbout
+        </pre>
 
     </div>
+    <!--vantar virkni i takkann-->
+    <div>
+        <a href="" class="btn btn-success - btn pull-right">Niðurhala</a>
+    </div>
+}
+<!--er að reyna að gera javscript hérna, er með sér file -->
+@Scripts.Render("~/bundles/jquery")
 
-</div>
-  
-<!--vantar virkni i takkann og eg fæ hann ekki til að færa sig -->
-<div id="NiðurhalaTakki">
-    <input type="button" value="Niðurhala" class="btn btn-default" />
-</div>
-
-  
-
-
-   
-
-
-
-    <!--er að reyna að gera javscript hérna, er með sér file -->
-    @Scripts.Render("~/bundles/jquery")
-     <script type="text/javascript" src="~/Scripts/JavaScriptAlex.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="~/Scripts/script.js"></script>
 
 
 

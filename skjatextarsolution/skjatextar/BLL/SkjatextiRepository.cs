@@ -130,6 +130,7 @@ namespace skjatextar.BLL
                 show.year = item.year;
                 show.episodeTitle = item.episodeTitle;
                 show.tvId = item.tvId;
+                show.movieId = item.movieId;
                 list.Add(show);
 
             }
@@ -142,7 +143,7 @@ namespace skjatextar.BLL
             var list = new List<Models.CollectionOfSrt>();
             var query = (from item in contex.SrtCollection
                          orderby item.title
-                         select item).Take(10); 
+                         select item).Take(20); //breyta i 10
             foreach (var item in query)
             {
                 var show = new Models.CollectionOfSrt();
@@ -153,7 +154,7 @@ namespace skjatextar.BLL
                 show.episode = item.episode;
                 show.year = item.year;
                 show.tvId = item.tvId;
-
+                show.movieId = item.movieId;
                 list.Add(show);
 
             }

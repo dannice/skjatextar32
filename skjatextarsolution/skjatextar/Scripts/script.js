@@ -2,7 +2,8 @@
 
     var tvDetails;
 
-
+    alert("hallo");
+    $("#TvShowAbout").hide();
 
     $("#selectEpisode").hide();
     $("#episodeInfo").hide();
