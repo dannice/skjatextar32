@@ -85,7 +85,7 @@ namespace skjatextar.Controllers
                         movieItem.year = year;
                         db.Movie.Add(movieItem);
                         srtItem.movieId = movieItem.movieId;
-                        srtItem.type = "movie";
+                        srtItem.type = 1;
                     }
                     else if (!String.IsNullOrEmpty(radioTv))
                     {
@@ -101,7 +101,7 @@ namespace skjatextar.Controllers
                         tvItem.episodeAbout = episodeAbout;
                         db.TvShow.Add(tvItem);
                         srtItem.tvId = tvItem.tvId;
-                        srtItem.type = "episode";
+                        srtItem.type = 2;
                     }
 
                     // Hér vantar error message um ef hvorugt er valið, mynd eða þáttaröð.

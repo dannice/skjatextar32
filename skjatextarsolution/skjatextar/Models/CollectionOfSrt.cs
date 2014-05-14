@@ -16,6 +16,7 @@ namespace skjatextar.Models
         public DateTime rdDate { get; set; }
         public int srtCounter { get; set; }
         public int srtLike { get; set; }
+        public int type { get; set; }
         public int? movieId { get; set; }
         [Required]
         public int? year { get; set; }
@@ -26,7 +27,6 @@ namespace skjatextar.Models
         public int? season { get; set; }
         public string episodeTitle { get; set; }
         public string episodeAbout { get; set; }
-        public string type { get; set; }
 
         public virtual TvShow TvShow { get; set; }
         public virtual Movie Movie { get; set; }
