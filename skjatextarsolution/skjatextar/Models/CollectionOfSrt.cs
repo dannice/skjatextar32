@@ -4,12 +4,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+
+
 namespace skjatextar.Models
 {
     public class CollectionOfSrt
     {
         public int srtId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Verður að skrá titil!")]
         public string title { get; set; }
         public DateTime srtDate { get; set; }
         public int srtReady { get; set; }
@@ -18,12 +20,12 @@ namespace skjatextar.Models
         public int srtLike { get; set; }
         public int type { get; set; }
         public int? movieId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Verður að skrá ártal!")]
         public int? year { get; set; }
         public int? tvId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Verður að skrá nafn á þátt!")]
         public int? episode { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Verður að skrá seríu!")]
         public int? season { get; set; }
         public string episodeTitle { get; set; }
         public string episodeAbout { get; set; }

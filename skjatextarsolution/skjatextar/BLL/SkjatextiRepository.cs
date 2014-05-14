@@ -22,6 +22,7 @@ namespace skjatextar.BLL
             // titles from the SrtFile table, since it duplicates 
             // Show names
             var result = (from item in contex.SrtFile
+                          where item.type == 2
                           group item by new {item.title} 
                           into showGroup
                           select showGroup.FirstOrDefault());
