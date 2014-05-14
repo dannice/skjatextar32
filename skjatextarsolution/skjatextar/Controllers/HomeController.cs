@@ -41,29 +41,6 @@ namespace skjatextar.Controllers
             return View();
         }
 
-        // showing search result from text box
-        [HttpPost]
-       public ActionResult SearchResult()
-        {
-            string query = Request.Params.Get("srch-term");
-
-            var bll = new SkjatextiRepository();
-            var results =  bll.Search(query);
-
-            
-
-   
-            ViewData["query"] = query;
-
-            return View(results);
-        }
-
-        /*public ActionResult Upload()
-        {
-            
-            return View();
-        }*/
-
         [HttpGet]
         public ActionResult Upload()
         {
@@ -72,7 +49,7 @@ namespace skjatextar.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult Upload(HttpPostedFileBase file, FormCollection col)
         {
             // Verify that the user selected a file
             if (file != null && file.ContentLength > 0)
@@ -84,23 +61,59 @@ namespace skjatextar.Controllers
                 StreamReader streamReader = new StreamReader(file.InputStream);
                 // Reads until end of the file.
                 string text = streamReader.ReadToEnd();
+                // Radio button from upload view
+                var radioMovie = col["radioMovie"];
+                var radioTv = col["radioTv"];
+                string title = col["title"];
                 
                 // Connects to database
                 using (var db = new SkjatextiEntities())
                 {
                     var dataItem = new SrtData();
+                    var movieItem = new Movie();
+                    var tvItem = new TvShow();
+                    var srtItem = new SrtFile();
                     // Puts filename into db
                     dataItem.dataName = fileName;
                     // Puts all text from file to db
                     dataItem.dataText = text;
-
                     db.SrtData.Add(dataItem);
+                    srtItem.dataId = dataItem.dataId;
+                    if (!String.IsNullOrEmpty(radioMovie))
+                    {
+                        int year = Convert.ToInt32(col["yearMovie"]);
+                        movieItem.year = year;
+                        db.Movie.Add(movieItem);
+                        srtItem.movieId = movieItem.movieId;
+                    }
+                    else if (!String.IsNullOrEmpty(radioTv))
+                    {
+                        // Vantar að setja inn að episodeNr og seasonNr er skylda.
+                        // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
+                        string episodeTitle = col["episodeTitle"];
+                        string episodeAbout = col["episodeAbout"];
+                        int episodeNr = Convert.ToInt32(col["episodeNr"]);
+                        int seasonNr = Convert.ToInt32(col["seasonNr"]);
+                        tvItem.episode = episodeNr;
+                        tvItem.season = seasonNr;
+                        tvItem.episodeTitle = episodeTitle;
+                        tvItem.episodeAbout = episodeAbout;
+                        db.TvShow.Add(tvItem);
+                        srtItem.tvId = tvItem.tvId;
+                    }
+
+                    // Hér vantar error message um ef hvorugt er valið, mynd eða þáttaröð.
+
+                    srtItem.title = title;
+                    srtItem.srtDate = DateTime.Today;
+
+                    db.SrtFile.Add(srtItem);
                     db.SaveChanges();
                 }
                 streamReader.Close();
             }
 
-            // redirect back to the index action to show the form once again
+            // Redirect back to the index action to show the form once again
             return RedirectToAction("Index");
         }
 
@@ -137,13 +150,6 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Search(string searchString)
-        {
-            // framkvæmir search í sql 
-            //returnar view með results
-            return null;
-        }
-
         public ActionResult Details(int? id)
         {
             SkjatextiRepository bll = new SkjatextiRepository();
@@ -157,12 +163,16 @@ namespace skjatextar.Controllers
                 return View(result);
             }
             return View("error");
-          }
+        }
 
+        // Downloads from database an .srt file
         public FileResult Download(int? id)
         {
+            // New empty string
             string text = "";
+            // New empty filename
             string filename = "";
+            // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
                 var query = (from s in db.SrtData
@@ -171,9 +181,22 @@ namespace skjatextar.Controllers
                 text = query.dataText;
                 filename = query.dataName;
             }
+            // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
         }
 
-      
+        // Showing search result from text box
+        [HttpPost]
+        public ActionResult SearchResult()
+        {
+            string query = Request.Params.Get("srch-term");
+
+            var bll = new SkjatextiRepository();
+            var results = bll.Search(query);
+
+            ViewData["query"] = query;
+
+            return View(results);
+        }
     }
 }
