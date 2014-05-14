@@ -110,6 +110,7 @@
           <Property Name="movieId" Type="int" />
           <Property Name="tvId" Type="int" />
           <Property Name="dataId" Type="int" />
+          <Property Name="type" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="TvShow">
           <Key>
@@ -382,7 +383,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             <End Role="TvShow" EntitySet="TvShow" />
             <End Role="SrtFile" EntitySet="SrtFile" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Request">
           <Key>
             <PropertyRef Name="reqId" />
@@ -569,6 +570,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <Property Name="movieId" Type="Int32" />
           <Property Name="tvId" Type="Int32" />
           <Property Name="dataId" Type="Int32" />
+          <Property Name="type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Comment" Relationship="SkjatextiModel.FK__Comment__strId__30F848ED" FromRole="SrtFile" ToRole="Comment" />
           <NavigationProperty Name="Movie" Relationship="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0" FromRole="SrtFile" ToRole="Movie" />
           <NavigationProperty Name="SrtData" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtFile" ToRole="SrtData" />
@@ -622,7 +624,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -762,6 +764,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <EntitySetMapping Name="SrtFile">
             <EntityTypeMapping TypeName="SkjatextiModel.SrtFile">
               <MappingFragment StoreEntitySet="SrtFile">
+                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="dataId" ColumnName="dataId" />
                 <ScalarProperty Name="tvId" ColumnName="tvId" />
                 <ScalarProperty Name="movieId" ColumnName="movieId" />

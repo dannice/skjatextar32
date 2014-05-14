@@ -26,6 +26,7 @@ namespace skjatextar.Models
         public int? season { get; set; }
         public string episodeTitle { get; set; }
         public string episodeAbout { get; set; }
+        public string type { get; set; }
 
         public virtual TvShow TvShow { get; set; }
         public virtual Movie Movie { get; set; }

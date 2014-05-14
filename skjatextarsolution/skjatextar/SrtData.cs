@@ -26,10 +26,5 @@ namespace skjatextar
         public string dataText { get; set; }
     
         public virtual ICollection<SrtFile> SrtFile { get; set; }
-
-        internal object First()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
