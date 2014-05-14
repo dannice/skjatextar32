@@ -36,7 +36,7 @@ namespace skjatextar.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "";
 
             return View();
         }
@@ -153,15 +153,14 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int? id, int? id2)
+        public ActionResult Details(int? id)
         {
             SkjatextiRepository bll = new SkjatextiRepository();
             var getDetails = bll.GetBothTvshowsAndMovies();
-            var result = (from elem in getDetails.Where(elem => elem.movieId == id2 || elem.tvId == id)
-                          select elem).FirstOrDefault();
-            /*var result = (from elem in getDetails
-                          where elem.movieId == id 
-                          select elem).SingleOrDefault();*/
+            var result = (from elem in getDetails
+                          where elem.srtId == id 
+                          select elem).SingleOrDefault();
+
             if (result != null)
             {
                 return View(result);
@@ -180,9 +179,12 @@ namespace skjatextar.Controllers
             // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
-                var query = (from s in db.SrtData
-                             where s.dataId == id
+                var query = (from s in db.SrtCollection
+                             where s.srtId == id
                              select s).FirstOrDefault();
+                /*var query = (from s in db.SrtData
+                             where s.dataId == id
+                             select s).FirstOrDefault();*/
                 text = query.dataText;
                 filename = query.dataName;
                 // var srtItem = new SrtFile();
