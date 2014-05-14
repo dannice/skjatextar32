@@ -193,12 +193,9 @@ namespace skjatextar.Controllers
             var bll = new SkjatextiRepository();
             var results = bll.Search(query);
 
+            ViewData["query"] = query;
 
-
-
-            ViewData["results"] = results;
-
-            return View();
+            return View(results);
         }
     }
 }
