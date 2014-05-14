@@ -53,7 +53,7 @@ namespace skjatextar.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Rangt notandanafn eða lykilorð.");
                 }
             }
 
