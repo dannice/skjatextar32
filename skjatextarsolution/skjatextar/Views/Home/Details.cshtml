@@ -8,8 +8,10 @@
     
     @Html.ValidationSummary(true)
 
-    <h1>@Model.title  - @Model.episodeTitle @Model.year</h1>
-    <div id="TvShowAbout">
+    <h1> @Model.title - @Model.episodeTitle @Model.year</h1>
+    if (@Model.type == 2)
+    {
+            <div id="TvShowAbout">
         <p class="text-left">
             <blockquote>
                 <h4>Season:@Model.season</h4>
@@ -21,11 +23,13 @@
 
         <h3>Um Myndefnið</h3>
 
-        <pre class="pre-scrollable">
+        <textarea disabled cols="1000" rows="10">
               @Model.episodeAbout
-        </pre>
+        </textarea>
 
     </div>
+    }
+
     <!--vantar virkni i takkann-->
     <div>
         <a href="" class="btn btn-success - btn pull-right">Niðurhala</a>
