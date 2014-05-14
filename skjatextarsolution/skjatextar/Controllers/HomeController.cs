@@ -171,6 +171,7 @@ namespace skjatextar.Controllers
             string text = "";
             // New empty filename
             string filename = "";
+            // int? counter = ++;
             // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
@@ -179,6 +180,9 @@ namespace skjatextar.Controllers
                              select s).FirstOrDefault();
                 text = query.dataText;
                 filename = query.dataName;
+                // var srtItem = new SrtFile();
+                // counter = srtItem.srtCounter;
+
             }
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
