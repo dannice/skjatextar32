@@ -28,7 +28,11 @@
                             @foreach (var item in Model)
                             {
                                      <tr>
-                                        <td>@Html.ActionLink(item.title, "Details", new { id = item.srtId })</td>
+                                         <td>
+                                             @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                             @Html.Raw(Html.ActionLink("Niðurhala", "Download", new { id = item.srtId }))</td>
+                                         
+                                     
                                     </tr>
                             }
                         </tbody>
