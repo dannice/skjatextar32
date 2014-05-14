@@ -13,11 +13,12 @@
         @Html.ValidationSummary(true)
 
             <div class="form-horizontal">
-                <textarea name="dataText" rows="20" cols="300">@Model.dataText</textarea>
+                <textarea name="dataText" rows="20" cols="300" disabled>@Model.dataText</textarea>
+                <textarea name="dataText" rows="20" cols="300" class="pull-right">@Model.dataText</textarea>
             </div>
    
             <div>
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn pull-right" />
             </div>
     </div>
 }
