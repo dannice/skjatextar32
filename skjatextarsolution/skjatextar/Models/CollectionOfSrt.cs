@@ -24,7 +24,7 @@ namespace skjatextar.Models
 
         [Display(Name = "Tegund")]
         [Required(ErrorMessage = "Verður að velja tegund!")]
-        public int type { get; set; }
+        public int? type { get; set; }
 
         public int? movieId { get; set; }
 
