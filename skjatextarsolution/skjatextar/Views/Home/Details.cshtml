@@ -3,7 +3,8 @@
     ViewBag.Title = "Details";
 }
 
-
+@using (Html.BeginForm())
+{
 @Html.ValidationSummary(true)
 
 <div id="TvShowDetails">
@@ -35,7 +36,7 @@
 <div id="NiðurhalaTakki">
     <input type="button" value="Niðurhala" class="btn btn-default" />
 </div>
-
+ }
   
 
 
