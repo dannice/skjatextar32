@@ -29,7 +29,7 @@
                             {
                                 <tr>
                                     <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
-                                    <td><a href="Details/@item.tvId">Nánar</a></td>
+                                    <td>@Html.ActionLink("Nánar", "Details", new { id = item.tvId })</td>
                                 </tr>
                             }
                         </tbody>
