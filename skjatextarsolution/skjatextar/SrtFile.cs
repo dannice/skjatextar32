@@ -29,6 +29,7 @@ namespace skjatextar
         public Nullable<int> movieId { get; set; }
         public Nullable<int> tvId { get; set; }
         public Nullable<int> dataId { get; set; }
+        public Nullable<int> type { get; set; }
     
         public virtual ICollection<Comment> Comment { get; set; }
         public virtual Movie Movie { get; set; }

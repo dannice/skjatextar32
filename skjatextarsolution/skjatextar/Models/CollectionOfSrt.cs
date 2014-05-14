@@ -16,6 +16,7 @@ namespace skjatextar.Models
         public DateTime rdDate { get; set; }
         public int srtCounter { get; set; }
         public int srtLike { get; set; }
+        public int type { get; set; }
         public int? movieId { get; set; }
         [Required]
         public int? year { get; set; }

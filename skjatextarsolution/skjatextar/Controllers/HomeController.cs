@@ -85,6 +85,8 @@ namespace skjatextar.Controllers
                         movieItem.year = year;
                         db.Movie.Add(movieItem);
                         srtItem.movieId = movieItem.movieId;
+                        // Type 1 if movie.
+                        srtItem.type = 1;
                     }
                     else if (!String.IsNullOrEmpty(radioTv))
                     {
@@ -100,6 +102,7 @@ namespace skjatextar.Controllers
                         tvItem.episodeAbout = episodeAbout;
                         db.TvShow.Add(tvItem);
                         srtItem.tvId = tvItem.tvId;
+                        srtItem.type = 2;
                     }
 
                     // Hér vantar error message um ef hvorugt er valið, mynd eða þáttaröð.
@@ -150,14 +153,15 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int? id2)
         {
             SkjatextiRepository bll = new SkjatextiRepository();
             var getDetails = bll.GetBothTvshowsAndMovies();
-
-            var result = (from elem in getDetails
-                          where elem.tvId == id
-                          select elem).SingleOrDefault();
+            var result = (from elem in getDetails.Where(elem => elem.movieId == id2 || elem.tvId == id)
+                          select elem).FirstOrDefault();
+            /*var result = (from elem in getDetails
+                          where elem.movieId == id 
+                          select elem).SingleOrDefault();*/
             if (result != null)
             {
                 return View(result);
@@ -172,6 +176,7 @@ namespace skjatextar.Controllers
             string text = "";
             // New empty filename
             string filename = "";
+            // int? counter = ++;
             // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
@@ -180,6 +185,9 @@ namespace skjatextar.Controllers
                              select s).FirstOrDefault();
                 text = query.dataText;
                 filename = query.dataName;
+                // var srtItem = new SrtFile();
+                // counter = srtItem.srtCounter;
+
             }
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);

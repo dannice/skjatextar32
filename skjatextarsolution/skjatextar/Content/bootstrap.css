@@ -47,67 +47,6 @@ audio:not([controls]) {
   height: 0;
 }
 
-#leftCol
-{
-    margin-left: -109px; /*alex*/
-}
-.AboutShow /*alex*/
-{
-    border: solid;
-    margin-left: 93px;
-    margin-right: 130px;
-    border-width: thin;
-    border-color: ghostwhite;
-    padding-top: 11px;
-    padding-right: 0px;
-    border-left-width: 5px;
-    border-top-width: 5px;
-}
-
-#TvShowDetails h3 /*alex */
-{
-
-margin-left: 87px;
-}
-.TvShowTable   /*alex */
-{
- margin-left: 83px;
- font-size: x-large;
-}
-
-#TvShowDetails /*alex */
-{
-   border: solid;
-border-width: thin;
-padding-bottom: 35px;
-border-color: ghostwhite;
-border-top-width: 6px;
-border-left-width: 6px;
-}
-
-.AboutShow   /*alex */
-{
-font-size: 16px;
-}
-
-#NiðurhalaTakki /*alex virkar ekki enn */
-{
-   margin-left: 761px;
-  
-}
-
-
-
-
-
-#TvShowDetails h1 /*alex */
-{
-   margin-left: 44px;
-}
-
-
-
-
 
 [hidden] {
   display: none;

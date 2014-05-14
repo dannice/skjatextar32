@@ -31,5 +31,6 @@ namespace skjatextar
         public string episodeAbout { get; set; }
         public Nullable<int> Expr2 { get; set; }
         public Nullable<int> year { get; set; }
+        public Nullable<int> type { get; set; }
     }
 }
