@@ -41,35 +41,34 @@
                 </div>
             </div>
         </form>
-
     </div>
-   
-
+    
     <div class="container">
         <div class="row">
             <div class="col-md-3" id="leftCol">
                 <div class="well">
                     <div id="droplist" class="droplist">
-                        <select id="selectShow">
-                            <option value="">Veldu sjónvarpsþátt</option>
-                            @foreach (var show in (List<skjatextar.Models.SrtFileModel>)ViewData["tvshows"])
-                            {
-                                <option value="@show.srtId">@show.title</option>
-                            }
-                        </select>
-                        <select id="selectEpisode">
-                            <option value="">Veldu seríu og þátt</option>
-                        </select>
-                        <div id="episodeInfo">
-                            <h4>Titill</h4>
-                            Þáttaröð: <span id="season"></span><br/>
-                            Þáttur nr: <span id="episode"></span><br />
-                            Nafn: <span id="episodeTitle"></span><br />
-                            Söguþráður: <span id="episodeAbout"></span><br />
-                            <hr/>
-                            <button class="btn btn-success" onclick="alert('download ')">Saekja texta</button>
+                        <div class="form-group">
+                            <select id="selectShow" class="form-control">
+                                <option value="">Veldu sjónvarpsþátt</option>
+                                @foreach (var show in (List<skjatextar.Models.SrtFileModel>)ViewData["tvshows"])
+                                {
+                                    <option value="@show.srtId">@show.title</option>
+                                }
+                            </select>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <select id="selectEpisode" class="form-control">
+                                <option value="">Veldu seríu og þátt</option>
+                            </select>
+                        </div>
+                            <div id="episodeInfo" class="alert alert-info">                            
+                                Þáttaröð: <span id="season"></span><br />
+                                Þáttur nr: <span id="episode"></span><br />
+                                Nafn: <span id="episodeTitle"></span><br />                
+                                <a href="" class="btn btn-success" id="episodeLink">Meira</a>
+                            </div>
+                        </div>
                 </div>
             </div>
             <div class="col-md-9" id="mainContent">
