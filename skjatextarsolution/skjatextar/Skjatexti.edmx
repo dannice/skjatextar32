@@ -128,6 +128,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <Key>
             <PropertyRef Name="srtId" />
             <PropertyRef Name="title" />
+            <PropertyRef Name="Expr3" />
           </Key>
           <Property Name="srtId" Type="int" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="30" Nullable="false" />
@@ -138,7 +139,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <Property Name="srtLike" Type="int" />
           <Property Name="movieId" Type="int" />
           <Property Name="tvId" Type="int" />
-          <Property Name="dataId" Type="int" />
+          <Property Name="Expr4" Type="int" />
           <Property Name="Expr1" Type="int" />
           <Property Name="episode" Type="int" />
           <Property Name="season" Type="int" />
@@ -147,6 +148,10 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <Property Name="Expr2" Type="int" />
           <Property Name="year" Type="int" />
           <Property Name="type" Type="int" />
+          <Property Name="Expr3" Type="int" Nullable="false" />
+          <Property Name="dataSize" Type="int" />
+          <Property Name="dataText" Type="text" />
+          <Property Name="dataName" Type="nvarchar" MaxLength="250" />
         </EntityType>
         <Association Name="FK__Comment__strId__30F848ED">
           <End Role="SrtFile" Type="Self.SrtFile" Multiplicity="1" />
@@ -288,7 +293,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
     [SrtCollection].[srtLike] AS [srtLike], 
     [SrtCollection].[movieId] AS [movieId], 
     [SrtCollection].[tvId] AS [tvId], 
-    [SrtCollection].[dataId] AS [dataId], 
+    [SrtCollection].[Expr4] AS [Expr4], 
     [SrtCollection].[Expr1] AS [Expr1], 
     [SrtCollection].[episode] AS [episode], 
     [SrtCollection].[season] AS [season], 
@@ -296,7 +301,11 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
     [SrtCollection].[episodeAbout] AS [episodeAbout], 
     [SrtCollection].[Expr2] AS [Expr2], 
     [SrtCollection].[year] AS [year], 
-    [SrtCollection].[type] AS [type]
+    [SrtCollection].[type] AS [type], 
+    [SrtCollection].[Expr3] AS [Expr3], 
+    [SrtCollection].[dataSize] AS [dataSize], 
+    [SrtCollection].[dataText] AS [dataText], 
+    [SrtCollection].[dataName] AS [dataName]
     FROM [dbo].[SrtCollection] AS [SrtCollection]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__Comment__strId__30F848ED" Association="Self.FK__Comment__strId__30F848ED">
@@ -368,7 +377,6 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             <End Role="Comment" EntitySet="Comment" />
           </AssociationSet>
           <EntitySet Name="SrtFile" EntityType="SkjatextiModel.SrtFile" />
-          <EntitySet Name="SrtCollection" EntityType="SkjatextiModel.SrtCollection" />
           <AssociationSet Name="FK__Comment__strId__30F848ED" Association="SkjatextiModel.FK__Comment__strId__30F848ED">
             <End Role="SrtFile" EntitySet="SrtFile" />
             <End Role="Comment" EntitySet="Comment" />
@@ -385,6 +393,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             <End Role="TvShow" EntitySet="TvShow" />
             <End Role="SrtFile" EntitySet="SrtFile" />
           </AssociationSet>
+          <EntitySet Name="SrtCollection" EntityType="SkjatextiModel.SrtCollection" />
           </EntityContainer>
         <EntityType Name="Request">
           <Key>
@@ -555,30 +564,6 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <NavigationProperty Name="SrtData" Relationship="SkjatextiModel.FK__SrtFile__dataId__0F975522" FromRole="SrtFile" ToRole="SrtData" />
           <NavigationProperty Name="TvShow" Relationship="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" FromRole="SrtFile" ToRole="TvShow" />
         </EntityType>
-        <EntityType Name="SrtCollection">
-          <Key>
-            <PropertyRef Name="srtId" />
-            <PropertyRef Name="title" />
-          </Key>
-          <Property Name="srtId" Type="Int32" Nullable="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="srtDate" Type="DateTime" Precision="3" />
-          <Property Name="srtReady" Type="Int32" />
-          <Property Name="rdDate" Type="DateTime" Precision="3" />
-          <Property Name="srtCounter" Type="Int32" />
-          <Property Name="srtLike" Type="Int32" />
-          <Property Name="movieId" Type="Int32" />
-          <Property Name="tvId" Type="Int32" />
-          <Property Name="dataId" Type="Int32" />
-          <Property Name="Expr1" Type="Int32" />
-          <Property Name="episode" Type="Int32" />
-          <Property Name="season" Type="Int32" />
-          <Property Name="episodeTitle" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="episodeAbout" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="Expr2" Type="Int32" />
-          <Property Name="year" Type="Int32" />
-          <Property Name="type" Type="Int32" />
-        </EntityType>
         <Association Name="FK__Comment__strId__30F848ED">
           <End Type="SkjatextiModel.SrtFile" Role="SrtFile" Multiplicity="1" />
           <End Type="SkjatextiModel.Comment" Role="Comment" Multiplicity="*" />
@@ -627,6 +612,35 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SrtCollection">
+          <Key>
+            <PropertyRef Name="srtId" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="Expr3" />
+          </Key>
+          <Property Name="srtId" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="srtDate" Type="DateTime" Precision="3" />
+          <Property Name="srtReady" Type="Int32" />
+          <Property Name="rdDate" Type="DateTime" Precision="3" />
+          <Property Name="srtCounter" Type="Int32" />
+          <Property Name="srtLike" Type="Int32" />
+          <Property Name="movieId" Type="Int32" />
+          <Property Name="tvId" Type="Int32" />
+          <Property Name="Expr4" Type="Int32" />
+          <Property Name="Expr1" Type="Int32" />
+          <Property Name="episode" Type="Int32" />
+          <Property Name="season" Type="Int32" />
+          <Property Name="episodeTitle" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="episodeAbout" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="Expr2" Type="Int32" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="Expr3" Type="Int32" Nullable="false" />
+          <Property Name="dataSize" Type="Int32" />
+          <Property Name="dataText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="dataName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -761,6 +775,10 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <EntitySetMapping Name="SrtCollection">
             <EntityTypeMapping TypeName="SkjatextiModel.SrtCollection">
               <MappingFragment StoreEntitySet="SrtCollection">
+                <ScalarProperty Name="dataName" ColumnName="dataName" />
+                <ScalarProperty Name="dataText" ColumnName="dataText" />
+                <ScalarProperty Name="dataSize" ColumnName="dataSize" />
+                <ScalarProperty Name="Expr3" ColumnName="Expr3" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="year" ColumnName="year" />
                 <ScalarProperty Name="Expr2" ColumnName="Expr2" />
@@ -769,7 +787,7 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
                 <ScalarProperty Name="season" ColumnName="season" />
                 <ScalarProperty Name="episode" ColumnName="episode" />
                 <ScalarProperty Name="Expr1" ColumnName="Expr1" />
-                <ScalarProperty Name="dataId" ColumnName="dataId" />
+                <ScalarProperty Name="Expr4" ColumnName="Expr4" />
                 <ScalarProperty Name="tvId" ColumnName="tvId" />
                 <ScalarProperty Name="movieId" ColumnName="movieId" />
                 <ScalarProperty Name="srtLike" ColumnName="srtLike" />

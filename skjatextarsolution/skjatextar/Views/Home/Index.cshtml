@@ -28,8 +28,10 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                  
-                                    <td>@Html.Raw(Html.ActionLink(item.title, "Details", new { id = item.tvId, id2 = item.movieId }, null))</td>
+                                    <td>
+                                        @Html.Raw(Html.ActionLink(item.title, "Details", new { id = item.srtId }, null))
+                                        @Html.Raw(Html.ActionLink("Niðurhala", "Download", new { id = item.srtId }, null));
+                                </td>
                                 </tr>
                                
                             }
@@ -48,10 +50,10 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                               /*<tr>
-                                    <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
-                                    <td><a href="Details/@item.tvId">Nánar</a></td>
-                                </tr>*/
+                                /*<tr>
+                                     <td>@Html.ActionLink(item.title, "Details", new { id = item.srtId })</td>
+                                     <td><a href="Details/@item.tvId">Nánar</a></td>
+                                 </tr>*/
                             }
                         </tbody>
                     </table>
@@ -72,10 +74,10 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                 /*<tr>
-                                    <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
-                                    <td><a href="Details/@item.tvId">Nánar</a></td>
-                                </tr>*/
+                                /*<tr>
+                                   <td>@Html.ActionLink(item.title, "Details", new { id = item.srtId })</td>
+                                   <td><a href="Details/@item.tvId">Nánar</a></td>
+                               </tr>*/
                             }
                         </tbody>
                     </table>
@@ -93,7 +95,7 @@
                             @foreach (var item in Model)
                             {
                                 /* <tr>
-                                    <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
+                                    <td>@Html.ActionLink(item.title, "Details", new { id = item.srtId })</td>
                                     <td><a href="Details/@item.tvId">Nánar</a></td>
                                 </tr>*/
                             }

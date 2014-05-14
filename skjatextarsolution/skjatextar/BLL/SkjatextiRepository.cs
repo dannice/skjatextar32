@@ -116,13 +116,14 @@ namespace skjatextar.BLL
             var list = new List<Models.CollectionOfSrt>();
             // Sql query thats selects all in SrtCollection and orders it by title
             var query = from item in contex.SrtCollection
-                         orderby item.title
+                         orderby item.srtId
                          select item;
             // Loops through every item in query.
             foreach (var item in query)
             {
                 var show = new Models.CollectionOfSrt();
                 show.title = item.title;
+                show.srtId = item.srtId;
                 show.tvId = item.tvId;
                 show.episodeAbout = item.episodeAbout;
                 show.season = item.season;
@@ -142,13 +143,14 @@ namespace skjatextar.BLL
             SkjatextiEntities contex = new SkjatextiEntities();
             var list = new List<Models.CollectionOfSrt>();
             var query = (from item in contex.SrtCollection
-                         orderby item.title
+                         orderby item.srtId
                          select item).Take(20); //breyta i 10
             foreach (var item in query)
             {
                 var show = new Models.CollectionOfSrt();
                 show.title = item.title;
                 show.tvId = item.tvId;
+                show.srtId = item.srtId;
                 show.episodeAbout = item.episodeAbout;
                 show.season = item.season;
                 show.episode = item.episode;
