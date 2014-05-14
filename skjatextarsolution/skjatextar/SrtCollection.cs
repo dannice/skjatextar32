@@ -23,7 +23,7 @@ namespace skjatextar
         public Nullable<int> srtLike { get; set; }
         public Nullable<int> movieId { get; set; }
         public Nullable<int> tvId { get; set; }
-        public Nullable<int> dataId { get; set; }
+        public Nullable<int> Expr4 { get; set; }
         public Nullable<int> Expr1 { get; set; }
         public Nullable<int> episode { get; set; }
         public Nullable<int> season { get; set; }
@@ -32,5 +32,9 @@ namespace skjatextar
         public Nullable<int> Expr2 { get; set; }
         public Nullable<int> year { get; set; }
         public Nullable<int> type { get; set; }
+        public int Expr3 { get; set; }
+        public Nullable<int> dataSize { get; set; }
+        public string dataText { get; set; }
+        public string dataName { get; set; }
     }
 }

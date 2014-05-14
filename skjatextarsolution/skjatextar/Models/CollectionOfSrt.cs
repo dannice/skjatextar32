@@ -27,9 +27,17 @@ namespace skjatextar.Models
         public int? season { get; set; }
         public string episodeTitle { get; set; }
         public string episodeAbout { get; set; }
+        public int dataId { get; set; }
+        [Required]
+        public string dataFile { get; set; }
+        public int? dataSize { get; set; }
+        public string dataName { get; set; }
+        public string dataCont { get; set; }
+        public string dataText { get; set; }
 
         public virtual TvShow TvShow { get; set; }
         public virtual Movie Movie { get; set; }
         public virtual SrtFile SrtFile { get; set; }
+        public virtual SrtData SrtData { get; set; }
     }
 }

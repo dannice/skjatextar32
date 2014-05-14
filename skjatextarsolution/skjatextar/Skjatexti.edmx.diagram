@@ -20,11 +20,11 @@
         <EntityTypeShape EntityType="SkjatextiModel.Comment" Width="1.5" PointX="14.5" PointY="1.5" />
         <AssociationConnector Association="SkjatextiModel.FK_Comment_AspNetUsers" />
         <EntityTypeShape EntityType="SkjatextiModel.SrtFile" Width="1.5" PointX="10" PointY="6.75" />
-        <EntityTypeShape EntityType="SkjatextiModel.SrtCollection" Width="1.5" PointX="0.75" PointY="7.75" />
         <AssociationConnector Association="SkjatextiModel.FK__Comment__strId__30F848ED" />
         <AssociationConnector Association="SkjatextiModel.FK__SrtFile__movieId__0DAF0CB0" />
         <AssociationConnector Association="SkjatextiModel.FK__SrtFile__dataId__0F975522" />
         <AssociationConnector Association="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" />
+        <EntityTypeShape EntityType="SkjatextiModel.SrtCollection" Width="1.5" PointX="0.75" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
