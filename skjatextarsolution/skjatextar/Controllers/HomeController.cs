@@ -61,6 +61,7 @@ namespace skjatextar.Controllers
                 StreamReader streamReader = new StreamReader(file.InputStream);
                 // Reads until end of the file.
                 string text = streamReader.ReadToEnd();
+                // Radio button from upload view
                 var radioMovie = col["radioMovie"];
                 var radioTv = col["radioTv"];
                 string title = col["title"];
@@ -197,12 +198,9 @@ namespace skjatextar.Controllers
             var bll = new SkjatextiRepository();
             var results = bll.Search(query);
 
+            ViewData["query"] = query;
 
-
-
-            ViewData["results"] = results;
-
-            return View();
+            return View(results);
         }
     }
 }

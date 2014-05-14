@@ -29,6 +29,7 @@
                             {
                                 <tr>
                                     <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
+                                    <td>@Html.ActionLink("Nánar", "Details", new { id = item.tvId })</td>
                                 </tr>
                             }
                         </tbody>
@@ -40,14 +41,15 @@
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3>Hello.</h3></div>
+                <div class="panel-heading"><h3>Óskir</h3></div>
                 <div class="panel-body">
                     <table>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                               <tr>
                                     <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
+                                    <td><a href="Details/@item.tvId">Nánar</a></td>
                                 </tr>
                             }
                         </tbody>
@@ -62,15 +64,16 @@
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3>10 Nýjustu</h3></div>
+                <div class="panel-heading"><h3>10.Vinsælustu</h3></div>
                 <div class="panel-body">
 
                     <table>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                                 <tr>
                                     <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
+                                    <td><a href="Details/@item.tvId">Nánar</a></td>
                                 </tr>
                             }
                         </tbody>
@@ -82,14 +85,15 @@
         </div>
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3>Hello.</h3></div>
+                <div class="panel-heading"><h3>Listinn</h3></div>
                 <div class="panel-body">
                     <table>
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
+                                 <tr>
                                     <td>@Html.ActionLink(item.title, "Details", new { id = item.tvId })</td>
+                                    <td><a href="Details/@item.tvId">Nánar</a></td>
                                 </tr>
                             }
                         </tbody>
