@@ -30,8 +30,6 @@
                                      <tr>
                                         <td>@Html.ActionLink(item.title, "Details", new { id = item.srtId })</td>
                                     </tr>
-                              
-                               
                             }
                         </tbody>
                     </table>
@@ -46,7 +44,13 @@
                 <div class="panel-body">
                     <table>
                         <tbody>
-                          
+                            @foreach (var item in Model)
+
+                            {
+                                <tr>
+                                    <td>@Html.ActionLink(item.title, "Details", new { id = item.srtId })</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -64,7 +68,12 @@
 
                     <table>
                         <tbody>
-                           
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>@Html.ActionLink(item.title, "Details", new { id = item.srtId })</td>
+                            </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -78,7 +87,12 @@
                 <div class="panel-body">
                     <table>
                         <tbody>
-                           
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.ActionLink(item.title, "Details", new { id = item.srtId })</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
