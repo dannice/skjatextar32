@@ -77,8 +77,6 @@ namespace skjatextar.BLL
             SkjatextiEntities contex = new SkjatextiEntities();
             var list = new Models.TvShowModel();
 
-           
-
             var result = (from item in contex.TvShow
                          where item.tvId == epId
                          select item).FirstOrDefault();
@@ -93,7 +91,22 @@ namespace skjatextar.BLL
             return episode;
         }
 
+        // Search from inputbox
+        public List<Models.CollectionOfSrt> Search(string s)
+        {
+            // Connect to db through Skjatexti.context.cs
+            SkjatextiEntities contex = new SkjatextiEntities();
+            // Creates new empty list using collectionofst
+            var list = new List<Models.CollectionOfSrt>();
 
+            // compares input string to database
+            List<Models.CollectionOfSrt> listOfAll = GetBothTvshowsAndMovies().Where(b => ContainsIgnoreCase(b.title,s) 
+                                                                                    || ContainsIgnoreCase(b.episodeTitle,s)
+                                                                                    || ContainsIgnoreCase(b.episodeAbout,s)) .ToList();
+            
+            
+            return listOfAll;
+        }
         // Gets all tvshows and movies
         public List<Models.CollectionOfSrt> GetBothTvshowsAndMovies()
         {
@@ -110,6 +123,7 @@ namespace skjatextar.BLL
             {
                 var show = new Models.CollectionOfSrt();
                 show.title = item.title;
+                show.tvId = item.tvId;
                 show.episodeAbout = item.episodeAbout;
                 show.season = item.season;
                 show.episode = item.episode;
@@ -128,11 +142,12 @@ namespace skjatextar.BLL
             var list = new List<Models.CollectionOfSrt>();
             var query = (from item in contex.SrtCollection
                          orderby item.title
-                         select item).Take(10);
+                         select item).Take(10); 
             foreach (var item in query)
             {
                 var show = new Models.CollectionOfSrt();
                 show.title = item.title;
+                show.tvId = item.tvId;
                 show.episodeAbout = item.episodeAbout;
                 show.season = item.season;
                 show.episode = item.episode;
@@ -189,5 +204,19 @@ namespace skjatextar.BLL
 
             return tvItem;
         }
+
+        /// <summary>
+        /// method to check if string contains another string
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="toCheck"></param>
+        /// <returns></returns>
+       private bool ContainsIgnoreCase(string source, string toCheck)
+        {
+            if (string.IsNullOrEmpty(toCheck) || string.IsNullOrEmpty(source))
+                return false;
+
+            return source.IndexOf(toCheck, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        } 
     }
 }

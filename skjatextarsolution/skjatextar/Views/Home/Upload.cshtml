@@ -11,50 +11,48 @@
     <form role="form">
         <div class="form-group">
             <label for="title">Titill</label>
-            <input type="text" class="form-control" id="srtId" placeholder="Sláðu inn titil">
+            <input type="text" class="form-control" name="title" placeholder="Sláðu inn titil">
         </div>
 
         <div class="radio">
             <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios1"
-                       value="option1" checked> Kvikmynd
+                <input type="radio" name="radioMovie" value="option1"> Kvikmynd
             </label>
         </div>
         <div class="form-group">
             <label for="year">Útgáfuár</label>
-            <input type="text" class="form-control" id="movieId" placeholder="Sláðu inn ártal kvikmyndar">
+            <input type="number" class="form-control" name="yearMovie" placeholder="Sláðu inn ártal kvikmyndar">
         </div>
 
         <div class="radio">
             <label>
-                <input type="radio" name="optionsRadios" id="optionsRadios2"
-                       value="option2"> Þáttaröð
+                <input type="radio" name="radioTv" value="option2"> Þáttaröð
             </label>
         </div>
 
         <div class="form-group">
              <label for="episodeTitle">Titill þáttar</label>
-             <input type="text" class="form-control" id="tvId" placeholder="Sláðu inn titil þáttar">
+             <input type="text" class="form-control" name="episodeTitle" placeholder="Sláðu inn titil þáttar">
         </div>
         
         <div class="form-group">
             <label for="season">Númer þáttaseríu</label>
-            <input type="number" class="form-control" id="tvId" placeholder="Veldu númer þáttaseríu">
+            <input type="number" class="form-control" name="seasonNr" placeholder="Veldu númer þáttaseríu">
         </div>
 
         <div class="form-group">
             <label for="episode">Númer þáttar</label>
-            <input type="number" class="form-control" id="movieId" placeholder="Veldu númer þáttar">
+            <input type="number" class="form-control" name="episodeNr" placeholder="Veldu númer þáttar">
         </div>
 
         <div>
         <label for="episodeAbout">Athugasemd</label>
-        <textarea class="form-control" rows="3"></textarea>
+            <textarea class="form-control" rows="3" name="episodeAbout"></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Upload" class="btn btn-default" />
         </div>
 
     </form>
-
-
-        <input type="submit" name="Submit" id="Submit" value="Upload" />
     }
 </div>
