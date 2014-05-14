@@ -85,6 +85,7 @@ namespace skjatextar.Controllers
                         movieItem.year = year;
                         db.Movie.Add(movieItem);
                         srtItem.movieId = movieItem.movieId;
+                        // Type 1 if movie.
                         srtItem.type = 1;
                     }
                     else if (!String.IsNullOrEmpty(radioTv))
