@@ -83,6 +83,7 @@ function getEpisode(epId) {
             $("#episode").text(data.episode);
             $("#episodeTitle").text(data.episodeTitle);
             $("#episodeAbout").text(data.episodeAbout);
+            $("#episodeLink").attr("href", "/Home/Details/" + epId);
             console.log(data);
         },
     });
