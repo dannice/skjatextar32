@@ -92,11 +92,12 @@ function getEpisode(epId) {
         type: "GET",
         url: "/Home/GetEpisodeData?epId=" + epId,
         success: function (data) {
+            console.log(data);
             $("#season").text(data.season);
             $("#episode").text(data.episode);
             $("#episodeTitle").text(data.episodeTitle);
             $("#episodeAbout").text(data.episodeAbout);
-            $("#episodeLink").attr("href", "/Home/Details/" + epId);
+            $("#episodeLink").attr("href", "/Home/Details/" + data.srtId);
             console.log(data);
         },
     });
