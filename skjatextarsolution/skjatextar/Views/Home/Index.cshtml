@@ -11,78 +11,122 @@
 
         <div class="row">
 
-            <div class="col-md-9">
-                <h2 id="sec0">Content</h2>
-                At Bootply we like to build simple Bootstrap templates that utilize the code Bootstap CSS without a lot of customization. Sure you can
-                find a lot of Bootstrap themes and inspiration, but these templates tend to be heavy on customiz
-            </div>
+            
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3>10 Nýjustu</h3></div>
+                <div class="panel-heading"><h3>10.Vinsælustu Þættir</h3></div>
                 <div class="panel-body">
-                    <table>
+                    <table class="table table-bordered">
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                     <tr>
-                                         <td>
-                                             @Html.ActionLink(item.title, "Details", new { id = item.srtId })
-                                             @Html.Raw(Html.ActionLink("Niðurhala", "Download", new { id = item.srtId }))</td>
-                                         
-                                     
-                                    </tr>
-                              
-                               
+                                if(item.type == 2)
+                                { 
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                    </td>
+                                   
+                                     <td>
+                                        @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
+                                    </td>
+                                    <td>
+                                        @Html.Raw(Html.ActionLink("Niðurhala", "Download", new { id = item.srtId }))
+                                    </td>
+                                </tr>
                             }
+
+                                }
                         </tbody>
                     </table>
-                  
 
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3>10.Vinsælustu Myndir</h3></div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            
+                            @foreach (var item in Model)
+                            {
+                                if(item.type == 1)
+                                { 
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
+                                    </td>
+                                    <td>
+                                        @Html.Raw(Html.ActionLink("Niðurhala", "Download", new { id = item.srtId }))
+                                    </td>
+                                </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading"><h3>Óskir</h3></div>
                 <div class="panel-body">
-                    <table>
+                    <table class="table table-bordered">
                         <tbody>
-                          
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
+                                    </td>
+                                  
+                                </tr>
+
+                            }
                         </tbody>
                     </table>
 
                 </div>
             </div>
         </div>
-    </div>
-
-
-    <div class="row">
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading"><h3>10.Vinsælustu</h3></div>
+                <div class="panel-heading"><h3>Nýjast</h3></div>
                 <div class="panel-body">
-
-                    <table>
+                    <table class="table table-bordered">
                         <tbody>
-                           
-                        </tbody>
-                    </table>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
+                                    </td>
+                                    <td>
+                                        @Html.Raw(Html.ActionLink("Niðurhala", "Download", new { id = item.srtId }))
+                                    </td>
+                                </tr>
 
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-heading"><h3>Listinn</h3></div>
-                <div class="panel-body">
-                    <table>
-                        <tbody>
-                           
+                            }
                         </tbody>
                     </table>
 
