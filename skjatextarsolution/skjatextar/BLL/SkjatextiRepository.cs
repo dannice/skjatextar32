@@ -144,7 +144,7 @@ namespace skjatextar.BLL
             SkjatextiEntities contex = new SkjatextiEntities();
             var list = new List<Models.CollectionOfSrt>();
             var query = (from item in contex.SrtCollection
-                         orderby item.title
+                         orderby item.title 
                          select item).Take(10); 
             foreach (var item in query)
             {

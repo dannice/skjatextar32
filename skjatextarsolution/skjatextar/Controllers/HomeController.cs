@@ -207,5 +207,14 @@ namespace skjatextar.Controllers
 
             return View(results);
         }
+        
+        [HttpPost]
+        public ActionResult NyBeidni()
+        {
+
+            return View();
+        }
+
+
     }
 }
