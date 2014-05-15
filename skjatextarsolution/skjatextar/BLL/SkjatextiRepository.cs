@@ -352,7 +352,7 @@ namespace skjatextar.BLL
            var list = new List<Models.RequestModel>();
 
            var result = from item in contex.Request
-                        orderby item.reqDate
+                        orderby item.reqDate descending
                         select item;
             foreach (var item in result)
 	        {
