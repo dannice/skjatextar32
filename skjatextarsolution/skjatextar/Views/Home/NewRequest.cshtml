@@ -1,11 +1,11 @@
-﻿@model skjatextar.Models.CollectionOfSrt
+﻿    @model skjatextar.Models.CollectionOfSrt
 @{
     ViewBag.Title = "NyBeidni";
 }
 
 <div>
     <h2>Ný Beiðni</h2>
-    @using (Html.BeginForm("NyBeidni", "Home", FormMethod.Post, new { enctype = "multipart/form-data",@class = "form-horizontal",role = "form",id ="beidniForm"}))
+    @using (Html.BeginForm("NewRequest", "Home", FormMethod.Post, new { enctype = "multipart/form-data",@class = "form-horizontal",role = "form",id ="beidniForm"}))
     {
          @Html.ValidationSummary(true)
         
