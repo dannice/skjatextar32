@@ -20,6 +20,9 @@ namespace skjatextar.Controllers
         {
             var query = bll.GetTopTenSrt();
 
+            ViewBag["requests"] = bll.GetRequests();
+            
+
             //return View(users);
             return View(query);
         }

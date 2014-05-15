@@ -133,23 +133,58 @@
                 <div class="panel-body">
                     <table class="table table-striped">
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in ViewBag.requests)
                             {
-                                <tr>
-                                    <td>
-                                        @Html.ActionLink(item.title, "Details", new { id = item.srtId })
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
-                                    </td>
-                                    <td>
-                                        <a href="@Url.Action("Download", new {id = item.srtId})"><span class="glyphicon glyphicon-download-alt"></span></a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.Action("EditFile", new {id = item.srtId})"><span class="glyphicon glyphicon-edit"></span></a>
+                                if(item.type == 1)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                        </td>
+                                        <td>
+                                            Árgerð: @item.year
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Download", new {id = item.srtId})"><span class="glyphicon glyphicon-download-alt"></span></a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("EditFile", new {id = item.srtId})"><span class="glyphicon glyphicon-edit"></span></a>
 
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>
+                                            
+                                            @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                        </td>
+                                        <td>
+                                            Sería: @item.season
+                                        </td>
+                                        <td>
+                                            Þáttur: @item.episode
+                                        </td>
+
+                                        <td>
+                                            @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("Download", new {id = item.srtId})"><span class="glyphicon glyphicon-download-alt"></span></a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("EditFile", new {id = item.srtId})"><span class="glyphicon glyphicon-edit"></span></a>
+
+                                        </td>
+
+                                       
+                                    </tr>
+                                }
+                                
 
                             }
                         </tbody>

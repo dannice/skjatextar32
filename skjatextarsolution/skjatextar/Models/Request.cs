@@ -19,11 +19,11 @@ namespace skjatextar.Models
 
         [Display(Name = "Númer þáttar")]
         [Required(ErrorMessage = "Verður að skrá nr á þátt!")]
-        public int reqEpisodeNr { get; set; }
+        public int? reqEpisodeNr { get; set; }
 
         [Display(Name = "Sería")]
         [Required(ErrorMessage = "Verður að skrá seríu!")]
-        public int reqSeasonNr { get; set; }
+        public int? reqSeasonNr { get; set; }
         public string reqEpisodeTitle { get; set; }
     }
 }

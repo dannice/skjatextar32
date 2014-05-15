@@ -262,6 +262,29 @@ namespace skjatextar.BLL
            return moep;
        }
 
+        public List<Models.RequestModel> GetRequests()
+       {
+           SkjatextiEntities contex = new SkjatextiEntities();
+           var list = new List<Models.RequestModel>();
+
+           var result = from item in contex.Request
+                        orderby item.reqDate
+                        select item;
+            foreach (var item in result)
+	        {
+		         var reqItem = new Models.RequestModel();
+                 reqItem.reqId = item.reqId;
+                 reqItem.reqDate = item.reqDate;
+                 reqItem.reqTitle = item.reqTitle;
+                 reqItem.reqSeasonNr = item.reqSeasonNr;
+                 reqItem.reqEpisodeNr = item.reqEpisodeNr;
+                 reqItem.reqEpisodeTitle = item.reqEpisodeTitle;
+                 list.Add(reqItem);
+	        }
+
+            return list;
+       }
+
        /*public Models.SrtFileModel DownloadCount()
        {
            SkjatextiEntities contex = new SkjatextiEntities();
@@ -275,4 +298,5 @@ namespace skjatextar.BLL
            contex.SaveChanges();
        }*/
     }
+
 }
