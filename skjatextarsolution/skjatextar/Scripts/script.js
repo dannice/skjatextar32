@@ -42,19 +42,25 @@
         
     });
     
+    // Loading new srt file;
     initUploadForm();
+
+    // sending in new raquest
+    newRequest();
+
 });
 
+// Loading new srt file;
 function initUploadForm() {
 
     var uploadForm = $("#uploadForm");
-    if(uploadForm.length > 0)
+    
+    if(uploadForm.length > 0) 
     {
         radioType = uploadForm.find("input[name='type']");
+       
         console.log(radioType);
         $(".tv-field, .movie-field").hide();
-
-       console.log( $(".tv-field, .movie-field").length);
 
         radioType.on("change", function () {
             var typeValue = ($(this).val());
@@ -72,7 +78,32 @@ function initUploadForm() {
         })
     }
 };
+function newRequest() {
 
+    var beidniForm = $("#beidniForm");
+
+    console.log(beidniForm);
+
+    if (beidniForm.length > 0) {
+        radioType = beidniForm.find("input[name='type']");
+
+        console.log(radioType);
+        $(".tv-field, .movie-field").hide();
+
+        radioType.on("change", function () {
+            var typeValue = ($(this).val());
+
+            if (typeValue == 1) {
+                $(".tv-field").fadeOut();
+                $(".movie-field").fadeIn();
+            }
+            else {
+                $(".tv-field").fadeIn();
+                $(".movie-field").fadeOut();
+            }
+        })
+    }
+}
 
 function getEpisodes(srtId){  
     $.ajax({
