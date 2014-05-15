@@ -1,4 +1,4 @@
-﻿    @model skjatextar.Models.CollectionOfSrt
+﻿    @model skjatextar.Models.RequestModel
 @{
     ViewBag.Title = "NyBeidni";
 }
@@ -11,61 +11,42 @@
         
          
         <div id="title" class="form-group">
-            @Html.LabelFor(m => m.title, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.reqTitle, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.title, new { @class = "form-control" })
-                @Html.ValidationMessage("title")
+                @Html.TextBoxFor(m => m.reqTitle, new { @class = "form-control" })
+                @Html.ValidationMessage("reqTitle")
             </div>
         </div>
-       <div class="form-group">
-           <div class="col-md-10 col-md-offset-2">
-               @Html.RadioButtonFor(m => m.type, "1") Kvikmynd
-               @Html.RadioButtonFor(m => m.type, "2") Þáttur
-               @Html.ValidationMessage("type")
-           </div>
-       </div>
-    <div id="episodeTitle" class="form-group tv-field">
-        @Html.LabelFor(m => m.episodeTitle, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.episodeTitle, new { @class = "form-control" })
-            @Html.ValidationMessage("episodeTitle")
-        </div>
-    </div>
+       
          <div id="year" class="form-group movie-field">
-            @Html.LabelFor(m => m.year, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.reqYear, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.year, new { @class = "form-control", type = "number" })
-                @Html.ValidationMessage("year")
+                @Html.TextBoxFor(m => m.reqYear, new { @class = "form-control", type = "number" })
+                @Html.ValidationMessage("reqYea")
             </div>
        </div>
     <div id="season" class="form-group tv-field">
-        @Html.LabelFor(m => m.season, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.reqSeasonNr, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.season, new { @class = "form-control", type = "number" })
-            @Html.ValidationMessage("season")
+            @Html.TextBoxFor(m => m.reqSeasonNr, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessage("reqSeasonNr")
         </div>
     </div>
     <div id="episode" class="form-group tv-field">
-        @Html.LabelFor(m => m.episode, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.reqEpisodeTitle, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.episode, new { @class = "form-control", type = "number" })
-            @Html.ValidationMessage("episode")
+            @Html.TextBoxFor(m => m.reqEpisodeTitle, new { @class = "form-control" })
+            @Html.ValidationMessage("reqEpisodeTitle")
         </div>
     </div>
          <div id="episodeAbout"class="form-group tv-field" >
-            @Html.LabelFor(m => m.episodeAbout, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.reqEpisodeNr, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.episodeAbout, new { @class = "form-control" })
-                @Html.ValidationMessage("episodeAbout")
+                @Html.TextBoxFor(m => m.reqEpisodeNr, new { @class = "form-control",type ="number" })
+                @Html.ValidationMessage("reqEpisodeNr")
             </div>
        </div>
-         <div id="dataFile" class="form-group">
-            @Html.LabelFor(m => m.dataFile, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(m => m.dataFile, new { @class = "form-control" })
-                @Html.ValidationMessage("dataFile")
-            </div>
-       </div>
+         
      
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -82,7 +63,7 @@
     }
 
         
-        
+        </div>
         
         
         
