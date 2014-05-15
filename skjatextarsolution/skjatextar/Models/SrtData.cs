@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace skjatextar.Models
 {
@@ -15,6 +16,7 @@ namespace skjatextar.Models
         public int? dataSize { get; set; }
         public string dataName { get; set; }
         public string dataCont { get; set; }
+        [AllowHtml]
         public string dataText { get; set; }
     }
 }
