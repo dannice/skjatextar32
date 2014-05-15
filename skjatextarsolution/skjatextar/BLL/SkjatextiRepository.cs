@@ -22,6 +22,7 @@ namespace skjatextar.BLL
             // titles from the SrtFile table, since it duplicates 
             // Show names
             var result = (from item in contex.SrtFile
+                          where item.type == 2
                           group item by new {item.title} 
                           into showGroup
                           select showGroup.FirstOrDefault());
@@ -72,22 +73,22 @@ namespace skjatextar.BLL
         //
         // Returns info about episode to layout.
         //
-        public Models.TvShowModel GetEpisode(int epId)
+        public Models.CollectionOfSrt GetEpisode(int epId)
         {
             SkjatextiEntities contex = new SkjatextiEntities();
-            var list = new Models.TvShowModel();
-
-            var result = (from item in contex.TvShow
+       
+            var result = (from item in contex.SrtCollection
                          where item.tvId == epId
                          select item).FirstOrDefault();
 
-                    var episode = new Models.TvShowModel();
+                    var episode = new Models.CollectionOfSrt();
+                    episode.srtId = result.srtId;
                     episode.episodeTitle = result.episodeTitle;
                     episode.season = result.season;
                     episode.episode = result.episode;
                     episode.episodeAbout = result.episodeAbout;
                     episode.tvId = result.tvId;
-                    
+
             return episode;
         }
 
