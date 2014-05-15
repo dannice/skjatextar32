@@ -263,6 +263,11 @@ namespace skjatextar.Controllers
                 }
                 return strUser;
             }
+
+            public ActionResult NyBeidni()
+            {
+                return View();
+            }
         }
     
 }
