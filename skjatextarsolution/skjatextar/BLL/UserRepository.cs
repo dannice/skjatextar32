@@ -28,7 +28,9 @@ namespace skjatextar.BLL
             return list;
         }
 
-        public List<Models.RequestModel> GetRequests()
+
+
+        /*public List<Models.RequestModel> GetRequests()
         {
             SkjatextiEntities context = new SkjatextiEntities();
             var list = new List<Models.RequestModel>();
@@ -39,12 +41,13 @@ namespace skjatextar.BLL
             {
                 var request = new Models.RequestModel();
                 request.reqId = item.reqId;
-                request.requestText = item.requestText;
-                request.reqDate = item.reqDate;
-                request.reqLike = item.reqLike;
+                request.reqTitle = item.
+                // request.reqTitle = item.reqTitle;
+                // request.reqDate = item.reqDate;
+                //request.reqLike = item.reqLike;
                 list.Add(request);
             }
             return list;
-        } 
+        } */
     }
 }

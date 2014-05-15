@@ -15,8 +15,12 @@ namespace skjatextar
     public partial class Request
     {
         public int reqId { get; set; }
-        public string requestText { get; set; }
+        public string reqTitle { get; set; }
         public Nullable<System.DateTime> reqDate { get; set; }
         public Nullable<int> reqLike { get; set; }
+        public Nullable<int> reqEpisodeNr { get; set; }
+        public Nullable<int> reqSeasonNr { get; set; }
+        public string reqEpisodeTitle { get; set; }
+        public Nullable<int> reqYear { get; set; }
     }
 }

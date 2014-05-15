@@ -82,9 +82,13 @@
             <PropertyRef Name="reqId" />
           </Key>
           <Property Name="reqId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="requestText" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="reqTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="reqDate" Type="datetime" />
           <Property Name="reqLike" Type="int" />
+          <Property Name="reqEpisodeNr" Type="int" />
+          <Property Name="reqSeasonNr" Type="int" />
+          <Property Name="reqEpisodeTitle" Type="nvarchar" MaxLength="100" />
+          <Property Name="reqYear" Type="int" />
         </EntityType>
         <EntityType Name="SrtData">
           <Key>
@@ -121,6 +125,39 @@
           <Property Name="season" Type="int" Nullable="false" />
           <Property Name="episodeTitle" Type="nvarchar" MaxLength="40" />
           <Property Name="episodeAbout" Type="nvarchar" MaxLength="400" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'VERK014_H32.dbo.CommentCollection' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CommentCollection">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="commentId" />
+            <PropertyRef Name="comment" />
+            <PropertyRef Name="strId" />
+            <PropertyRef Name="AspNetUsersId" />
+            <PropertyRef Name="srtId" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="commentId" Type="int" Nullable="false" />
+          <Property Name="comment" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="commentDate" Type="datetime" />
+          <Property Name="strId" Type="int" Nullable="false" />
+          <Property Name="AspNetUsersId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="srtId" Type="int" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="srtDate" Type="datetime" />
+          <Property Name="srtCounter" Type="int" />
+          <Property Name="movieId" Type="int" />
+          <Property Name="tvId" Type="int" />
+          <Property Name="dataId" Type="int" />
+          <Property Name="type" Type="int" />
+          <Property Name="dataSize" Type="int" />
+          <Property Name="Expr1" Type="int" Nullable="false" />
+          <Property Name="dataName" Type="nvarchar" MaxLength="250" />
+          <Property Name="dataText" Type="text" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -282,6 +319,29 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <EntitySet Name="SrtData" EntityType="Self.SrtData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SrtFile" EntityType="Self.SrtFile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TvShow" EntityType="Self.TvShow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommentCollection" EntityType="Self.CommentCollection" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CommentCollection].[Id] AS [Id], 
+    [CommentCollection].[UserName] AS [UserName], 
+    [CommentCollection].[commentId] AS [commentId], 
+    [CommentCollection].[comment] AS [comment], 
+    [CommentCollection].[commentDate] AS [commentDate], 
+    [CommentCollection].[strId] AS [strId], 
+    [CommentCollection].[AspNetUsersId] AS [AspNetUsersId], 
+    [CommentCollection].[srtId] AS [srtId], 
+    [CommentCollection].[title] AS [title], 
+    [CommentCollection].[srtDate] AS [srtDate], 
+    [CommentCollection].[srtCounter] AS [srtCounter], 
+    [CommentCollection].[movieId] AS [movieId], 
+    [CommentCollection].[tvId] AS [tvId], 
+    [CommentCollection].[dataId] AS [dataId], 
+    [CommentCollection].[type] AS [type], 
+    [CommentCollection].[dataSize] AS [dataSize], 
+    [CommentCollection].[Expr1] AS [Expr1], 
+    [CommentCollection].[dataName] AS [dataName], 
+    [CommentCollection].[dataText] AS [dataText]
+    FROM [dbo].[CommentCollection] AS [CommentCollection]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="SrtCollection" EntityType="Self.SrtCollection" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [SrtCollection].[srtId] AS [srtId], 
@@ -350,7 +410,6 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
     <edmx:ConceptualModels>
       <Schema Namespace="SkjatextiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SkjatextiEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Request" EntityType="SkjatextiModel.Request" />
           <EntitySet Name="C__MigrationHistory" EntityType="SkjatextiModel.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="SkjatextiModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="SkjatextiModel.AspNetUserClaims" />
@@ -394,16 +453,9 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
             <End Role="SrtFile" EntitySet="SrtFile" />
           </AssociationSet>
           <EntitySet Name="SrtCollection" EntityType="SkjatextiModel.SrtCollection" />
+          <EntitySet Name="CommentCollection" EntityType="SkjatextiModel.CommentCollection" />
+          <EntitySet Name="Request" EntityType="SkjatextiModel.Request" />
           </EntityContainer>
-        <EntityType Name="Request">
-          <Key>
-            <PropertyRef Name="reqId" />
-          </Key>
-          <Property Name="reqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="requestText" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="reqDate" Type="DateTime" Precision="3" />
-          <Property Name="reqLike" Type="Int32" />
-        </EntityType>
         <EntityType Name="C__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -641,22 +693,56 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
           <Property Name="dataText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="dataName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="CommentCollection">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="commentId" />
+            <PropertyRef Name="comment" />
+            <PropertyRef Name="strId" />
+            <PropertyRef Name="AspNetUsersId" />
+            <PropertyRef Name="srtId" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="Expr1" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="commentId" Type="Int32" Nullable="false" />
+          <Property Name="comment" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="commentDate" Type="DateTime" Precision="3" />
+          <Property Name="strId" Type="Int32" Nullable="false" />
+          <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="srtId" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="srtDate" Type="DateTime" Precision="3" />
+          <Property Name="srtCounter" Type="Int32" />
+          <Property Name="movieId" Type="Int32" />
+          <Property Name="tvId" Type="Int32" />
+          <Property Name="dataId" Type="Int32" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="dataSize" Type="Int32" />
+          <Property Name="Expr1" Type="Int32" Nullable="false" />
+          <Property Name="dataName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="dataText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="reqId" />
+          </Key>
+          <Property Name="reqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reqTitle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="reqDate" Type="DateTime" Precision="3" />
+          <Property Name="reqLike" Type="Int32" />
+          <Property Name="reqEpisodeNr" Type="Int32" />
+          <Property Name="reqSeasonNr" Type="Int32" />
+          <Property Name="reqEpisodeTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="reqYear" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SkjatextiModelStoreContainer" CdmEntityContainer="SkjatextiEntities">
-          <EntitySetMapping Name="Request">
-            <EntityTypeMapping TypeName="SkjatextiModel.Request">
-              <MappingFragment StoreEntitySet="Request">
-                <ScalarProperty Name="reqLike" ColumnName="reqLike" />
-                <ScalarProperty Name="reqDate" ColumnName="reqDate" />
-                <ScalarProperty Name="requestText" ColumnName="requestText" />
-                <ScalarProperty Name="reqId" ColumnName="reqId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="C__MigrationHistory">
             <EntityTypeMapping TypeName="SkjatextiModel.C__MigrationHistory">
               <MappingFragment StoreEntitySet="__MigrationHistory">
@@ -797,6 +883,45 @@ warning 6002: The table/view 'VERK014_H32.dbo.SrtCollection' does not have a pri
                 <ScalarProperty Name="srtDate" ColumnName="srtDate" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="srtId" ColumnName="srtId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommentCollection">
+            <EntityTypeMapping TypeName="SkjatextiModel.CommentCollection">
+              <MappingFragment StoreEntitySet="CommentCollection">
+                <ScalarProperty Name="dataText" ColumnName="dataText" />
+                <ScalarProperty Name="dataName" ColumnName="dataName" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="dataSize" ColumnName="dataSize" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="dataId" ColumnName="dataId" />
+                <ScalarProperty Name="tvId" ColumnName="tvId" />
+                <ScalarProperty Name="movieId" ColumnName="movieId" />
+                <ScalarProperty Name="srtCounter" ColumnName="srtCounter" />
+                <ScalarProperty Name="srtDate" ColumnName="srtDate" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="srtId" ColumnName="srtId" />
+                <ScalarProperty Name="AspNetUsersId" ColumnName="AspNetUsersId" />
+                <ScalarProperty Name="strId" ColumnName="strId" />
+                <ScalarProperty Name="commentDate" ColumnName="commentDate" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="commentId" ColumnName="commentId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request">
+            <EntityTypeMapping TypeName="SkjatextiModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="reqYear" ColumnName="reqYear" />
+                <ScalarProperty Name="reqEpisodeTitle" ColumnName="reqEpisodeTitle" />
+                <ScalarProperty Name="reqSeasonNr" ColumnName="reqSeasonNr" />
+                <ScalarProperty Name="reqEpisodeNr" ColumnName="reqEpisodeNr" />
+                <ScalarProperty Name="reqLike" ColumnName="reqLike" />
+                <ScalarProperty Name="reqDate" ColumnName="reqDate" />
+                <ScalarProperty Name="reqTitle" ColumnName="reqTitle" />
+                <ScalarProperty Name="reqId" ColumnName="reqId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using skjatextar.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -100,7 +101,7 @@ namespace skjatextar.BLL
             // Creates new empty list using collectionofst
             var list = new List<Models.CollectionOfSrt>();
 
-            // compares input string to database
+            // Compares input string to database
             List<Models.CollectionOfSrt> listOfAll = GetBothTvshowsAndMovies().Where(b => ContainsIgnoreCase(b.title,s) 
                                                                                     || ContainsIgnoreCase(b.episodeTitle,s)
                                                                                     || ContainsIgnoreCase(b.episodeAbout,s)) .ToList();
@@ -164,18 +165,6 @@ namespace skjatextar.BLL
 
             }
             return list;
-        }
-
-        // Search tables of TvShows and Movies
-        public List<Models.CollectionOfSrt> Search()
-        {
-            SkjatextiEntities contex = new SkjatextiEntities();
-            var searchResult = new List<Models.CollectionOfSrt>();
-            var query = (from item in contex.SrtFile
-                         where item.title == "Big"
-                         select item).ToList();
-
-            return searchResult;
         }
 
         /*public List<Models.CollectionOfSrt> GetSrtData()
@@ -272,5 +261,18 @@ namespace skjatextar.BLL
 
            return moep;
        }
+
+       /*public Models.SrtFileModel DownloadCount()
+       {
+           SkjatextiEntities contex = new SkjatextiEntities();
+           int srtCounter = 0;
+
+           var srtF = new SrtFile();
+           // Counter goes up by 1 each time a file is downloaded
+           srtCounter++;
+           srtF.srtCounter = srtCounter;
+           contex.SrtFile.Add(srtF);
+           contex.SaveChanges();
+       }*/
     }
 }

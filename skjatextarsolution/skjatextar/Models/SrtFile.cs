@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -17,5 +18,7 @@ namespace skjatextar.Models
         public int srtCounter { get; set; }
         public int srtLike { get; set; }
         public int type { get; set; }
+
+        public virtual SrtData SrtData { get; set; }
     }
 }

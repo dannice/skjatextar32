@@ -1,0 +1,135 @@
+﻿@model IEnumerable<skjatextar.Models.CollectionComment>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.commentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.comment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.report)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.commentDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.srtId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.srtDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.srtReady)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rdDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.srtCounter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.srtLike)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dataId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dataFile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dataSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dataName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dataCont)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dataText)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.commentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.comment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.report)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.commentDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.srtId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.srtDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.srtReady)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.rdDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.srtCounter)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.srtLike)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dataId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dataFile)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dataSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dataName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dataCont)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dataText)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

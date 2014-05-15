@@ -1,18 +1,15 @@
-﻿@model skjatextar.Models.CollectionOfSrt
+﻿    @model skjatextar.Models.CollectionOfSrt
 @{
-    ViewBag.Title = "Upload";
+    ViewBag.Title = "NyBeidni";
 }
 
 <div>
-    <h2>Upload</h2>
-   @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal", role = "form",id ="uploadForm" }))
-{
-        @Html.ValidationSummary(true)
-        <div id="fileUpload" class="form-group">
-            <div class="col-md-10 col-md-offset-2">
-                <input type="file" name="file"/>
-            </div>
-        </div>
+    <h2>Ný Beiðni</h2>
+    @using (Html.BeginForm("NewRequest", "Home", FormMethod.Post, new { enctype = "multipart/form-data",@class = "form-horizontal",role = "form",id ="beidniForm"}))
+    {
+         @Html.ValidationSummary(true)
+        
+         
         <div id="title" class="form-group">
             @Html.LabelFor(m => m.title, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
@@ -83,3 +80,14 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+       

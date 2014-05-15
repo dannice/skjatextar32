@@ -25,7 +25,6 @@ namespace skjatextar
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Request> Request { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
@@ -37,5 +36,7 @@ namespace skjatextar
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<SrtFile> SrtFile { get; set; }
         public virtual DbSet<SrtCollection> SrtCollection { get; set; }
+        public virtual DbSet<CommentCollection> CommentCollection { get; set; }
+        public virtual DbSet<Request> Request { get; set; }
     }
 }

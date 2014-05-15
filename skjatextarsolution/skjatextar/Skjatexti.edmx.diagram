@@ -4,8 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="14c28a668fe04fef920ba16ca1b686c2" Name="Diagram1">
-        <EntityTypeShape EntityType="SkjatextiModel.Request" Width="1.5" PointX="0.875" PointY="3.125" />
+      <Diagram DiagramId="14c28a668fe04fef920ba16ca1b686c2" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="SkjatextiModel.C__MigrationHistory" Width="1.5" PointX="12" PointY="5" />
         <EntityTypeShape EntityType="SkjatextiModel.AspNetRoles" Width="1.5" PointX="8.25" PointY="0.875" />
         <EntityTypeShape EntityType="SkjatextiModel.AspNetUserClaims" Width="1.5" PointX="12.25" PointY="0.875" />
@@ -25,6 +24,8 @@
         <AssociationConnector Association="SkjatextiModel.FK__SrtFile__dataId__0F975522" />
         <AssociationConnector Association="SkjatextiModel.FK__SrtFile__tvId__0EA330E9" />
         <EntityTypeShape EntityType="SkjatextiModel.SrtCollection" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SkjatextiModel.CommentCollection" Width="1.5" PointX="3.375" PointY="7.75" />
+        <EntityTypeShape EntityType="SkjatextiModel.Request" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

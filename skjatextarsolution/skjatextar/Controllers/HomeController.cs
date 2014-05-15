@@ -14,10 +14,10 @@ namespace skjatextar.Controllers
     public class HomeController : ApplicationController
     {
 
+        SkjatextiRepository bll = new SkjatextiRepository();
+
         public ActionResult Index()
         {
-
-            var bll = new SkjatextiRepository();
             var query = bll.GetTopTenSrt();
 
             //return View(users);
@@ -26,7 +26,8 @@ namespace skjatextar.Controllers
 
         public ActionResult About()
         {
-            //ViewBag.Message = "Your application description page.";
+			ViewBag.Main = "Um Ístexta";
+            ViewBag.Message = "Siðareglur Ístexta";
             //var bll = new SkjatextiBLL();
             //var request = bll.GetRequests();
             //return View(request);
@@ -36,7 +37,7 @@ namespace skjatextar.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            //ViewBag.Message = "Ístextar - Hafðu samband";
 
             return View();
         }
@@ -155,7 +156,6 @@ namespace skjatextar.Controllers
 
         public ActionResult Details(int? id)
         {
-            SkjatextiRepository bll = new SkjatextiRepository();
             var getDetails = bll.GetBothTvshowsAndMovies();
 
             var result = (from elem in getDetails
@@ -177,7 +177,7 @@ namespace skjatextar.Controllers
             string text = "";
             // New empty filename
             string filename = "";
-            // int? counter = ++;
+            int dataId = 0;
             // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
@@ -186,12 +186,31 @@ namespace skjatextar.Controllers
                              select s).FirstOrDefault();
                 text = query.dataText;
                 filename = query.dataName;
-                // var srtItem = new SrtFile();
-                // counter = srtItem.srtCounter;
 
+                //dataId = query.dataId;
+                
+                // Counter goes up by 1 each time a file is downloaded
+                //db.SaveChanges(); 
             }
+
+           //UpDownloadCounter(id);
+
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
+        }
+
+        // Counter virkar ekki!
+        private void UpDownloadCounter(int? dataId)
+        {
+            // Gets SrtFile from db and ups the download counter
+            using (var db = new SkjatextiEntities())
+                    {
+                        var query = (from s in db.SrtFile
+                                     where s.dataId == dataId
+                                     select s).FirstOrDefault();
+                        query.srtCounter++;
+                        db.SaveChanges();
+                    }
         }
 
         // Showing search result from text box
@@ -207,12 +226,109 @@ namespace skjatextar.Controllers
 
             return View(results);
         }
-        
-        public ActionResult NyBeidni()
+
+        public ActionResult GetComments()
         {
-            return View();
+            CommentRepository cmm = new CommentRepository();
+            var model = cmm.GetAllComments();
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult InsertCommment(string strComment)
+        {
+            CommentRepository comRep = new CommentRepository();
 
-    }
+            if (!String.IsNullOrEmpty(strComment))
+            {
+                Comment c = new Comment();
+
+                c.comment1 = strComment;
+                String strUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                if (!String.IsNullOrEmpty(strUser))
+                {
+                    int slashPos = strUser.IndexOf("\\");
+                    if (slashPos != -1)
+                    {
+                        strUser = strUser.Substring(slashPos + 1);
+                    }
+                    c.AspNetUsers.UserName = strUser;
+
+                    comRep.AddComment(c);
+                }
+                else
+                {
+                    c.AspNetUsers.UserName = "Unknown user";
+                }
+                return Json("SUCCESS", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                ModelState.AddModelError("CommentText", "Comment text cannot be empty!");
+                return Json("FAILED", JsonRequestBehavior.AllowGet);
+            }
+        }
+            
+            private string getCurrentUser()
+            {
+                var user = new RegisterViewModel();
+                String strUser = user.UserName;
+                if (!String.IsNullOrEmpty(strUser))
+                {
+                    int slashPos = strUser.IndexOf("\\");
+                    if (slashPos != -1)
+                    {
+                        strUser = strUser.Substring(slashPos + 1);
+                    }
+                }
+                return strUser;
+            }
+
+            /// <summary>
+            /// View for new request
+            /// </summary>
+            [HttpGet]
+            public ActionResult NewRequest()
+            {
+                
+                return View();
+            }
+
+       /* [HttpPost]
+        public ActionResult newRequest(FormCollection col)
+            {
+                SkjatextiRepository req = new SkjatextiRepository();
+
+                var radioType= col["type"];
+                string title = col["title"];
+
+                if ("1".Equals(radioType))
+                {
+                    int year = Convert.ToInt32(col["year"]);
+                    movieItem.year = year;
+                    db.Movie.Add(movieItem);
+                    srtItem.movieId = movieItem.movieId;
+                    // Type 1 if movie.
+                    srtItem.type = 1;
+                }
+                else if ("2".Equals(radioType))
+                {
+                    // Vantar að setja inn að episodeNr og seasonNr er skylda.
+                    // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
+                    string episodeTitle = col["episodeTitle"];
+                    string episodeAbout = col["episodeAbout"];
+                    int episodeNr = Convert.ToInt32(col["episode"]);
+                    int seasonNr = Convert.ToInt32(col["season"]);
+                    tvItem.episode = episodeNr;
+                    tvItem.season = seasonNr;
+                    tvItem.episodeTitle = episodeTitle;
+                    tvItem.episodeAbout = episodeAbout;
+                    db.TvShow.Add(tvItem);
+                    srtItem.tvId = tvItem.tvId;
+                    srtItem.type = 2;
+                }
+
+                return RedirectToAction("Index");
+            }*/
+        }
+    
 }

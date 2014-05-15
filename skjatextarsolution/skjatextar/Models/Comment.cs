@@ -6,14 +6,12 @@ using System.Web;
 
 namespace skjatextar.Models
 {
-    public class CommentModel
+    public class Comment
     {
         public int commentId { get; set; }
         [Required]
         public string comment { get; set; }
         public int report { get; set; }
-        public DateTime commentDate { get; set; }
-
-
+        public DateTime? commentDate { get; set; }
     }
 }
