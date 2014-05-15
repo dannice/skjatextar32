@@ -324,7 +324,7 @@
     <Content Include="Views\Home\EditFile.cshtml" />
     <Content Include="Views\Home\Details.cshtml" />
     <Content Include="Views\Home\SearchResult.cshtml" />
-    <Content Include="Views\Home\NyBeidni.cshtml" />
+    <Content Include="Views\Home\NewRequest.cshtml" />
     <Content Include="Views\Home\Comment.cshtml" />
     <Content Include="Views\Home\CommentView.cshtml" />
   </ItemGroup>

@@ -28,6 +28,8 @@ namespace skjatextar.BLL
             return list;
         }
 
+
+
         /*public List<Models.RequestModel> GetRequests()
         {
             SkjatextiEntities context = new SkjatextiEntities();
