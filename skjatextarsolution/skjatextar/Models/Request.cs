@@ -25,5 +25,6 @@ namespace skjatextar.Models
         [Required(ErrorMessage = "Verður að skrá seríu!")]
         public int? reqSeasonNr { get; set; }
         public string reqEpisodeTitle { get; set; }
+
     }
 }

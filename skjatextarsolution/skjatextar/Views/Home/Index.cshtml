@@ -1,4 +1,4 @@
-﻿@model List<skjatextar.Models.CollectionOfSrt> 
+﻿
 @{
     ViewBag.Title = "Home Page";
 }
@@ -19,18 +19,14 @@
                     <table class="table table-striped">
                         <tbody>
                            
-                            @foreach (var item in Model)
+                            @foreach (var item in ViewBag.tvpopular)
                             {
                                 
-                                
-                                if (item.type == 2)
-                                {
                                     
                                     <tr>
                                         <td>
-                                            
-                                            @Html.ActionLink(item.title, "Details", new { id = item.srtId })
-                                        </td>
+                                           @Html.ActionLink((string)item.title, "Details", new { id = item.srtId })
+                                        
                                         <td>
                                             Sería: @item.season
                                         </td>
@@ -45,7 +41,7 @@
                                             <a href="@Url.Action("Download", new {id = item.srtId})"><span class="glyphicon glyphicon-download-alt"></span></a>
                                         </td>
                                         <td>
-                                            <a href="@Url.Action("EditFile", new {id = item.srtId})"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a href="@Url.Action("EditFile", new {id = @item.srtId})"><span class="glyphicon glyphicon-edit"></span></a>
 
                                         </td>
 
@@ -53,7 +49,7 @@
                                     </tr>
                                 }
 
-                            }
+                            
                         </tbody>
                     </table>
 
@@ -67,13 +63,13 @@
                     <table class="table table-striped">
                         <tbody>
 
-                            @foreach (var item in Model)
+                            @foreach (var item in ViewBag.moviepopular)
                             {
-                                if (item.type == 1)
-                                {
+                               
+                                
                                     <tr>
                                         <td>
-                                            @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                            @Html.ActionLink((string)item.title, "Details", new { id = item.srtId })
                                         </td>
                                         <td>
                                             Árgerð: @item.year
@@ -89,7 +85,7 @@
 
                                         </td>
                                     </tr>
-                                }
+                              
 
                             }
                         </tbody>
@@ -108,16 +104,17 @@
                 <div class="panel-body">
                     <table class="table table-striped">
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in ViewBag.request)
                             {
+
+
                                 <tr>
                                     <td>
-                                        @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                        @item.reqTitle
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
-                                    </td>
-
+                                        @item.reqDate
+                                    </td>                                    
                                 </tr>
 
                             }
@@ -133,17 +130,13 @@
                 <div class="panel-body">
                     <table class="table table-striped">
                         <tbody>
-                            @foreach (var item in ViewBag.requests)
+                            @foreach (var item in ViewBag.newest)
                             {
-                                if(item.type == 1)
-                                {
                                     <tr>
                                         <td>
-                                            @Html.ActionLink(item.title, "Details", new { id = item.srtId })
+                                          @Html.ActionLink((string)item.title, "Details", new { id = item.srtId })
                                         </td>
-                                        <td>
-                                            Árgerð: @item.year
-                                        </td>
+                                        
                                         <td>
                                             @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
                                         </td>
@@ -155,36 +148,6 @@
 
                                         </td>
                                     </tr>
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td>
-                                            
-                                            @Html.ActionLink(item.title, "Details", new { id = item.srtId })
-                                        </td>
-                                        <td>
-                                            Sería: @item.season
-                                        </td>
-                                        <td>
-                                            Þáttur: @item.episode
-                                        </td>
-
-                                        <td>
-                                            @Html.ActionLink("Nánar", "Details", new { id = item.srtId })
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("Download", new {id = item.srtId})"><span class="glyphicon glyphicon-download-alt"></span></a>
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("EditFile", new {id = item.srtId})"><span class="glyphicon glyphicon-edit"></span></a>
-
-                                        </td>
-
-                                       
-                                    </tr>
-                                }
-                                
 
                             }
                         </tbody>
