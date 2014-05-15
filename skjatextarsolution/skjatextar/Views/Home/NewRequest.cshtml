@@ -22,28 +22,27 @@
             @Html.LabelFor(m => m.reqYear, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.reqYear, new { @class = "form-control", type = "number" })
-                @Html.ValidationMessage("reqYea")
             </div>
        </div>
     <div id="season" class="form-group tv-field">
         @Html.LabelFor(m => m.reqSeasonNr, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.reqSeasonNr, new { @class = "form-control", type = "number" })
-            @Html.ValidationMessage("reqSeasonNr")
+           
         </div>
     </div>
     <div id="episode" class="form-group tv-field">
         @Html.LabelFor(m => m.reqEpisodeTitle, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.reqEpisodeTitle, new { @class = "form-control" })
-            @Html.ValidationMessage("reqEpisodeTitle")
+            
         </div>
     </div>
          <div id="episodeAbout"class="form-group tv-field" >
             @Html.LabelFor(m => m.reqEpisodeNr, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.reqEpisodeNr, new { @class = "form-control",type ="number" })
-                @Html.ValidationMessage("reqEpisodeNr")
+                
             </div>
        </div>
          

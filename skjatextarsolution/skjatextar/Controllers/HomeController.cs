@@ -307,43 +307,30 @@ namespace skjatextar.Controllers
         [HttpPost]
         public ActionResult NewRequest(FormCollection col)
             {
-                SkjatextiRepository req = new SkjatextiRepository();
+                //SkjatextiRepository req = new SkjatextiRepository();
 
-                var radioType= col["type"];
-                string title = col["title"];
-                string episodeTitle = col["episodeTitle"];
-                //int year = Convert.ToInt32(col["year"]);
-                int season = Convert.ToInt32(col["season"]);
-                var episode = Convert.ToInt32(col["episode"]);
-                string episodeAbout = col["episodeAbout"];
-
-                var request = new Request();
-
-                /*if ("1".Equals(radioType))
+                string title = col["reqTitle"];
+                string episodeTitle = col["reqEpisodeTitle"];
+                int year = Convert.ToInt32(col["reqYear"]);
+                int season = Convert.ToInt32(col["reqSeasonNr"]);
+                var episode = Convert.ToInt32(col["reqEpisodeNr"]);
+                
+                using(var db = new SkjatextiEntities())
                 {
-                    int year = Convert.ToInt32(col["year"]);
-                    Movie.year = year;
-                    db.Movie.Add(movieItem);
-                    srtItem.movieId = movieItem.movieId;
-                    // Type 1 if movie.
-                    srtItem.type = 1;
+                    var request = new Request();
+
+                    request.reqTitle = title;
+                    request.reqEpisodeTitle = episodeTitle;
+                    request.reqYear = year;
+                    request.reqSeasonNr = season;
+                    request.reqEpisodeNr = episode;
+                    request.reqDate = DateTime.Today;
+                    db.Request.Add(request);
+
+                    db.SaveChanges();
                 }
-                /*else if ("2".Equals(radioType))
-                {
-                    // Vantar að setja inn að episodeNr og seasonNr er skylda.
-                    // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
-                    string episodeTitle = col["episodeTitle"];
-                    string episodeAbout = col["episodeAbout"];
-                    int episodeNr = Convert.ToInt32(col["episode"]);
-                    int seasonNr = Convert.ToInt32(col["season"]);
-                    tvItem.episode = episodeNr;
-                    tvItem.season = seasonNr;
-                    tvItem.episodeTitle = episodeTitle;
-                    tvItem.episodeAbout = episodeAbout;
-                    db.TvShow.Add(tvItem);
-                    srtItem.tvId = tvItem.tvId;
-                    srtItem.type = 2;
-                }*/
+
+            
                 return View();
 
                 //return RedirectToAction("Index");
