@@ -176,6 +176,7 @@ namespace skjatextar.Controllers
             string text = "";
             // New empty filename
             string filename = "";
+            int dataId = 0;
             // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
@@ -184,14 +185,31 @@ namespace skjatextar.Controllers
                              select s).FirstOrDefault();
                 text = query.dataText;
                 filename = query.dataName;
-             
-                db.SaveChanges();
+
+                //dataId = query.dataId;
+                
+                // Counter goes up by 1 each time a file is downloaded
+                //db.SaveChanges(); 
             }
 
-            //var count = bll.DownloadCount();
+           //UpDownloadCounter(id);
 
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
+        }
+
+        // Counter virkar ekki!
+        private void UpDownloadCounter(int? dataId)
+        {
+            // Gets SrtFile from db and ups the download counter
+            using (var db = new SkjatextiEntities())
+                    {
+                        var query = (from s in db.SrtFile
+                                     where s.dataId == dataId
+                                     select s).FirstOrDefault();
+                        query.srtCounter++;
+                        db.SaveChanges();
+                    }
         }
 
         // Showing search result from text box
