@@ -39,7 +39,7 @@ namespace skjatextar.BLL
             {
                 var request = new Models.RequestModel();
                 request.reqId = item.reqId;
-                request.requestText = item.requestText;
+                request.reqTitle = item.reqTitle;
                 request.reqDate = item.reqDate;
                 request.reqLike = item.reqLike;
                 list.Add(request);

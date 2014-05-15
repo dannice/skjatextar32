@@ -10,8 +10,11 @@ namespace skjatextar.Models
     {
         public int reqId { get; set; }
         [Required]
-        public string requestText { get; set; }
+        public string reqTitle { get; set; }
         public DateTime? reqDate { get; set; }
         public int? reqLike { get; set; }
+        public int reqEpisodeNr { get; set; }
+        public int reqSeasonNr { get; set; }
+        public string reqEpisodeTitle { get; set; }
     }
 }

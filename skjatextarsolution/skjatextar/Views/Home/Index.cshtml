@@ -36,6 +36,9 @@
                                     <td>
                                         @Html.Raw(Html.ActionLink("Niðurhala", "Download", new { id = item.srtId }))
                                     </td>
+                                    <td>
+                                        @Html.Raw(Html.ActionLink("Breyta", "EditFile", new { id = item.srtId }))
+                                    </td>
                                 </tr>
                             }
 
