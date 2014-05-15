@@ -1,16 +1,19 @@
 ﻿@{
     ViewBag.Title = "NyBeidni";
 }
+
 <div>
-    <h2>Ný Beiðni</h2>
+    <h2>Ný Beiðni/h2>
     @using (Html.BeginForm("", "Home/NyBeidni", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
 
+        
         <form role="form">
             <div class="form-group">
                 <label for="title">Titill</label>
                 <input type="text" class="form-control" name="title" placeholder="Sláðu inn titil">
             </div>
+
             <div class="radio">
                 <label>
                     <input type="radio" name="radioMovie" value="option1"> Kvikmynd
@@ -20,11 +23,13 @@
                 <label for="year">Útgáfuár</label>
                 <input type="number" class="form-control" name="yearMovie" placeholder="Sláðu inn ártal kvikmyndar">
             </div>
+
             <div class="radio">
                 <label>
                     <input type="radio" name="radioTv" value="option2"> Þáttaröð
                 </label>
             </div>
+
             <div class="form-group">
                 <label for="episodeTitle">Titill þáttar</label>
                 <input type="text" class="form-control" name="episodeTitle" placeholder="Sláðu inn titil þáttar">
@@ -34,17 +39,20 @@
                 <label for="season">Númer þáttaseríu</label>
                 <input type="number" class="form-control" name="seasonNr" placeholder="Veldu númer þáttaseríu">
             </div>
+
             <div class="form-group">
                 <label for="episode">Númer þáttar</label>
                 <input type="number" class="form-control" name="episodeNr" placeholder="Veldu númer þáttar">
             </div>
+
             <div>
                 <label for="episodeAbout">Athugasemd</label>
                 <textarea class="form-control" rows="3" name="episodeAbout"></textarea>
             </div>
             <div>
-                <input type="submit" value="Senda" class="btn btn-success" />
+                <input type="submit" value="Upphlaða" class="btn btn-success" />
             </div>
+
         </form>
     }
 </div>
