@@ -26,7 +26,7 @@ namespace skjatextar.Controllers
 
         public ActionResult About()
         {
-            //ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Siðareglur Ístexta";
             //var bll = new SkjatextiBLL();
             //var request = bll.GetRequests();
             //return View(request);
