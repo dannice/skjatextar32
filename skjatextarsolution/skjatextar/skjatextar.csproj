@@ -203,6 +203,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AlexTest.cs" />
     <Compile Include="Models\CollectionOfSrt.cs" />
     <Compile Include="Models\CommentModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
