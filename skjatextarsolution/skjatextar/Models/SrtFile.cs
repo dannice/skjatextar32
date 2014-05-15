@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -16,5 +17,6 @@ namespace skjatextar.Models
         public DateTime rdDate { get; set; }
         public int srtCounter { get; set; }
         public int srtLike { get; set; }
+        public int type { get; set; }
     }
 }

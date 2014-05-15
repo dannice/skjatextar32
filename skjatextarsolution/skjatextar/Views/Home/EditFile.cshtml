@@ -8,22 +8,36 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h2>Upload</h2>
+        <h2>Þýða texta</h2>
         <hr />
         @Html.ValidationSummary(true)
 
             <div class="form-horizontal">
-                <textarea name="dataText" rows="20" cols="300">@Model.dataText</textarea>
+                <textarea name="dataText" rows="20" cols="300" disabled>@Model.dataText</textarea>
+                <textarea name="dataText" rows="20" cols="300" class="pull-right">@Model.dataText</textarea>
             </div>
    
             <div>
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Vista" class="btn btn-success - btn pull-right" />
             </div>
     </div>
 }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
+    <div class="form-horizontal">
+        <h3>Kommentakerfi</h3>
+        <hr />
+        <h4>Hér geta innskráðir notendur skrifað komment.</h4>
+        @Html.ValidationSummary(true)
+
+        <div class="form-horizontal">
+            <table>
+                
+            </table>
+        </div>
+    </div>
+}
 

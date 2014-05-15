@@ -14,10 +14,10 @@ namespace skjatextar.Controllers
     public class HomeController : ApplicationController
     {
 
+        SkjatextiRepository bll = new SkjatextiRepository();
+
         public ActionResult Index()
         {
-
-            var bll = new SkjatextiRepository();
             var query = bll.GetTopTenSrt();
 
             //return View(users);
@@ -62,8 +62,8 @@ namespace skjatextar.Controllers
                 // Reads until end of the file.
                 string text = streamReader.ReadToEnd();
                 // Radio button from upload view
-                var radioMovie = col["radioMovie"];
-                var radioTv = col["radioTv"];
+       
+                var radioType= col["type"];
                 string title = col["title"];
                 
                 // Connects to database
@@ -79,27 +79,30 @@ namespace skjatextar.Controllers
                     dataItem.dataText = text;
                     db.SrtData.Add(dataItem);
                     srtItem.dataId = dataItem.dataId;
-                    if (!String.IsNullOrEmpty(radioMovie))
+                    if ("1".Equals(radioType))
                     {
-                        int year = Convert.ToInt32(col["yearMovie"]);
+                        int year = Convert.ToInt32(col["year"]);
                         movieItem.year = year;
                         db.Movie.Add(movieItem);
                         srtItem.movieId = movieItem.movieId;
+                        // Type 1 if movie.
+                        srtItem.type = 1;
                     }
-                    else if (!String.IsNullOrEmpty(radioTv))
+                    else if ("2".Equals(radioType))
                     {
                         // Vantar að setja inn að episodeNr og seasonNr er skylda.
                         // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
                         string episodeTitle = col["episodeTitle"];
                         string episodeAbout = col["episodeAbout"];
-                        int episodeNr = Convert.ToInt32(col["episodeNr"]);
-                        int seasonNr = Convert.ToInt32(col["seasonNr"]);
+                        int episodeNr = Convert.ToInt32(col["episode"]);
+                        int seasonNr = Convert.ToInt32(col["season"]);
                         tvItem.episode = episodeNr;
                         tvItem.season = seasonNr;
                         tvItem.episodeTitle = episodeTitle;
                         tvItem.episodeAbout = episodeAbout;
                         db.TvShow.Add(tvItem);
                         srtItem.tvId = tvItem.tvId;
+                        srtItem.type = 2;
                     }
 
                     // Hér vantar error message um ef hvorugt er valið, mynd eða þáttaröð.
@@ -107,8 +110,8 @@ namespace skjatextar.Controllers
                     srtItem.title = title;
                     srtItem.srtDate = DateTime.Today;
 
-                    db.SrtFile.Add(srtItem);
-                    db.SaveChanges();
+                   db.SrtFile.Add(srtItem);
+                   db.SaveChanges();
                 }
                 streamReader.Close();
             }
@@ -152,16 +155,17 @@ namespace skjatextar.Controllers
 
         public ActionResult Details(int? id)
         {
-            SkjatextiRepository bll = new SkjatextiRepository();
             var getDetails = bll.GetBothTvshowsAndMovies();
 
             var result = (from elem in getDetails
-                          where elem.tvId == id
+                          where elem.srtId == id
                           select elem).SingleOrDefault();
-            if (result != null)
-            {
-                return View(result);
-            }
+            
+            if (id != null)
+	        {
+		        return View(result);
+	        }
+            
             return View("error");
         }
 
@@ -180,7 +184,12 @@ namespace skjatextar.Controllers
                              select s).FirstOrDefault();
                 text = query.dataText;
                 filename = query.dataName;
+             
+                db.SaveChanges();
             }
+
+            //var count = bll.DownloadCount();
+
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
         }
@@ -198,5 +207,67 @@ namespace skjatextar.Controllers
 
             return View(results);
         }
-    }
+
+        public ActionResult GetComments()
+        {
+            CommentRepository cmm = new CommentRepository();
+            var model = cmm.GetAllComments();
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult InsertCommment(string strComment)
+        {
+            CommentRepository comRep = new CommentRepository();
+
+            if (!String.IsNullOrEmpty(strComment))
+            {
+                Comment c = new Comment();
+
+                c.comment1 = strComment;
+                String strUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                if (!String.IsNullOrEmpty(strUser))
+                {
+                    int slashPos = strUser.IndexOf("\\");
+                    if (slashPos != -1)
+                    {
+                        strUser = strUser.Substring(slashPos + 1);
+                    }
+                    c.AspNetUsers.UserName = strUser;
+
+                    comRep.AddComment(c);
+                }
+                else
+                {
+                    c.AspNetUsers.UserName = "Unknown user";
+                }
+                return Json("SUCCESS", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                ModelState.AddModelError("CommentText", "Comment text cannot be empty!");
+                return Json("FAILED", JsonRequestBehavior.AllowGet);
+            }
+        }
+            
+            private string getCurrentUser()
+            {
+                var user = new RegisterViewModel();
+                String strUser = user.UserName;
+                if (!String.IsNullOrEmpty(strUser))
+                {
+                    int slashPos = strUser.IndexOf("\\");
+                    if (slashPos != -1)
+                    {
+                        strUser = strUser.Substring(slashPos + 1);
+                    }
+                }
+                return strUser;
+            }
+
+            public ActionResult NyBeidni()
+            {
+                return View();
+            }
+        }
+    
 }

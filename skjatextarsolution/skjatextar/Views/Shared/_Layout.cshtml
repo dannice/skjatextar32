@@ -22,10 +22,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Upload", "Upload", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Forsíða", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Um ístexta", "About", "Home")</li>
+                    <li>@Html.ActionLink("Upphlaða", "Upload", "Home")</li>
+                    <li>@Html.ActionLink("Hafa samband", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -51,9 +51,12 @@
                         <div class="form-group">
                             <select id="selectShow" class="form-control">
                                 <option value="">Veldu sjónvarpsþátt</option>
+
                                 @foreach (var show in (List<skjatextar.Models.SrtFileModel>)ViewData["tvshows"])
                                 {
-                                    <option value="@show.srtId">@show.title</option>
+                                        
+                                        <option value="@show.srtId">@show.title</option>
+                                        
                                 }
                             </select>
                         </div>

@@ -2,7 +2,7 @@
 
     var tvDetails;
 
-
+   
 
     $("#selectEpisode").hide();
     $("#episodeInfo").hide();
@@ -42,25 +42,38 @@
         
     });
     
-
+    initUploadForm();
 });
 
-/*function search(movieShow) {
+function initUploadForm() {
 
-    console.log("search");
-    var list = getAll();
-};*/
-// gets list of everything in database
-/*function getAll() {
-    console.log("jo");
-    $.ajax({
-        type: "GET",
-        url: "/Home/GetBothTvshowsAndMovies/",
-        success: function (data) {
-            return data;
-        },
-    });
-};*/
+    var uploadForm = $("#uploadForm");
+    if(uploadForm.length > 0)
+    {
+        radioType = uploadForm.find("input[name='type']");
+        console.log(radioType);
+        $(".tv-field, .movie-field").hide();
+
+       console.log( $(".tv-field, .movie-field").length);
+
+        radioType.on("change", function () {
+            var typeValue = ($(this).val());
+
+            if(typeValue == 1)
+            {
+                $(".tv-field").fadeOut();
+                $(".movie-field").fadeIn();
+            }
+            else
+            {
+                $(".tv-field").fadeIn();
+                $(".movie-field").fadeOut();
+            }
+        })
+    }
+};
+
+
 function getEpisodes(srtId){  
     $.ajax({
         type: "GET",
@@ -79,11 +92,12 @@ function getEpisode(epId) {
         type: "GET",
         url: "/Home/GetEpisodeData?epId=" + epId,
         success: function (data) {
+            console.log(data);
             $("#season").text(data.season);
             $("#episode").text(data.episode);
             $("#episodeTitle").text(data.episodeTitle);
             $("#episodeAbout").text(data.episodeAbout);
-            $("#episodeLink").attr("href", "/Home/Details/" + epId);
+            $("#episodeLink").attr("href", "/Home/Details/" + data.srtId);
             console.log(data);
         },
     });

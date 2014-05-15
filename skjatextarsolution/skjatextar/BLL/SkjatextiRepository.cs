@@ -1,4 +1,5 @@
-﻿using System;
+﻿using skjatextar.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,6 +23,7 @@ namespace skjatextar.BLL
             // titles from the SrtFile table, since it duplicates 
             // Show names
             var result = (from item in contex.SrtFile
+                          where item.type == 2
                           group item by new {item.title} 
                           into showGroup
                           select showGroup.FirstOrDefault());
@@ -72,22 +74,22 @@ namespace skjatextar.BLL
         //
         // Returns info about episode to layout.
         //
-        public Models.TvShowModel GetEpisode(int epId)
+        public Models.CollectionOfSrt GetEpisode(int epId)
         {
             SkjatextiEntities contex = new SkjatextiEntities();
-            var list = new Models.TvShowModel();
-
-            var result = (from item in contex.TvShow
+       
+            var result = (from item in contex.SrtCollection
                          where item.tvId == epId
                          select item).FirstOrDefault();
 
-                    var episode = new Models.TvShowModel();
+                    var episode = new Models.CollectionOfSrt();
+                    episode.srtId = result.srtId;
                     episode.episodeTitle = result.episodeTitle;
                     episode.season = result.season;
                     episode.episode = result.episode;
                     episode.episodeAbout = result.episodeAbout;
                     episode.tvId = result.tvId;
-                    
+
             return episode;
         }
 
@@ -99,7 +101,7 @@ namespace skjatextar.BLL
             // Creates new empty list using collectionofst
             var list = new List<Models.CollectionOfSrt>();
 
-            // compares input string to database
+            // Compares input string to database
             List<Models.CollectionOfSrt> listOfAll = GetBothTvshowsAndMovies().Where(b => ContainsIgnoreCase(b.title,s) 
                                                                                     || ContainsIgnoreCase(b.episodeTitle,s)
                                                                                     || ContainsIgnoreCase(b.episodeAbout,s)) .ToList();
@@ -116,12 +118,13 @@ namespace skjatextar.BLL
             var list = new List<Models.CollectionOfSrt>();
             // Sql query thats selects all in SrtCollection and orders it by title
             var query = from item in contex.SrtCollection
-                         orderby item.title
+                         orderby item.srtId
                          select item;
             // Loops through every item in query.
             foreach (var item in query)
             {
                 var show = new Models.CollectionOfSrt();
+                show.srtId = item.srtId;
                 show.title = item.title;
                 show.tvId = item.tvId;
                 show.episodeAbout = item.episodeAbout;
@@ -130,6 +133,8 @@ namespace skjatextar.BLL
                 show.year = item.year;
                 show.episodeTitle = item.episodeTitle;
                 show.tvId = item.tvId;
+                show.movieId = item.movieId;
+                show.type = item.type;
                 list.Add(show);
 
             }
@@ -141,35 +146,25 @@ namespace skjatextar.BLL
             SkjatextiEntities contex = new SkjatextiEntities();
             var list = new List<Models.CollectionOfSrt>();
             var query = (from item in contex.SrtCollection
-                         orderby item.title
+                         orderby item.title 
                          select item).Take(10); 
             foreach (var item in query)
             {
                 var show = new Models.CollectionOfSrt();
                 show.title = item.title;
+                show.srtId = item.srtId;
                 show.tvId = item.tvId;
                 show.episodeAbout = item.episodeAbout;
                 show.season = item.season;
                 show.episode = item.episode;
                 show.year = item.year;
                 show.tvId = item.tvId;
-
+                show.movieId = item.movieId;
+                show.type = item.type;
                 list.Add(show);
 
             }
             return list;
-        }
-
-        // Search tables of TvShows and Movies
-        public List<Models.CollectionOfSrt> Search()
-        {
-            SkjatextiEntities contex = new SkjatextiEntities();
-            var searchResult = new List<Models.CollectionOfSrt>();
-            var query = (from item in contex.SrtFile
-                         where item.title == "Big"
-                         select item).ToList();
-
-            return searchResult;
         }
 
         /*public List<Models.CollectionOfSrt> GetSrtData()
@@ -217,6 +212,67 @@ namespace skjatextar.BLL
                 return false;
 
             return source.IndexOf(toCheck, StringComparison.CurrentCultureIgnoreCase) >= 0;
-        } 
+        }
+
+       public List<Models.CollectionOfSrt> GetAllTvshows()
+       {
+           // Connect to db through Skjatexti.context.cs
+           SkjatextiEntities contex = new SkjatextiEntities();
+           // Creates new empty list using collectionofstr
+           var list = new List<Models.CollectionOfSrt>();
+           // Sql query thats selects all in SrtCollection and orders it by title
+           var query = from item in contex.SrtCollection
+                       where item.type == 2
+                       orderby item.title
+                       select item;
+           // Loops through every item in query.
+           foreach (var item in query)
+           {
+               var show = new Models.CollectionOfSrt();
+               show.title = item.title;
+               show.tvId = item.tvId;
+               show.episodeAbout = item.episodeAbout;
+               show.season = item.season;
+               show.episode = item.episode;
+               show.episodeTitle = item.episodeTitle;
+               show.type = item.type;
+               list.Add(show);
+
+           }
+           return list;
+       }
+
+       public Models.CollectionOfSrt GetMovieAndEpisodeById(int id)
+       {
+           SkjatextiEntities contex = new SkjatextiEntities();
+
+           var result = (from item in contex.SrtCollection
+                         where item.srtId == id
+                         select item).FirstOrDefault();
+
+           var moep = new Models.CollectionOfSrt();
+           moep.title = result.title;
+           moep.tvId = result.tvId;
+           moep.episodeAbout = result.episodeAbout;
+           moep.season = result.season;
+           moep.episode = result.episode;
+           moep.episodeTitle = result.episodeTitle;
+           moep.type = result.type;
+
+           return moep;
+       }
+
+       /*public Models.SrtFileModel DownloadCount()
+       {
+           SkjatextiEntities contex = new SkjatextiEntities();
+           int srtCounter = 0;
+
+           var srtF = new SrtFile();
+           // Counter goes up by 1 each time a file is downloaded
+           srtCounter++;
+           srtF.srtCounter = srtCounter;
+           contex.SrtFile.Add(srtF);
+           contex.SaveChanges();
+       }*/
     }
 }
