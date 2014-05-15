@@ -1,58 +1,85 @@
-﻿@{
+﻿@model skjatextar.Models.CollectionOfSrt
+@{
     ViewBag.Title = "Upload";
 }
 
 <div>
     <h2>Upload</h2>
-    @using (Html.BeginForm("", "Home/Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        
-        <input type="file" name="file" /><br />
-    <form role="form">
-        <div class="form-group">
-            <label for="title">Titill</label>
-            <input type="text" class="form-control" name="title" placeholder="Sláðu inn titil">
+   @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal", role = "form",id ="uploadForm" }))
+{
+        @Html.ValidationSummary(true)
+        <div id="fileUpload" class="form-group">
+            <div class="col-md-10 col-md-offset-2">
+                <input type="file" name="file"/>
+            </div>
         </div>
+        <div id="title" class="form-group">
+            @Html.LabelFor(m => m.title, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.title, new { @class = "form-control" })
+                @Html.ValidationMessage("title")
+            </div>
+        </div>
+       <div class="form-group">
+           <div class="col-md-10 col-md-offset-2">
+               @Html.RadioButtonFor(m => m.type, "1") Kvikmynd
+               @Html.RadioButtonFor(m => m.type, "2") Þáttur
+               @Html.ValidationMessage("type")
+           </div>
+       </div>
+    <div id="episodeTitle" class="form-group tv-field">
+        @Html.LabelFor(m => m.episodeTitle, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.episodeTitle, new { @class = "form-control" })
+            @Html.ValidationMessage("episodeTitle")
+        </div>
+    </div>
+         <div id="year" class="form-group movie-field">
+            @Html.LabelFor(m => m.year, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.year, new { @class = "form-control", type = "number" })
+                @Html.ValidationMessage("year")
+            </div>
+       </div>
+    <div id="season" class="form-group tv-field">
+        @Html.LabelFor(m => m.season, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.season, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessage("season")
+        </div>
+    </div>
+    <div id="episode" class="form-group tv-field">
+        @Html.LabelFor(m => m.episode, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.episode, new { @class = "form-control", type = "number" })
+            @Html.ValidationMessage("episode")
+        </div>
+    </div>
+         <div id="episodeAbout"class="form-group tv-field" >
+            @Html.LabelFor(m => m.episodeAbout, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.episodeAbout, new { @class = "form-control" })
+                @Html.ValidationMessage("episodeAbout")
+            </div>
+       </div>
+         <div id="dataFile" class="form-group">
+            @Html.LabelFor(m => m.dataFile, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => m.dataFile, new { @class = "form-control" })
+                @Html.ValidationMessage("dataFile")
+            </div>
+       </div>
+     
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div>
+                <input type="submit" value="Upphlaða" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
 
-        <div class="radio">
-            <label>
-                <input type="radio" name="radioMovie" value="option1"> Kvikmynd
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="year">Útgáfuár</label>
-            <input type="number" class="form-control" name="yearMovie" placeholder="Sláðu inn ártal kvikmyndar">
-        </div>
-
-        <div class="radio">
-            <label>
-                <input type="radio" name="radioTv" value="option2"> Þáttaröð
-            </label>
-        </div>
-
-        <div class="form-group">
-             <label for="episodeTitle">Titill þáttar</label>
-             <input type="text" class="form-control" name="episodeTitle" placeholder="Sláðu inn titil þáttar">
-        </div>
-        
-        <div class="form-group">
-            <label for="season">Númer þáttaseríu</label>
-            <input type="number" class="form-control" name="seasonNr" placeholder="Veldu númer þáttaseríu">
-        </div>
-
-        <div class="form-group">
-            <label for="episode">Númer þáttar</label>
-            <input type="number" class="form-control" name="episodeNr" placeholder="Veldu númer þáttar">
-        </div>
-
-        <div>
-        <label for="episodeAbout">Athugasemd</label>
-            <textarea class="form-control" rows="3" name="episodeAbout"></textarea>
-        </div>
-        <div>
-            <input type="submit" value="Upphlaða" class="btn btn-success" />
-        </div>
-
-    </form>
     }
-</div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

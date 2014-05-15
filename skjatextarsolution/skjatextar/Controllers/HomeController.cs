@@ -62,8 +62,8 @@ namespace skjatextar.Controllers
                 // Reads until end of the file.
                 string text = streamReader.ReadToEnd();
                 // Radio button from upload view
-                var radioMovie = col["radioMovie"];
-                var radioTv = col["radioTv"];
+       
+                var radioType= col["type"];
                 string title = col["title"];
                 
                 // Connects to database
@@ -79,23 +79,23 @@ namespace skjatextar.Controllers
                     dataItem.dataText = text;
                     db.SrtData.Add(dataItem);
                     srtItem.dataId = dataItem.dataId;
-                    if (!String.IsNullOrEmpty(radioMovie))
+                    if ("1".Equals(radioType))
                     {
-                        int year = Convert.ToInt32(col["yearMovie"]);
+                        int year = Convert.ToInt32(col["year"]);
                         movieItem.year = year;
                         db.Movie.Add(movieItem);
                         srtItem.movieId = movieItem.movieId;
                         // Type 1 if movie.
                         srtItem.type = 1;
                     }
-                    else if (!String.IsNullOrEmpty(radioTv))
+                    else if ("2".Equals(radioType))
                     {
                         // Vantar að setja inn að episodeNr og seasonNr er skylda.
                         // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
                         string episodeTitle = col["episodeTitle"];
                         string episodeAbout = col["episodeAbout"];
-                        int episodeNr = Convert.ToInt32(col["episodeNr"]);
-                        int seasonNr = Convert.ToInt32(col["seasonNr"]);
+                        int episodeNr = Convert.ToInt32(col["episode"]);
+                        int seasonNr = Convert.ToInt32(col["season"]);
                         tvItem.episode = episodeNr;
                         tvItem.season = seasonNr;
                         tvItem.episodeTitle = episodeTitle;
@@ -110,8 +110,8 @@ namespace skjatextar.Controllers
                     srtItem.title = title;
                     srtItem.srtDate = DateTime.Today;
 
-                    db.SrtFile.Add(srtItem);
-                    db.SaveChanges();
+                   db.SrtFile.Add(srtItem);
+                   db.SaveChanges();
                 }
                 streamReader.Close();
             }
