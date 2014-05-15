@@ -177,13 +177,14 @@ namespace skjatextar.Controllers
             string text = "";
             // New empty filename
             string filename = "";
-            int dataId = 0;
+            
             // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
-                var query = (from s in db.SrtData
-                             where s.dataId == id
+                var query = (from s in db.SrtCollection
+                             where s.srtId == id
                              select s).FirstOrDefault();
+
                 text = query.dataText;
                 filename = query.dataName;
 
@@ -193,22 +194,31 @@ namespace skjatextar.Controllers
                 //db.SaveChanges(); 
             }
 
-           //UpDownloadCounter(id);
+           UpDownloadCounter(id);
 
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
         }
 
         // Counter virkar ekki!
-        private void UpDownloadCounter(int? dataId)
+        private void UpDownloadCounter(int? srtId)
         {
             // Gets SrtFile from db and ups the download counter
             using (var db = new SkjatextiEntities())
                     {
                         var query = (from s in db.SrtFile
-                                     where s.dataId == dataId
+                                     where s.srtId == srtId
                                      select s).FirstOrDefault();
-                        query.srtCounter++;
+                        int? count = query.srtCounter;
+                        if (count == null)
+                        {
+                            query.srtCounter = 1;
+                        }
+                        else
+                        {
+                            query.srtCounter++;
+                        }
+                        
                         db.SaveChanges();
                     }
         }
