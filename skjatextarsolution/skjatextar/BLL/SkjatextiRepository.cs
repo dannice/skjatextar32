@@ -169,6 +169,36 @@ namespace skjatextar.BLL
             }
             return list;
         }
+        public List<Models.CollectionOfSrt> GetNewBothTvshowsAndMovies()
+        {
+            // Connect to db through Skjatexti.context.cs
+            SkjatextiEntities contex = new SkjatextiEntities();
+            // Creates new empty list using collectionofstr
+            var list = new List<Models.CollectionOfSrt>();
+            // Sql query thats selects all in SrtCollection and orders it by title
+            var query = from item in contex.SrtCollection
+                        orderby item.srtDate descending
+                        select item;
+            // Loops through every item in query.
+            foreach (var item in query)
+            {
+                var show = new Models.CollectionOfSrt();
+                show.srtId = item.srtId;
+                show.title = item.title;
+                show.tvId = item.tvId;
+                show.episodeAbout = item.episodeAbout;
+                show.season = item.season;
+                show.episode = item.episode;
+                show.year = item.year;
+                show.episodeTitle = item.episodeTitle;
+                show.tvId = item.tvId;
+                show.movieId = item.movieId;
+                show.type = item.type;
+                list.Add(show);
+
+            }
+            return list;
+        }
 
         public List<Models.CollectionOfSrt> GetTopTenSrt()
         {
@@ -252,7 +282,7 @@ namespace skjatextar.BLL
            // Sql query thats selects all in SrtCollection and orders it by title
            var query = from item in contex.SrtCollection
                        where item.type == 2
-                       orderby item.title
+                       orderby item.srtCounter descending //breytti var áður title Alex ívar
                        select item;
            // Loops through every item in query.
            foreach (var item in query)
@@ -265,6 +295,31 @@ namespace skjatextar.BLL
                show.episode = item.episode;
                show.episodeTitle = item.episodeTitle;
                show.type = item.type;
+               show.srtId = item.srtId;
+               list.Add(show);
+
+           }
+           return list;
+       }
+       public List<Models.CollectionOfSrt> GetAllMovies()
+       {
+           // Connect to db through Skjatexti.context.cs
+           SkjatextiEntities contex = new SkjatextiEntities();
+           // Creates new empty list using collectionofstr
+           var list = new List<Models.CollectionOfSrt>();
+           // Sql query thats selects all in SrtCollection and orders it by title
+           var query = from item in contex.SrtCollection
+                       where item.type == 1
+                       orderby item.srtCounter descending //breytti var áður title Alex ívar
+                       select item;
+           // Loops through every item in query.
+           foreach (var item in query)
+           {
+               var show = new Models.CollectionOfSrt();
+               show.title = item.title;
+               show.year = item.year;
+               show.type = item.type;
+               show.srtId = item.srtId;
                list.Add(show);
 
            }
@@ -289,6 +344,29 @@ namespace skjatextar.BLL
            moep.type = result.type;
 
            return moep;
+       }
+
+        public List<Models.RequestModel> GetRequests()
+       {
+           SkjatextiEntities contex = new SkjatextiEntities();
+           var list = new List<Models.RequestModel>();
+
+           var result = from item in contex.Request
+                        orderby item.reqDate
+                        select item;
+            foreach (var item in result)
+	        {
+		         var reqItem = new Models.RequestModel();
+                 reqItem.reqId = item.reqId;
+                 reqItem.reqDate = item.reqDate;
+                 reqItem.reqTitle = item.reqTitle;
+                 reqItem.reqSeasonNr = item.reqSeasonNr;
+                 reqItem.reqEpisodeNr = item.reqEpisodeNr;
+                 reqItem.reqEpisodeTitle = item.reqEpisodeTitle;
+                 list.Add(reqItem);
+	        }
+
+            return list;
        }
 
        /*public Models.SrtFileModel DownloadCount()
@@ -319,4 +397,5 @@ namespace skjatextar.BLL
                       
        }
     }
+
 }

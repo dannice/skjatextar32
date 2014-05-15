@@ -20,6 +20,17 @@ namespace skjatextar.Controllers
         {
             var query = bll.GetTopTenSrt();
 
+           // ViewBag["requests"] = bll.GetRequests();
+            //ViewBag["tvpopular"] = bll.GetAllTvshows();
+            //bll.GetAllTvshows() = ViewBag["tvpopular"];
+
+            ViewBag.tvpopular = bll.GetAllTvshows();
+            ViewBag.request = bll.GetRequests();
+            ViewBag.moviepopular = bll.GetAllMovies();
+            ViewBag.newest = bll.GetNewBothTvshowsAndMovies();
+
+            
+
             //return View(users);
             return View(query);
         }

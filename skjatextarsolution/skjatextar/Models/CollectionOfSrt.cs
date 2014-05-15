@@ -62,5 +62,23 @@ namespace skjatextar.Models
         public virtual Movie Movie { get; set; }
         public virtual SrtFile SrtFile { get; set; }
         public virtual SrtData SrtData { get; set; }
+
+        public int reqId { get; set; }
+
+        [Display(Name = "Titill")]                               //hér
+        [Required(ErrorMessage = "Verður að skrá titil!")]
+        public string reqTitle { get; set; }
+
+        public DateTime? reqDate { get; set; }
+        public int? reqLike { get; set; }
+
+        [Display(Name = "Númer þáttar")]
+        [Required(ErrorMessage = "Verður að skrá nr á þátt!")]
+        public int reqEpisodeNr { get; set; }
+
+        [Display(Name = "Sería")]
+        [Required(ErrorMessage = "Verður að skrá seríu!")]
+        public int reqSeasonNr { get; set; }
+        public string reqEpisodeTitle { get; set; }               //til hér
     }
 }
