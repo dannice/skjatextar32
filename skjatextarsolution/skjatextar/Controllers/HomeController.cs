@@ -283,10 +283,52 @@ namespace skjatextar.Controllers
                 return strUser;
             }
 
-            public ActionResult NyBeidni()
+            /// <summary>
+            /// View for new request
+            /// </summary>
+            [HttpGet]
+            public ActionResult NewRequest()
             {
+                
                 return View();
             }
+
+       /* [HttpPost]
+        public ActionResult newRequest(FormCollection col)
+            {
+                SkjatextiRepository req = new SkjatextiRepository();
+
+                var radioType= col["type"];
+                string title = col["title"];
+
+                if ("1".Equals(radioType))
+                {
+                    int year = Convert.ToInt32(col["year"]);
+                    movieItem.year = year;
+                    db.Movie.Add(movieItem);
+                    srtItem.movieId = movieItem.movieId;
+                    // Type 1 if movie.
+                    srtItem.type = 1;
+                }
+                else if ("2".Equals(radioType))
+                {
+                    // Vantar að setja inn að episodeNr og seasonNr er skylda.
+                    // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
+                    string episodeTitle = col["episodeTitle"];
+                    string episodeAbout = col["episodeAbout"];
+                    int episodeNr = Convert.ToInt32(col["episode"]);
+                    int seasonNr = Convert.ToInt32(col["season"]);
+                    tvItem.episode = episodeNr;
+                    tvItem.season = seasonNr;
+                    tvItem.episodeTitle = episodeTitle;
+                    tvItem.episodeAbout = episodeAbout;
+                    db.TvShow.Add(tvItem);
+                    srtItem.tvId = tvItem.tvId;
+                    srtItem.type = 2;
+                }
+
+                return RedirectToAction("Index");
+            }*/
         }
     
 }
