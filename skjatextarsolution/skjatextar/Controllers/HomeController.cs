@@ -14,10 +14,10 @@ namespace skjatextar.Controllers
     public class HomeController : ApplicationController
     {
 
+        SkjatextiRepository bll = new SkjatextiRepository();
+
         public ActionResult Index()
         {
-
-            var bll = new SkjatextiRepository();
             var query = bll.GetTopTenSrt();
 
             //return View(users);
@@ -155,7 +155,6 @@ namespace skjatextar.Controllers
 
         public ActionResult Details(int? id)
         {
-            SkjatextiRepository bll = new SkjatextiRepository();
             var getDetails = bll.GetBothTvshowsAndMovies();
 
             var result = (from elem in getDetails
@@ -177,7 +176,6 @@ namespace skjatextar.Controllers
             string text = "";
             // New empty filename
             string filename = "";
-            // int? counter = ++;
             // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
@@ -186,10 +184,12 @@ namespace skjatextar.Controllers
                              select s).FirstOrDefault();
                 text = query.dataText;
                 filename = query.dataName;
-                // var srtItem = new SrtFile();
-                // counter = srtItem.srtCounter;
-
+             
+                db.SaveChanges();
             }
+
+            //var count = bll.DownloadCount();
+
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
         }
@@ -207,5 +207,62 @@ namespace skjatextar.Controllers
 
             return View(results);
         }
-    }
+
+        public ActionResult GetComments()
+        {
+            CommentRepository cmm = new CommentRepository();
+            var model = cmm.GetAllComments();
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult InsertCommment(string strComment)
+        {
+            CommentRepository comRep = new CommentRepository();
+
+            if (!String.IsNullOrEmpty(strComment))
+            {
+                Comment c = new Comment();
+
+                c.comment1 = strComment;
+                String strUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+                if (!String.IsNullOrEmpty(strUser))
+                {
+                    int slashPos = strUser.IndexOf("\\");
+                    if (slashPos != -1)
+                    {
+                        strUser = strUser.Substring(slashPos + 1);
+                    }
+                    c.AspNetUsers.UserName = strUser;
+
+                    comRep.AddComment(c);
+                }
+                else
+                {
+                    c.AspNetUsers.UserName = "Unknown user";
+                }
+                return Json("SUCCESS", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                ModelState.AddModelError("CommentText", "Comment text cannot be empty!");
+                return Json("FAILED", JsonRequestBehavior.AllowGet);
+            }
+        }
+            
+            private string getCurrentUser()
+            {
+                var user = new RegisterViewModel();
+                String strUser = user.UserName;
+                if (!String.IsNullOrEmpty(strUser))
+                {
+                    int slashPos = strUser.IndexOf("\\");
+                    if (slashPos != -1)
+                    {
+                        strUser = strUser.Substring(slashPos + 1);
+                    }
+                }
+                return strUser;
+            }
+        }
+    
 }

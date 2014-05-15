@@ -187,8 +187,12 @@
     <Compile Include="AspNetUsers.cs">
       <DependentUpon>Skjatexti.tt</DependentUpon>
     </Compile>
+    <Compile Include="BLL\CommentRepository.cs" />
     <Compile Include="BLL\UserRepository.cs" />
     <Compile Include="Comment.cs">
+      <DependentUpon>Skjatexti.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CommentCollection.cs">
       <DependentUpon>Skjatexti.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
@@ -203,8 +207,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CollectionComment.cs" />
     <Compile Include="Models\CollectionOfSrt.cs" />
-    <Compile Include="Models\CommentModel.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Models\Request.cs" />

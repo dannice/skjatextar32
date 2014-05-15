@@ -37,5 +37,6 @@ namespace skjatextar
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<SrtFile> SrtFile { get; set; }
         public virtual DbSet<SrtCollection> SrtCollection { get; set; }
+        public virtual DbSet<CommentCollection> CommentCollection { get; set; }
     }
 }
