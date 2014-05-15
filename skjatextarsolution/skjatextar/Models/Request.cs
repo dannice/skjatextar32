@@ -18,15 +18,15 @@ namespace skjatextar.Models
         public int? reqLike { get; set; }
 
         [Display(Name = "Númer þáttar")]
-        public int reqEpisodeNr { get; set; }
+        public int? reqEpisodeNr { get; set; }
 
         [Display(Name = "Sería")]
-        public int reqSeasonNr { get; set; }
+        public int? reqSeasonNr { get; set; }
 
         [Display(Name = "Nafn þáttar")]
         public string reqEpisodeTitle { get; set; }
 
         [Display(Name = "Ártal")]
-        public int reqYear { get; set; }
+        public int? reqYear { get; set; }
     }
 }

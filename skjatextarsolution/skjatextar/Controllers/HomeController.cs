@@ -42,6 +42,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
+        //[Authorize]
         [HttpGet]
         public ActionResult Upload()
         {
@@ -49,6 +50,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
+       // [Authorize]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, FormCollection col)
         {
@@ -137,6 +139,7 @@ namespace skjatextar.Controllers
             return View("EditFile",srtModel);
         }
 
+        //[Authorize]
         [HttpPost]
         [ValidateInput(false)]
         // Takes changes made in textbox, pushes it to db and overwrites current data
@@ -238,6 +241,7 @@ namespace skjatextar.Controllers
             return View(results);
         }
 
+        [HttpGet]
         public ActionResult GetComments()
         {
             CommentRepository cmm = new CommentRepository();
@@ -300,6 +304,9 @@ namespace skjatextar.Controllers
             [HttpGet]
             public ActionResult NewRequest()
             {
+                SkjatextiRepository repo = new SkjatextiRepository();
+
+                ViewData["requests"] = repo.GetAllRequests();
                 
                 return View();
             }
@@ -311,9 +318,10 @@ namespace skjatextar.Controllers
 
                 string title = col["reqTitle"];
                 string episodeTitle = col["reqEpisodeTitle"];
-                int year = Convert.ToInt32(col["reqYear"]);
-                int season = Convert.ToInt32(col["reqSeasonNr"]);
-                var episode = Convert.ToInt32(col["reqEpisodeNr"]);
+           
+                int? year = string.IsNullOrEmpty(col["reqYear"] ) ? 0 : Convert.ToInt32(col["reqYear"]);
+                int? season = string.IsNullOrEmpty(col["reqSeasonNr"]) ? 0 : Convert.ToInt32(col["reqSeasonNr"]);
+                int? episode = string.IsNullOrEmpty(col["reqEpisodeNr"]) ? 0 : Convert.ToInt32(col["reqEpisodeNr"]);
                 
                 using(var db = new SkjatextiEntities())
                 {
@@ -324,16 +332,23 @@ namespace skjatextar.Controllers
                     request.reqYear = year;
                     request.reqSeasonNr = season;
                     request.reqEpisodeNr = episode;
-                    request.reqDate = DateTime.Today;
+                    request.reqDate = DateTime.Now;
                     db.Request.Add(request);
 
                     db.SaveChanges();
                 }
 
-            
-                return View();
+             return RedirectToAction("NewRequest");
+            }
 
-                //return RedirectToAction("Index");
+           // [Authorize]
+            public ActionResult DeleteRequest(int? reqId)
+            {
+                SkjatextiRepository repo = new SkjatextiRepository();
+
+                repo.DeleteRequest(reqId);
+
+                return RedirectToAction("NewRequest");
             }
         }
     

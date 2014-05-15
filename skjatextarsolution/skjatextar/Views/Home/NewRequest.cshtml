@@ -1,68 +1,93 @@
-﻿    @model skjatextar.Models.RequestModel
+﻿@model skjatextar.Models.RequestModel
 @{
     ViewBag.Title = "NyBeidni";
 }
 
-<div>
-    <h2>Ný Beiðni</h2>
-    @using (Html.BeginForm("NewRequest", "Home", FormMethod.Post, new { enctype = "multipart/form-data",@class = "form-horizontal",role = "form",id ="beidniForm"}))
-    {
-         @Html.ValidationSummary(true)
-        
-         
-        <div id="title" class="form-group">
-            @Html.LabelFor(m => m.reqTitle, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.reqTitle, new { @class = "form-control" })
-                @Html.ValidationMessage("reqTitle")
+<div class="row">
+    <div class="col-md-8">
+        <h2>Ný Beiðni</h2>
+        @using (Html.BeginForm("NewRequest", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "beidniForm" }))
+        {
+            @Html.ValidationSummary(true)
+
+
+            <div id="title" class="form-group">
+                @Html.LabelFor(m => m.reqTitle, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.reqTitle, new { @class = "form-control" })
+                    @Html.ValidationMessage("reqTitle")
+                </div>
             </div>
-        </div>
-       
-         <div id="year" class="form-group movie-field">
-            @Html.LabelFor(m => m.reqYear, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.reqYear, new { @class = "form-control", type = "number" })
+
+            <div id="year" class="form-group movie-field">
+                @Html.LabelFor(m => m.reqYear, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.reqYear, new { @class = "form-control", type = "number" })
+                </div>
             </div>
-       </div>
-    <div id="season" class="form-group tv-field">
-        @Html.LabelFor(m => m.reqSeasonNr, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.reqSeasonNr, new { @class = "form-control", type = "number" })
-           
+            <div id="season" class="form-group tv-field">
+                @Html.LabelFor(m => m.reqSeasonNr, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.reqSeasonNr, new { @class = "form-control", type = "number" })
+
+                </div>
+            </div>
+            <div id="episode" class="form-group tv-field">
+                @Html.LabelFor(m => m.reqEpisodeTitle, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.reqEpisodeTitle, new { @class = "form-control" })
+
+                </div>
+            </div>
+            <div id="episodeAbout" class="form-group tv-field">
+                @Html.LabelFor(m => m.reqEpisodeNr, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.reqEpisodeNr, new { @class = "form-control", type = "number" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div>
+                        <input type="submit" value="Upphlaða" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <table class="table table-condensed table-striped">
+                    <tbody>
+                           @foreach (var req in (List<skjatextar.Models.RequestModel>)ViewData["requests"])
+                            {
+                                <tr>
+                                    <td class="col-md-11">@req.reqTitle</td>
+                                    <td class="col-md-1">
+                                        @if(Request.IsAuthenticated)
+                                        {
+                                            @Html.ActionLink("Eyða", "DeleteRequest", new { reqId = req.reqId }) 
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <div id="episode" class="form-group tv-field">
-        @Html.LabelFor(m => m.reqEpisodeTitle, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.reqEpisodeTitle, new { @class = "form-control" })
-            
-        </div>
-    </div>
-         <div id="episodeAbout"class="form-group tv-field" >
-            @Html.LabelFor(m => m.reqEpisodeNr, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.reqEpisodeNr, new { @class = "form-control",type ="number" })
-                
-            </div>
-       </div>
-         
-     
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <div>
-                <input type="submit" value="Upphlaða" class="btn btn-success" />
-            </div>
-        </div>
-    </div>
-  
-    }
+    
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 
-        
-        </div>
+</div>     
         
         
         

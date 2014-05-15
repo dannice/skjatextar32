@@ -93,6 +93,35 @@ namespace skjatextar.BLL
             return episode;
         }
 
+        /// <summary>
+        /// Return a list of all requests from users
+        /// </summary>
+        public List<Models.RequestModel> GetAllRequests()
+        {
+            SkjatextiEntities context = new SkjatextiEntities();
+
+            var list = new List<Models.RequestModel>();
+
+            var requestList = from item in context.Request
+                              orderby item.reqDate descending
+                              select item;
+            foreach (var item in requestList)
+            {
+                var reqItem = new Models.RequestModel() ;
+                reqItem.reqId = item.reqId;
+                reqItem.reqTitle = item.reqTitle;
+                reqItem.reqYear = item.reqYear;
+                reqItem.reqSeasonNr = item.reqSeasonNr;
+                reqItem.reqEpisodeTitle = item.reqEpisodeTitle;
+                reqItem.reqEpisodeNr = item.reqEpisodeNr;
+                reqItem.reqDate = item.reqDate;
+
+                list.Add(reqItem);
+            }
+
+            return list;
+        }
+
         // Search from inputbox
         public List<Models.CollectionOfSrt> Search(string s)
         {
@@ -274,5 +303,20 @@ namespace skjatextar.BLL
            contex.SrtFile.Add(srtF);
            contex.SaveChanges();
        }*/
+
+       public void DeleteRequest(int? reqId)
+       {
+           SkjatextiEntities context = new SkjatextiEntities();
+
+           var result = (from item in context.Request
+                         where item.reqId == reqId
+                         select item).FirstOrDefault();
+
+           context.Request.Remove(result);
+
+           context.SaveChanges();
+           //context.Request.DeleteOnSubmit(result);  
+                      
+       }
     }
 }
