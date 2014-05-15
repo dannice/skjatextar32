@@ -138,6 +138,7 @@ namespace skjatextar.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         // Takes changes made in textbox, pushes it to db and overwrites current data
         public ActionResult EditFile(FormCollection col, int id)
         {
