@@ -2,8 +2,6 @@
 
     var tvDetails;
 
-   
-
     $("#selectEpisode").hide();
     $("#episodeInfo").hide();
 
@@ -45,8 +43,10 @@
     // Loading new srt file;
     initUploadForm();
 
+    
+
     // sending in new raquest
-    newRequest();
+    //newRequest();
 
 });
 
@@ -60,7 +60,7 @@ function initUploadForm() {
         radioType = uploadForm.find("input[name='type']");
        
         console.log(radioType);
-        $(".tv-field, .movie-field").hide();
+        $(".upload .tv-field, .upload .movie-field").hide();
 
         radioType.on("change", function () {
             var typeValue = ($(this).val());
@@ -78,13 +78,17 @@ function initUploadForm() {
         })
     }
 };
-function newRequest() {
+/*function newRequest() {
 
+    alert("ho");
     var beidniForm = $("#beidniForm");
-
     console.log(beidniForm);
+    
 
-    if (beidniForm.length > 0) {
+};*/
+    
+
+    /*if (beidniForm.length > 0) {
         radioType = beidniForm.find("input[name='type']");
 
         console.log(radioType);
@@ -103,7 +107,7 @@ function newRequest() {
             }
         })
     }
-}
+}*/
 
 function getEpisodes(srtId){  
     $.ajax({

@@ -3,7 +3,7 @@
     ViewBag.Title = "Upload";
 }
 
-<div>
+<div class="upload">
     <h2>Upload</h2>
    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal", role = "form",id ="uploadForm" }))
 {
@@ -83,3 +83,4 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
+    </div>

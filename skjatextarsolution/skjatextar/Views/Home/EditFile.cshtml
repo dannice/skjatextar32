@@ -3,7 +3,7 @@
     ViewBag.Title = "EditFile";
 }
 
-@using (Html.BeginForm("EditFile", "EditFile", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "editForm" }))
+@using (Html.BeginForm("EditFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal", role = "form", id = "editForm" }))
 {
     @Html.AntiForgeryToken()
 

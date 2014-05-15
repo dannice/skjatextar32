@@ -141,6 +141,7 @@ namespace skjatextar.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         // Takes changes made in textbox, pushes it to db and overwrites current data
         public ActionResult EditFile(FormCollection col, int id)
         {
@@ -180,13 +181,14 @@ namespace skjatextar.Controllers
             string text = "";
             // New empty filename
             string filename = "";
-            int dataId = 0;
+            
             // Gets connected to database and gets data that matches id
             using (var db = new SkjatextiEntities())
             {
-                var query = (from s in db.SrtData
-                             where s.dataId == id
+                var query = (from s in db.SrtCollection
+                             where s.srtId == id
                              select s).FirstOrDefault();
+
                 text = query.dataText;
                 filename = query.dataName;
 
@@ -196,22 +198,31 @@ namespace skjatextar.Controllers
                 //db.SaveChanges(); 
             }
 
-           //UpDownloadCounter(id);
+           UpDownloadCounter(id);
 
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
         }
 
         // Counter virkar ekki!
-        private void UpDownloadCounter(int? dataId)
+        private void UpDownloadCounter(int? srtId)
         {
             // Gets SrtFile from db and ups the download counter
             using (var db = new SkjatextiEntities())
                     {
                         var query = (from s in db.SrtFile
-                                     where s.dataId == dataId
+                                     where s.srtId == srtId
                                      select s).FirstOrDefault();
-                        query.srtCounter++;
+                        int? count = query.srtCounter;
+                        if (count == null)
+                        {
+                            query.srtCounter = 1;
+                        }
+                        else
+                        {
+                            query.srtCounter++;
+                        }
+                        
                         db.SaveChanges();
                     }
         }
@@ -296,24 +307,31 @@ namespace skjatextar.Controllers
                 return View();
             }
 
-       /* [HttpPost]
-        public ActionResult newRequest(FormCollection col)
+        [HttpPost]
+        public ActionResult NewRequest(FormCollection col)
             {
                 SkjatextiRepository req = new SkjatextiRepository();
 
                 var radioType= col["type"];
                 string title = col["title"];
+                string episodeTitle = col["episodeTitle"];
+                //int year = Convert.ToInt32(col["year"]);
+                int season = Convert.ToInt32(col["season"]);
+                var episode = Convert.ToInt32(col["episode"]);
+                string episodeAbout = col["episodeAbout"];
 
-                if ("1".Equals(radioType))
+                var request = new Request();
+
+                /*if ("1".Equals(radioType))
                 {
                     int year = Convert.ToInt32(col["year"]);
-                    movieItem.year = year;
+                    Movie.year = year;
                     db.Movie.Add(movieItem);
                     srtItem.movieId = movieItem.movieId;
                     // Type 1 if movie.
                     srtItem.type = 1;
                 }
-                else if ("2".Equals(radioType))
+                /*else if ("2".Equals(radioType))
                 {
                     // Vantar að setja inn að episodeNr og seasonNr er skylda.
                     // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
@@ -328,10 +346,11 @@ namespace skjatextar.Controllers
                     db.TvShow.Add(tvItem);
                     srtItem.tvId = tvItem.tvId;
                     srtItem.type = 2;
-                }
+                }*/
+                return View();
 
-                return RedirectToAction("Index");
-            }*/
+                //return RedirectToAction("Index");
+            }
         }
     
 }
