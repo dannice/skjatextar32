@@ -4,46 +4,48 @@
 }
 
 @using (Html.BeginForm())
-{ 
-     @Html.ValidationSummary(true)
+{
+    @Html.ValidationSummary(true)
 
     <h1> @Model.title</h1>
     if(@Model.type == 1)
-    { 
+    {
         <blockquote>
-                <h2>Árgerð: @Model.year</h2>
+            <h2>Árgerð: @Model.year</h2>
         </blockquote>
                 }
 
                 if (@Model.type == 2)
                 {
-                <h2>@Model.episodeTitle</h2>
-                <div id="TvShowAbout">
-                    <p class="text-left">
-                        <blockquote>
-                            <h4>Season:@Model.season</h4>
-                            <h4>Epsisode: @Model.episode</h4>
-                        </blockquote>
-                    </p>
-                    <h3>Um Myndefnið</h3>
+                    <h2>@Model.episodeTitle</h2>
+                    <div id="TvShowAbout">
+                        <p class="text-left">
+                            <blockquote>
+                                <h4>Season:@Model.season</h4>
+                                <h4>Epsisode: @Model.episode</h4>
+                            </blockquote>
+                        </p>
+                        <h3>Um Myndefnið</h3>
 
-                    <textarea disabled rows="10" cols="400">
-                        @Model.episodeAbout
-                    </textarea>
+                        <textarea disabled rows="10" cols="400">
+                            @Model.episodeAbout
+                        </textarea>
 
-                </div>
-                
+                    </div>
+                    <a href="@Url.Action("EditFile", new {id = @Model.srtId})"><div class="glyphicon glyphicon-edit" id="icontakkialex"></div></a>
+
                 }
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="checkReady" value="2" @(Model.dataReady == 2 ? "checked=\"checked\"" : "")> Þýðing tilbúin
                     </label>
-                </div> 
+                </div>
                 <!--Download linkur-->
                 <div>
-                    <a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success - btn pull-left">Niðurhala</a>
+                    <a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success" id="alex">Niðurhala</a>
                 </div>
-                }
+
+    }
 
 
                 <!--er að reyna að gera javscript hérna, er með sér file -->
@@ -51,4 +53,3 @@
                 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
                 <script type="text/javascript" src="~/Scripts/script.js"></script>
-
