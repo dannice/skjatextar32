@@ -32,6 +32,7 @@
                     </textarea>
 
                 </div>
+                     <a href="@Url.Action("EditFile", new {id = @Model.srtId})"><div class="glyphicon glyphicon-edit" id="icontakkialex"></div></a>
                 
                 }
                 <div class="checkbox">
@@ -40,10 +41,13 @@
                     </label>
                 </div> 
                 <!--Download linkur-->
-                <div>
-                    <a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success - btn pull-left">Niðurhala</a>
-                </div>
+                <div><a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success" id="alex">Niðurhala</a></div>
                 }
+               
+
+                 
+
+
 
 
                 <!--er að reyna að gera javscript hérna, er með sér file -->
