@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+/// <summary>
+/// Function for comments that is never used because website does not offer users to comment.
+/// </summary>
+
 namespace skjatextar.BLL
 {
     public class CommentRepository

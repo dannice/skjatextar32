@@ -13,23 +13,19 @@ namespace skjatextar.Controllers
 {
     public class HomeController : ApplicationController
     {
-
+        /// <summary>
+        /// Connection to repository that every function can use.
+        /// </summary>
         SkjatextiRepository bll = new SkjatextiRepository();
 
         public ActionResult Index()
         {
             var query = bll.GetTopTenSrt();
 
-           // ViewBag["requests"] = bll.GetRequests();
-            //ViewBag["tvpopular"] = bll.GetAllTvshows();
-            //bll.GetAllTvshows() = ViewBag["tvpopular"];
-
             ViewBag.tvpopular = bll.GetAllTvshows();
             ViewBag.request = bll.GetRequests();
             ViewBag.moviepopular = bll.GetAllMovies();
             ViewBag.newest = bll.GetNewBothTvshowsAndMovies();
-
-            
 
             //return View(users);
             return View(query);
@@ -39,17 +35,12 @@ namespace skjatextar.Controllers
         {
 			ViewBag.Main = "Um Ístexta";
             ViewBag.Message = "Siðareglur Ístexta";
-            //var bll = new SkjatextiBLL();
-            //var request = bll.GetRequests();
-            //return View(request);
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            //ViewBag.Message = "Ístextar - Hafðu samband";
-
             return View();
         }
 
@@ -57,10 +48,12 @@ namespace skjatextar.Controllers
         [HttpGet]
         public ActionResult Upload()
         {
-
             return View();
         }
 
+        /// <summary>
+        /// Function that uploads file by reading it and input text from file to db.
+        /// </summary>
         [Authorize]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, FormCollection col)
@@ -68,15 +61,13 @@ namespace skjatextar.Controllers
             // Verify that the user selected a file
             if (file != null && file.ContentLength > 0)
             {
-
                 // Extract only the fielname
                 var fileName = Path.GetFileName(file.FileName);
                 // Starts to read file
                 StreamReader streamReader = new StreamReader(file.InputStream);
                 // Reads until end of the file.
                 string text = streamReader.ReadToEnd();
-                // Radio button from upload view
-       
+                
                 var radioType= col["type"];
                 string title = col["title"];
                 
@@ -106,8 +97,6 @@ namespace skjatextar.Controllers
                     }
                     else if ("2".Equals(radioType))
                     {
-                        // Vantar að setja inn að episodeNr og seasonNr er skylda.
-                        // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
                         string episodeTitle = col["episodeTitle"];
                         string episodeAbout = col["episodeAbout"];
                         int episodeNr = Convert.ToInt32(col["episode"]);
@@ -121,10 +110,8 @@ namespace skjatextar.Controllers
                         srtItem.type = 2;
                     }
 
-                    // Hér vantar error message um ef hvorugt er valið, mynd eða þáttaröð.
-
                     srtItem.title = title;
-                    srtItem.srtDate = DateTime.Today;
+                    srtItem.srtDate = DateTime.Now;
 
                    db.SrtFile.Add(srtItem);
                    db.SaveChanges();
@@ -132,16 +119,16 @@ namespace skjatextar.Controllers
                 streamReader.Close();
             }
 
-            // Redirect back to the index action to show the form once again
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Gets file from database and displays it on page.
+        /// </summary>
         [Authorize]
         [HttpGet]
-        // Gets file from database and displays it on page
         public ActionResult EditFile(int id)
         {
-            
             var model = new SrtDataModel();
             //CollectionOfSrt srtModel;
             using (var db = new SkjatextiEntities())
@@ -152,29 +139,21 @@ namespace skjatextar.Controllers
                
                 model.dataText = query.dataText;
                 model.dataReady = query.dataReady;
-               /* srtModel = new CollectionOfSrt();
-                {
-                     = query.Expr4;
-                    dataText = query.dataText,
-                    dataName = query.dataName,
-                    dataSize = query.dataSize,
-                    dataReady = query.dataReady
-                };*/
             }
             
-            //return View("EditFile",srtModel);
             return View("EditFile", model);
         }
 
+        /// <summary>
+        /// Takes changes made in textbox and overwrites current data in db. Returns user to index view.
+        /// </summary>
         [Authorize]
         [HttpPost]
         [ValidateInput(false)]
-        // Takes changes made in textbox, pushes it to db and overwrites current data
         public ActionResult EditFile(FormCollection col, int id)
         {
             string dataText = col["dataText"];
             var dataReady = col["checkReady"];
-            //var dataItem = new SrtData();
 
             using (var db = new SkjatextiEntities())
             {
@@ -199,17 +178,12 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Displays information about selected show/movie by id.
+        /// </summary>
         public ActionResult Details(int? id)
         {
-
             var getDetails = bll.GetMovieAndEpisodeById(Convert.ToInt32(id));
-
-            /*var result = (from elem in getDetails
-                          where elem.srtId == id
-                          select elem).SingleOrDefault();*/
-
-            /*var detailsIt = new CollectionOfSrt();
-            detailsIt.dataReady = result.dataReady;*/
             
             if (id != null)
 	        {
@@ -219,15 +193,17 @@ namespace skjatextar.Controllers
             return View("error");
         }
 
-        // Downloads from database an .srt file
+        /// <summary>
+        /// Downloads from database an .srt file.
+        /// </summary>
         public FileResult Download(int? id)
         {
-            // New empty string
+            // New empty string.
             string text = "";
-            // New empty filename
+            // New empty filename.
             string filename = "";
             
-            // Gets connected to database and gets data that matches id
+            // Gets connected to database and gets data that matches id.
             using (var db = new SkjatextiEntities())
             {
                 var query = (from s in db.SrtCollection
@@ -236,42 +212,41 @@ namespace skjatextar.Controllers
 
                 text = query.dataText;
                 filename = query.dataName;
-
-                //dataId = query.dataId;
-                
-                // Counter goes up by 1 each time a file is downloaded
-                //db.SaveChanges(); 
             }
 
            UpDownloadCounter(id);
 
-            // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file
+            // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file.
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
         }
 
+        /// <summary>
+        /// Ups counter each time a file is downloaded.
+        /// </summary>
         private void UpDownloadCounter(int? srtId)
         {
-            // Gets SrtFile from db and ups the download counter
             using (var db = new SkjatextiEntities())
-                    {
-                        var query = (from s in db.SrtFile
-                                     where s.srtId == srtId
-                                     select s).FirstOrDefault();
-                        int? count = query.srtCounter;
-                        if (count == null)
-                        {
-                            query.srtCounter = 1;
-                        }
-                        else
-                        {
-                            query.srtCounter++;
-                        }
-                        
-                        db.SaveChanges();
-                    }
+            {
+                  var query = (from s in db.SrtFile
+                               where s.srtId == srtId
+                               select s).FirstOrDefault();
+                  int? count = query.srtCounter;
+                  if (count == null)
+                  {
+                      query.srtCounter = 1;
+                  }
+                  else
+                  {
+                      query.srtCounter++;
+                  }
+                       
+                  db.SaveChanges();
+              }
         }
 
-        // Showing search result from text box
+        /// <summary>
+        /// Showing search result from text box.
+        /// </summary>
         [HttpPost]
         public ActionResult SearchResult()
         {
@@ -285,6 +260,9 @@ namespace skjatextar.Controllers
             return View(results);
         }
 
+        /// <summary>
+        /// Function for comments that is never used because website does not offer users to comment.
+        /// </summary>
         [HttpGet]
         public ActionResult GetComments()
         {
@@ -293,6 +271,9 @@ namespace skjatextar.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
+        /// <summary>
+        /// Function for comments that is never used because website does not offer users to comment.
+        /// </summary>
         public ActionResult InsertCommment(string strComment)
         {
             CommentRepository comRep = new CommentRepository();
@@ -326,35 +307,41 @@ namespace skjatextar.Controllers
                 return Json("FAILED", JsonRequestBehavior.AllowGet);
             }
         }
-            
-            private string getCurrentUser()
+
+        /// <summary>
+        /// Function for comments that is never used because website does not offer users to comment.
+        /// </summary>
+        private string getCurrentUser()
+        {
+            var user = new RegisterViewModel();
+            String strUser = user.UserName;
+            if (!String.IsNullOrEmpty(strUser))
             {
-                var user = new RegisterViewModel();
-                String strUser = user.UserName;
-                if (!String.IsNullOrEmpty(strUser))
+                int slashPos = strUser.IndexOf("\\");
+                if (slashPos != -1)
                 {
-                    int slashPos = strUser.IndexOf("\\");
-                    if (slashPos != -1)
-                    {
-                        strUser = strUser.Substring(slashPos + 1);
-                    }
+                    strUser = strUser.Substring(slashPos + 1);
                 }
-                return strUser;
             }
+            return strUser;
+        }
 
-            /// <summary>
-            /// View for new request
-            /// </summary>
-            [HttpGet]
-            public ActionResult NewRequest()
-            {
-                SkjatextiRepository repo = new SkjatextiRepository();
+        /// <summary>
+        /// View for new request.
+        /// </summary>
+        [HttpGet]
+        public ActionResult NewRequest()
+        {
+            SkjatextiRepository repo = new SkjatextiRepository();
 
-                ViewData["requests"] = repo.GetAllRequests();
+            ViewData["requests"] = repo.GetAllRequests();
                 
-                return View();
-            }
+            return View();
+        }
 
+        /// <summary>
+        /// Pushes inputs from request form to database.
+        /// </summary>
         [HttpPost]
         public ActionResult NewRequest(FormCollection col)
             {
@@ -383,17 +370,19 @@ namespace skjatextar.Controllers
                 }
 
              return RedirectToAction("NewRequest");
-            }
-
-            //[Authorize]
-            public ActionResult DeleteRequest(int? reqId)
-            {
-                SkjatextiRepository repo = new SkjatextiRepository();
-
-                repo.DeleteRequest(reqId);
-
-                return RedirectToAction("NewRequest");
-            }
         }
+
+        /// <summary>
+        /// Deletes request if user is logged in.
+        /// </summary>
+        public ActionResult DeleteRequest(int? reqId)
+        {
+            SkjatextiRepository repo = new SkjatextiRepository();
+
+            repo.DeleteRequest(reqId);
+
+            return RedirectToAction("NewRequest");
+        }
+    }
     
 }

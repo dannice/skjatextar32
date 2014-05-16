@@ -8,19 +8,18 @@ namespace skjatextar.BLL
 {
     public class SkjatextiRepository
     {
+        /// <summary>
+        /// Connection to db.
+        /// </summary>
+        SkjatextiEntities contex = new SkjatextiEntities();
 
         /// <summary>
         /// Return a list of all tvshows.
         /// </summary>
         public List<Models.SrtFileModel> GetTvShows()
         {
-            SkjatextiEntities contex = new SkjatextiEntities();
             var list = new List<Models.SrtFileModel>();
 
-            //
-            // Must use group by to have unique list of 
-            // titles from the SrtFile table, since it duplicates 
-            // Show names
             var result = (from item in contex.SrtFile
                           where item.type == 2
                           group item by new {item.title} 
@@ -38,12 +37,10 @@ namespace skjatextar.BLL
         }
 
         /// <summary>
-        /// Returns list of all episodes in TvShow Series.
+        /// Finds one episode by id and returns it.
         /// </summary>
-        
         public List<Models.TvShowModel> GetEpisodes(int srtId)
         {
-            SkjatextiEntities contex = new SkjatextiEntities();
             var list = new List<Models.TvShowModel>();
 
             var srtList = from srtItem in contex.SrtFile
@@ -72,13 +69,10 @@ namespace skjatextar.BLL
         }
 
         /// <summary>
-        ///  Returns info about episode to layout.
+        ///  Returns info about episode by id.
         /// </summary>
-      
         public Models.CollectionOfSrt GetEpisode(int epId)
         {
-            SkjatextiEntities contex = new SkjatextiEntities();
-       
             var result = (from item in contex.SrtCollection
                          where item.tvId == epId
                          select item).FirstOrDefault();
@@ -95,9 +89,9 @@ namespace skjatextar.BLL
         }
 
         /// <summary>
-        /// Return a list of all requests from users
+        /// Return a list of all requests from users.
         /// </summary>
-        public List<Models.RequestModel> GetAllRequests()   //erum hér
+        public List<Models.RequestModel> GetAllRequests()
         {
             SkjatextiEntities context = new SkjatextiEntities();
 
@@ -123,15 +117,14 @@ namespace skjatextar.BLL
             return list;
         }
 
-        // Search from inputbox
+        /// <summary>
+        /// Search from inputbox.
+        /// </summary>
         public List<Models.CollectionOfSrt> Search(string s)
         {
-            // Connect to db through Skjatexti.context.cs
-            SkjatextiEntities contex = new SkjatextiEntities();
-            // Creates new empty list using collectionofst
             var list = new List<Models.CollectionOfSrt>();
 
-            // Compares input string to database
+            // Compares input string to database.
             List<Models.CollectionOfSrt> listOfAll = GetBothTvshowsAndMovies().Where(b => ContainsIgnoreCase(b.title,s) 
                                                                                     || ContainsIgnoreCase(b.episodeTitle,s)
                                                                                     || ContainsIgnoreCase(b.episodeAbout,s)) .ToList();
@@ -139,14 +132,14 @@ namespace skjatextar.BLL
             
             return listOfAll;
         }
-        // Gets all tvshows and movies
+
+        /// <summary>
+        /// Gets all tvshows and movies.
+        /// </summary>
         public List<Models.CollectionOfSrt> GetBothTvshowsAndMovies()
         {
-            // Connect to db through Skjatexti.context.cs
-            SkjatextiEntities contex = new SkjatextiEntities();
-            // Creates new empty list using collectionofstr
             var list = new List<Models.CollectionOfSrt>();
-            // Sql query thats selects all in SrtCollection and orders it by title
+            // Sql query thats selects all in SrtCollection and orders it by title.
             var query = from item in contex.SrtCollection
                          orderby item.srtId
                          select item;
@@ -173,16 +166,13 @@ namespace skjatextar.BLL
         }
 
         /// <summary>
-        /// Returns list of all tvshows and movies ordered newest.
+        /// Returns list of top ten tvshows and movies ordered newest.
         /// </summary>
-        /// 
         public List<Models.CollectionOfSrt> GetNewBothTvshowsAndMovies()
         {
-            // Connect to db through Skjatexti.context.cs
-            SkjatextiEntities contex = new SkjatextiEntities();
             // Creates new empty list using collectionofstr
             var list = new List<Models.CollectionOfSrt>();
-            // Sql query thats selects all in SrtCollection and orders it by title
+            // Sql query thats selects all in SrtCollection and orders it by title.
             var query = (from item in contex.SrtCollection
                          orderby item.srtDate descending
                          select item).Take(10);
@@ -202,18 +192,15 @@ namespace skjatextar.BLL
                 show.movieId = item.movieId;
                 show.type = item.type;
                 list.Add(show);
-
             }
             return list;
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// 
+        /// Lists up 10 episode and tvshow by alphabet.
+        /// </summary> 
         public List<Models.CollectionOfSrt> GetTopTenSrt()
         {
-            SkjatextiEntities contex = new SkjatextiEntities();
             var list = new List<Models.CollectionOfSrt>();
             var query = (from item in contex.SrtCollection
                          orderby item.title 
@@ -232,33 +219,15 @@ namespace skjatextar.BLL
                 show.movieId = item.movieId;
                 show.type = item.type;
                 list.Add(show);
-
             }
             return list;
         }
 
-        /*public List<Models.CollectionOfSrt> GetSrtData()
-        {
-            SkjatextiEntities contex = new SkjatextiEntities();
-            var model = new List<Models.SrtDataModel>();
-            var query = from b in contex.SrtData
-                        select b.dataText;
-                foreach (var item in query)
-                {
-                    var dataItem = new SrtData();
-                    dataItem.dataText = item.
-                    newsitem.blogId = item.BlogId;
-                    newsitem.title = item.Title;
-                    newsitem.date = item.Date;
-                    newsitem.texti = item.Name;
-                    newsitem.category = item.Category;
-                    model.Add(newsitem);
-                }
-        }*/
-
+        /// <summary>
+        /// Finds episode or movie by id and returns it.
+        /// </summary>
         public SrtCollection GetMovieEpisodeById(int? id)
         {
-            SkjatextiEntities contex = new SkjatextiEntities();
             var result = (from c in contex.SrtCollection
                           where c.tvId == id
                           select c).SingleOrDefault();
@@ -266,16 +235,12 @@ namespace skjatextar.BLL
             tvItem.tvId = result.tvId;
             tvItem.title = result.title;
                 
-
             return tvItem;
         }
 
         /// <summary>
-        /// method to check if string contains another string
+        /// Method to check if string contains another string.
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="toCheck"></param>
-        /// <returns></returns>
        private bool ContainsIgnoreCase(string source, string toCheck)
         {
             if (string.IsNullOrEmpty(toCheck) || string.IsNullOrEmpty(source))
@@ -284,13 +249,13 @@ namespace skjatextar.BLL
             return source.IndexOf(toCheck, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
+       /// <summary>
+       /// Returns list of all tv shows.
+       /// </summary>
        public List<Models.CollectionOfSrt> GetAllTvshows()
        {
-           // Connect to db through Skjatexti.context.cs
-           SkjatextiEntities contex = new SkjatextiEntities();
-           // Creates new empty list using collectionofstr
            var list = new List<Models.CollectionOfSrt>();
-           // Sql query thats selects all in SrtCollection and orders it by title
+           // Sql query thats selects all in SrtCollection and orders it by title.
            var query = (from item in contex.SrtCollection
                         where item.type == 2
                         orderby item.srtCounter descending 
@@ -308,17 +273,17 @@ namespace skjatextar.BLL
                show.type = item.type;
                show.srtId = item.srtId;
                list.Add(show);
-
            }
            return list;
        }
+
+       /// <summary>
+       /// Returns list of all movies.
+       /// </summary>
        public List<Models.CollectionOfSrt> GetAllMovies()
        {
-           // Connect to db through Skjatexti.context.cs
-           SkjatextiEntities contex = new SkjatextiEntities();
-           // Creates new empty list using collectionofstr
            var list = new List<Models.CollectionOfSrt>();
-           // Sql query thats selects all in SrtCollection and orders it by title
+           // Sql query thats selects all in SrtCollection and orders it by title.
            var query = (from item in contex.SrtCollection
                         where item.type == 1
                         orderby item.srtCounter descending 
@@ -332,15 +297,15 @@ namespace skjatextar.BLL
                show.type = item.type;
                show.srtId = item.srtId;
                list.Add(show);
-
            }
            return list;
        }
 
+       /// <summary>
+       /// Returns episode or movie by id.
+       /// </summary>
        public Models.CollectionOfSrt GetMovieAndEpisodeById(int id)
        {
-           SkjatextiEntities contex = new SkjatextiEntities();
-
            var result = (from item in contex.SrtCollection
                          where item.srtId == id
                          select item).FirstOrDefault();
@@ -360,9 +325,11 @@ namespace skjatextar.BLL
            return moep;
        }
 
-        public List<Models.RequestModel> GetRequests()
+       /// <summary>
+       /// Returns list of 10 newest request.
+       /// </summary>
+       public List<Models.RequestModel> GetRequests()
        {
-           SkjatextiEntities contex = new SkjatextiEntities();
            var list = new List<Models.RequestModel>();
 
            var result = (from item in contex.Request
@@ -383,19 +350,9 @@ namespace skjatextar.BLL
             return list;
        }
 
-       /*public Models.SrtFileModel DownloadCount()
-       {
-           SkjatextiEntities contex = new SkjatextiEntities();
-           int srtCounter = 0;
-
-           var srtF = new SrtFile();
-           // Counter goes up by 1 each time a file is downloaded
-           srtCounter++;
-           srtF.srtCounter = srtCounter;
-           contex.SrtFile.Add(srtF);
-           contex.SaveChanges();
-       }*/
-
+       /// <summary>
+       /// Deletes request by id.
+       /// </summary>
        public void DeleteRequest(int? reqId)
        {
            SkjatextiEntities context = new SkjatextiEntities();
@@ -406,10 +363,7 @@ namespace skjatextar.BLL
 
            context.Request.Remove(result);
 
-           context.SaveChanges();
-           //context.Request.DeleteOnSubmit(result);  
-                      
+           context.SaveChanges();          
        }
     }
-
 }
