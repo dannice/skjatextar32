@@ -345,8 +345,6 @@ namespace skjatextar.Controllers
         [HttpPost]
         public ActionResult NewRequest(FormCollection col)
             {
-                //SkjatextiRepository req = new SkjatextiRepository();
-
                 string title = col["reqTitle"];
                 string episodeTitle = col["reqEpisodeTitle"];
            

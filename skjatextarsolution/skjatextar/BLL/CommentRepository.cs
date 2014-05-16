@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Function for comments that is never used because website does not offer users to comment.
+/// Was meant to get all comments from registered users, about the translations.
+/// We ran out of time to implement this completely in the project.
+/// These functions are never used.
 /// </summary>
 
 namespace skjatextar.BLL
