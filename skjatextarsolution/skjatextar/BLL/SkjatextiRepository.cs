@@ -37,7 +37,7 @@ namespace skjatextar.BLL
         }
 
         /// <summary>
-        /// Finds one episode by id and returns it.
+        /// Returns list of all episodes in serie.
         /// </summary>
         public List<Models.TvShowModel> GetEpisodes(int srtId)
         {
@@ -239,7 +239,7 @@ namespace skjatextar.BLL
         }
 
         /// <summary>
-        /// Method to check if string contains another string.
+        /// Makes search input not case sensitive.
         /// </summary>
        private bool ContainsIgnoreCase(string source, string toCheck)
         {
