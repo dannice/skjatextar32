@@ -53,7 +53,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public ActionResult Upload()
         {
@@ -61,7 +61,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
-       // [Authorize]
+        [Authorize]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, FormCollection col)
         {
@@ -136,6 +136,7 @@ namespace skjatextar.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         [HttpGet]
         // Gets file from database and displays it on page
         public ActionResult EditFile(int id)
@@ -165,7 +166,7 @@ namespace skjatextar.Controllers
             return View("EditFile", model);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         [ValidateInput(false)]
         // Takes changes made in textbox, pushes it to db and overwrites current data
@@ -384,7 +385,7 @@ namespace skjatextar.Controllers
              return RedirectToAction("NewRequest");
             }
 
-           // [Authorize]
+            //[Authorize]
             public ActionResult DeleteRequest(int? reqId)
             {
                 SkjatextiRepository repo = new SkjatextiRepository();
