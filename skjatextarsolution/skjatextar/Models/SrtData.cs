@@ -18,5 +18,6 @@ namespace skjatextar.Models
         public string dataCont { get; set; }
         [AllowHtml]
         public string dataText { get; set; }
+        public int? dataReady { get; set; }
     }
 }

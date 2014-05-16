@@ -53,6 +53,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
+        //[Authorize]
         [HttpGet]
         public ActionResult Upload()
         {
@@ -60,6 +61,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
+       // [Authorize]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, FormCollection col)
         {
@@ -89,6 +91,8 @@ namespace skjatextar.Controllers
                     dataItem.dataName = fileName;
                     // Puts all text from file to db
                     dataItem.dataText = text;
+                    dataItem.dataReady = 1;
+                    dataItem.dataSize = file.ContentLength;
                     db.SrtData.Add(dataItem);
                     srtItem.dataId = dataItem.dataId;
                     if ("1".Equals(radioType))
@@ -137,23 +141,35 @@ namespace skjatextar.Controllers
         public ActionResult EditFile(int id)
         {
             var model = new SrtData();
+            SrtDataModel srtModel;
             using (var db = new SkjatextiEntities())
             {
                 var query = (from s in db.SrtData
                             where s.dataId == id
                             select s).FirstOrDefault();
                 model.dataText = query.dataText;
+                srtModel = new SrtDataModel
+                {
+                    dataId = query.dataId,
+                    dataText = query.dataText,
+                    dataName = query.dataName,
+                    dataSize = query.dataSize,
+                    dataReady = query.dataReady
+                };
             }
-            var srtModel = new SrtDataModel { dataId = model.dataId, dataText = model.dataText, dataName = model.dataName, dataSize = model.dataSize };
+            
             return View("EditFile",srtModel);
         }
 
+        //[Authorize]
         [HttpPost]
         [ValidateInput(false)]
         // Takes changes made in textbox, pushes it to db and overwrites current data
         public ActionResult EditFile(FormCollection col, int id)
         {
             string dataText = col["dataText"];
+            var dataReady = col["checkReady"];
+
             using (var db = new SkjatextiEntities())
             {
                 var edit = (from sr in db.SrtData
@@ -161,6 +177,14 @@ namespace skjatextar.Controllers
                            select sr).FirstOrDefault();
 
                 edit.dataText = dataText;
+                if (String.IsNullOrEmpty(dataReady))
+                {
+                    edit.dataReady = 1;
+                }
+                else
+                {
+                    edit.dataReady = 2;
+                }
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
@@ -168,15 +192,19 @@ namespace skjatextar.Controllers
 
         public ActionResult Details(int? id)
         {
-            var getDetails = bll.GetBothTvshowsAndMovies();
 
-            var result = (from elem in getDetails
+            var getDetails = bll.GetMovieAndEpisodeById(Convert.ToInt32(id));
+
+            /*var result = (from elem in getDetails
                           where elem.srtId == id
                           select elem).SingleOrDefault();
+
+            /*var detailsIt = new CollectionOfSrt();
+            detailsIt.dataReady = result.dataReady;*/
             
             if (id != null)
 	        {
-		        return View(result);
+                return View(getDetails);
 	        }
             
             return View("error");
@@ -249,6 +277,7 @@ namespace skjatextar.Controllers
             return View(results);
         }
 
+        [HttpGet]
         public ActionResult GetComments()
         {
             CommentRepository cmm = new CommentRepository();
@@ -311,6 +340,9 @@ namespace skjatextar.Controllers
             [HttpGet]
             public ActionResult NewRequest()
             {
+                SkjatextiRepository repo = new SkjatextiRepository();
+
+                ViewData["requests"] = repo.GetAllRequests();
                 
                 return View();
             }
@@ -318,46 +350,41 @@ namespace skjatextar.Controllers
         [HttpPost]
         public ActionResult NewRequest(FormCollection col)
             {
-                SkjatextiRepository req = new SkjatextiRepository();
+                //SkjatextiRepository req = new SkjatextiRepository();
 
-                var radioType= col["type"];
-                string title = col["title"];
-                string episodeTitle = col["episodeTitle"];
-                //int year = Convert.ToInt32(col["year"]);
-                int season = Convert.ToInt32(col["season"]);
-                var episode = Convert.ToInt32(col["episode"]);
-                string episodeAbout = col["episodeAbout"];
-
-                var request = new Request();
-
-                /*if ("1".Equals(radioType))
+                string title = col["reqTitle"];
+                string episodeTitle = col["reqEpisodeTitle"];
+           
+                int? year = string.IsNullOrEmpty(col["reqYear"] ) ? 0 : Convert.ToInt32(col["reqYear"]);
+                int? season = string.IsNullOrEmpty(col["reqSeasonNr"]) ? 0 : Convert.ToInt32(col["reqSeasonNr"]);
+                int? episode = string.IsNullOrEmpty(col["reqEpisodeNr"]) ? 0 : Convert.ToInt32(col["reqEpisodeNr"]);
+                
+                using(var db = new SkjatextiEntities())
                 {
-                    int year = Convert.ToInt32(col["year"]);
-                    Movie.year = year;
-                    db.Movie.Add(movieItem);
-                    srtItem.movieId = movieItem.movieId;
-                    // Type 1 if movie.
-                    srtItem.type = 1;
+                    var request = new Request();
+
+                    request.reqTitle = title;
+                    request.reqEpisodeTitle = episodeTitle;
+                    request.reqYear = year;
+                    request.reqSeasonNr = season;
+                    request.reqEpisodeNr = episode;
+                    request.reqDate = DateTime.Now;
+                    db.Request.Add(request);
+
+                    db.SaveChanges();
                 }
-                /*else if ("2".Equals(radioType))
-                {
-                    // Vantar að setja inn að episodeNr og seasonNr er skylda.
-                    // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
-                    string episodeTitle = col["episodeTitle"];
-                    string episodeAbout = col["episodeAbout"];
-                    int episodeNr = Convert.ToInt32(col["episode"]);
-                    int seasonNr = Convert.ToInt32(col["season"]);
-                    tvItem.episode = episodeNr;
-                    tvItem.season = seasonNr;
-                    tvItem.episodeTitle = episodeTitle;
-                    tvItem.episodeAbout = episodeAbout;
-                    db.TvShow.Add(tvItem);
-                    srtItem.tvId = tvItem.tvId;
-                    srtItem.type = 2;
-                }*/
-                return View();
 
-                //return RedirectToAction("Index");
+             return RedirectToAction("NewRequest");
+            }
+
+           // [Authorize]
+            public ActionResult DeleteRequest(int? reqId)
+            {
+                SkjatextiRepository repo = new SkjatextiRepository();
+
+                repo.DeleteRequest(reqId);
+
+                return RedirectToAction("NewRequest");
             }
         }
     

@@ -8,7 +8,6 @@
      @Html.ValidationSummary(true)
 
     <h1> @Model.title</h1>
-    
     if(@Model.type == 1)
     { 
         <blockquote>
@@ -33,16 +32,18 @@
                     </textarea>
 
                 </div>
-                <!--þarf að breyta staðsetningu á iconinu-->
-               <a href="@Url.Action("EditFile", new {id = @Model.srtId})"><div class="glyphicon glyphicon-edit" id="icontakkialex"></div></a>
-                  
-                 }
-                <!--Download linkur þarf að laga staðsetningu á takkanum-->
-
-    <div><a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success" id="alex">Niðurhala</a></div>
-
-
-}
+                
+                }
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="checkReady" value="2" @(Model.dataReady == 2 ? "checked=\"checked\"" : "")> Þýðing tilbúin
+                    </label>
+                </div> 
+                <!--Download linkur-->
+                <div>
+                    <a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success - btn pull-left">Niðurhala</a>
+                </div>
+                }
 
 
                 <!--er að reyna að gera javscript hérna, er með sér file -->

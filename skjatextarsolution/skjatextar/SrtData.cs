@@ -24,6 +24,7 @@ namespace skjatextar
         public string dataName { get; set; }
         public byte[] dataFile { get; set; }
         public string dataText { get; set; }
+        public Nullable<int> dataReady { get; set; }
     
         public virtual ICollection<SrtFile> SrtFile { get; set; }
     }

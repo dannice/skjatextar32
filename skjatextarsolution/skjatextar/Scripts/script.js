@@ -1,5 +1,13 @@
 ﻿$(document).ready(function () {
+    // Syncronized scrolling textarea in EditFile
+    $('#dataTextReadOnly').scroll(function (){
+        $('#dataText').scrollTop($('#dataTextReadOnly').scrollTop());
+    });
 
+    $('#dataText').scroll(function (){
+        $('#dataTextReadOnly').scrollTop($('#dataText').scrollTop());
+    });
+    // Syncronized scrolling ends
     var tvDetails;
 
     $("#selectEpisode").hide();
@@ -131,7 +139,6 @@ function getEpisode(epId) {
             $("#season").text(data.season);
             $("#episode").text(data.episode);
             $("#episodeTitle").text(data.episodeTitle);
-            $("#episodeAbout").text(data.episodeAbout);
             $("#episodeLink").attr("href", "/Home/Details/" + data.srtId);
             console.log(data);
         },

@@ -13,14 +13,19 @@
         @Html.ValidationSummary(true)
 
             <div class="form-horizontal">
-                <textarea name="dataTextReadOnly" rows="20" cols="300" disabled>@Model.dataText</textarea>
-                <textarea name="dataText" rows="20" cols="300" class="pull-right">@Model.dataText</textarea>
+                <textarea name="dataTextReadOnly" id="dataTextReadOnly" rows="20" cols="300" disabled>@Model.dataText</textarea>
+                <textarea name="dataText" id="dataText" rows="20" cols="300" class="pull-right">@Model.dataText</textarea>
             </div>
             <div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="checkReady" value="2" @(Model.dataReady == 2 ? "checked=\"checked\"" : "")> Þýðing tilbúin
+                    </label>
+                </div>
                 <input type="submit" value="Vista" class="btn btn-success - btn pull-right" />
             </div>
     </div>
 }
 @section Scripts {
-    +    -    @Scripts.Render("~/bundles/jqueryval")
-    +    -}
+       @Scripts.Render("~/bundles/jqueryval")
+    }
