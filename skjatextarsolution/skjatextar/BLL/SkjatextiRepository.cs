@@ -81,7 +81,6 @@ namespace skjatextar.BLL
             var result = (from item in contex.SrtCollection
                          where item.tvId == epId
                          select item).FirstOrDefault();
-
                     var episode = new Models.CollectionOfSrt();
                     episode.srtId = result.srtId;
                     episode.episodeTitle = result.episodeTitle;
@@ -164,6 +163,7 @@ namespace skjatextar.BLL
                 show.tvId = item.tvId;
                 show.movieId = item.movieId;
                 show.type = item.type;
+                show.dataReady = item.dataReady;
                 list.Add(show);
 
             }
@@ -176,9 +176,9 @@ namespace skjatextar.BLL
             // Creates new empty list using collectionofstr
             var list = new List<Models.CollectionOfSrt>();
             // Sql query thats selects all in SrtCollection and orders it by title
-            var query = from item in contex.SrtCollection
-                        orderby item.srtDate descending
-                        select item;
+            var query = (from item in contex.SrtCollection
+                         orderby item.srtDate descending
+                         select item).Take(10);
             // Loops through every item in query.
             foreach (var item in query)
             {
@@ -280,10 +280,10 @@ namespace skjatextar.BLL
            // Creates new empty list using collectionofstr
            var list = new List<Models.CollectionOfSrt>();
            // Sql query thats selects all in SrtCollection and orders it by title
-           var query = from item in contex.SrtCollection
-                       where item.type == 2
-                       orderby item.srtCounter descending //breytti var áður title Alex ívar
-                       select item;
+           var query = (from item in contex.SrtCollection
+                        where item.type == 2
+                        orderby item.srtCounter descending //breytti var áður title Alex ívar
+                        select item).Take(10);
            // Loops through every item in query.
            foreach (var item in query)
            {
@@ -308,10 +308,10 @@ namespace skjatextar.BLL
            // Creates new empty list using collectionofstr
            var list = new List<Models.CollectionOfSrt>();
            // Sql query thats selects all in SrtCollection and orders it by title
-           var query = from item in contex.SrtCollection
-                       where item.type == 1
-                       orderby item.srtCounter descending //breytti var áður title Alex ívar
-                       select item;
+           var query = (from item in contex.SrtCollection
+                        where item.type == 1
+                        orderby item.srtCounter descending //breytti var áður title Alex ívar
+                        select item).Take(10);
            // Loops through every item in query.
            foreach (var item in query)
            {
@@ -342,6 +342,7 @@ namespace skjatextar.BLL
            moep.episode = result.episode;
            moep.episodeTitle = result.episodeTitle;
            moep.type = result.type;
+           moep.dataReady = result.dataReady;
 
            return moep;
        }
@@ -351,9 +352,9 @@ namespace skjatextar.BLL
            SkjatextiEntities contex = new SkjatextiEntities();
            var list = new List<Models.RequestModel>();
 
-           var result = from item in contex.Request
-                        orderby item.reqDate descending
-                        select item;
+           var result = (from item in contex.Request
+                         orderby item.reqDate descending
+                         select item).Take(10);
             foreach (var item in result)
 	        {
 		         var reqItem = new Models.RequestModel();

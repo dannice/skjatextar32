@@ -31,12 +31,12 @@ namespace skjatextar
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Movie> Movie { get; set; }
-        public virtual DbSet<SrtData> SrtData { get; set; }
         public virtual DbSet<TvShow> TvShow { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<SrtFile> SrtFile { get; set; }
-        public virtual DbSet<SrtCollection> SrtCollection { get; set; }
         public virtual DbSet<CommentCollection> CommentCollection { get; set; }
         public virtual DbSet<Request> Request { get; set; }
+        public virtual DbSet<SrtData> SrtData { get; set; }
+        public virtual DbSet<SrtCollection> SrtCollection { get; set; }
     }
 }

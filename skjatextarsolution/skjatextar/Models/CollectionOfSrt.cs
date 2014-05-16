@@ -57,6 +57,7 @@ namespace skjatextar.Models
         public string dataName { get; set; }
         public string dataCont { get; set; }
         public string dataText { get; set; }
+        public int? dataReady { get; set; }
 
         public virtual TvShow TvShow { get; set; }
         public virtual Movie Movie { get; set; }
