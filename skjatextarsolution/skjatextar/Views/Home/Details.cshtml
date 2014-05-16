@@ -35,7 +35,7 @@
                    
 
                 }
-                <a href="@Url.Action("EditFile", new {id = @Model.srtId})"><div class="glyphicon glyphicon-edit" id="icontakkialex"></div></a>
+                <a href="@Url.Action("EditFile", new {id = @Model.srtId})"><div class="glyphicon glyphicon-edit" id="icontakki"></div></a>
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" disabled name="checkReady" value="2" @(Model.dataReady == 2 ? "checked=\"checked\"" : "")> Þýðing tilbúin
@@ -43,7 +43,7 @@
                 </div>
                 <!--Download linkur-->
                 <div>
-                    <a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success" id="alex">Niðurhala</a>
+                    <a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success" id="downloadD">Niðurhala</a>
                 </div>
 
     }
