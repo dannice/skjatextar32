@@ -140,25 +140,29 @@ namespace skjatextar.Controllers
         // Gets file from database and displays it on page
         public ActionResult EditFile(int id)
         {
-            var model = new SrtData();
-            SrtDataModel srtModel;
+            
+            var model = new SrtDataModel();
+            //CollectionOfSrt srtModel;
             using (var db = new SkjatextiEntities())
             {
-                var query = (from s in db.SrtData
-                            where s.dataId == id
+                var query = (from s in db.SrtCollection
+                            where s.srtId == id
                             select s).FirstOrDefault();
+               
                 model.dataText = query.dataText;
-                srtModel = new SrtDataModel
+                model.dataReady = query.dataReady;
+               /* srtModel = new CollectionOfSrt();
                 {
-                    dataId = query.dataId,
+                     = query.Expr4;
                     dataText = query.dataText,
                     dataName = query.dataName,
                     dataSize = query.dataSize,
                     dataReady = query.dataReady
-                };
+                };*/
             }
             
-            return View("EditFile",srtModel);
+            //return View("EditFile",srtModel);
+            return View("EditFile", model);
         }
 
         //[Authorize]
@@ -169,14 +173,18 @@ namespace skjatextar.Controllers
         {
             string dataText = col["dataText"];
             var dataReady = col["checkReady"];
+            //var dataItem = new SrtData();
 
             using (var db = new SkjatextiEntities())
             {
-                var edit = (from sr in db.SrtData
-                           where sr.dataId == id
-                           select sr).FirstOrDefault();
-
+                var edit = (from sr in db.SrtFile
+                            join dt in db.SrtData
+                            on sr.dataId equals dt.dataId
+                            where sr.srtId == id
+                            select dt).SingleOrDefault();
+                            
                 edit.dataText = dataText;
+
                 if (String.IsNullOrEmpty(dataReady))
                 {
                     edit.dataReady = 1;
@@ -197,7 +205,7 @@ namespace skjatextar.Controllers
 
             /*var result = (from elem in getDetails
                           where elem.srtId == id
-                          select elem).SingleOrDefault();
+                          select elem).SingleOrDefault();*/
 
             /*var detailsIt = new CollectionOfSrt();
             detailsIt.dataReady = result.dataReady;*/
@@ -240,7 +248,6 @@ namespace skjatextar.Controllers
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
         }
 
-        // Counter virkar ekki!
         private void UpDownloadCounter(int? srtId)
         {
             // Gets SrtFile from db and ups the download counter
