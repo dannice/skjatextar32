@@ -343,6 +343,7 @@ namespace skjatextar.BLL
            moep.episodeTitle = result.episodeTitle;
            moep.type = result.type;
            moep.dataReady = result.dataReady;
+           moep.srtId = result.srtId;
 
            return moep;
        }
