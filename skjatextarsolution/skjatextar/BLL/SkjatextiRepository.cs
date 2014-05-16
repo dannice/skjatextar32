@@ -345,6 +345,7 @@ namespace skjatextar.BLL
            moep.dataReady = result.dataReady;
            moep.srtId = result.srtId;
            moep.year = result.year;
+           moep.dataId = result.Expr4;
            return moep;
        }
 
