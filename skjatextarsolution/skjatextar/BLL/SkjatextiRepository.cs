@@ -92,6 +92,35 @@ namespace skjatextar.BLL
             return episode;
         }
 
+        /// <summary>
+        /// Return a list of all requests from users
+        /// </summary>
+        public List<Models.RequestModel> GetAllRequests()
+        {
+            SkjatextiEntities context = new SkjatextiEntities();
+
+            var list = new List<Models.RequestModel>();
+
+            var requestList = from item in context.Request
+                              orderby item.reqDate descending
+                              select item;
+            foreach (var item in requestList)
+            {
+                var reqItem = new Models.RequestModel() ;
+                reqItem.reqId = item.reqId;
+                reqItem.reqTitle = item.reqTitle;
+                reqItem.reqYear = item.reqYear;
+                reqItem.reqSeasonNr = item.reqSeasonNr;
+                reqItem.reqEpisodeTitle = item.reqEpisodeTitle;
+                reqItem.reqEpisodeNr = item.reqEpisodeNr;
+                reqItem.reqDate = item.reqDate;
+
+                list.Add(reqItem);
+            }
+
+            return list;
+        }
+
         // Search from inputbox
         public List<Models.CollectionOfSrt> Search(string s)
         {
@@ -135,6 +164,36 @@ namespace skjatextar.BLL
                 show.movieId = item.movieId;
                 show.type = item.type;
                 show.dataReady = item.dataReady;
+                list.Add(show);
+
+            }
+            return list;
+        }
+        public List<Models.CollectionOfSrt> GetNewBothTvshowsAndMovies()
+        {
+            // Connect to db through Skjatexti.context.cs
+            SkjatextiEntities contex = new SkjatextiEntities();
+            // Creates new empty list using collectionofstr
+            var list = new List<Models.CollectionOfSrt>();
+            // Sql query thats selects all in SrtCollection and orders it by title
+            var query = from item in contex.SrtCollection
+                        orderby item.srtDate descending
+                        select item;
+            // Loops through every item in query.
+            foreach (var item in query)
+            {
+                var show = new Models.CollectionOfSrt();
+                show.srtId = item.srtId;
+                show.title = item.title;
+                show.tvId = item.tvId;
+                show.episodeAbout = item.episodeAbout;
+                show.season = item.season;
+                show.episode = item.episode;
+                show.year = item.year;
+                show.episodeTitle = item.episodeTitle;
+                show.tvId = item.tvId;
+                show.movieId = item.movieId;
+                show.type = item.type;
                 list.Add(show);
 
             }
@@ -223,7 +282,7 @@ namespace skjatextar.BLL
            // Sql query thats selects all in SrtCollection and orders it by title
            var query = from item in contex.SrtCollection
                        where item.type == 2
-                       orderby item.title
+                       orderby item.srtCounter descending //breytti var áður title Alex ívar
                        select item;
            // Loops through every item in query.
            foreach (var item in query)
@@ -236,6 +295,31 @@ namespace skjatextar.BLL
                show.episode = item.episode;
                show.episodeTitle = item.episodeTitle;
                show.type = item.type;
+               show.srtId = item.srtId;
+               list.Add(show);
+
+           }
+           return list;
+       }
+       public List<Models.CollectionOfSrt> GetAllMovies()
+       {
+           // Connect to db through Skjatexti.context.cs
+           SkjatextiEntities contex = new SkjatextiEntities();
+           // Creates new empty list using collectionofstr
+           var list = new List<Models.CollectionOfSrt>();
+           // Sql query thats selects all in SrtCollection and orders it by title
+           var query = from item in contex.SrtCollection
+                       where item.type == 1
+                       orderby item.srtCounter descending //breytti var áður title Alex ívar
+                       select item;
+           // Loops through every item in query.
+           foreach (var item in query)
+           {
+               var show = new Models.CollectionOfSrt();
+               show.title = item.title;
+               show.year = item.year;
+               show.type = item.type;
+               show.srtId = item.srtId;
                list.Add(show);
 
            }
@@ -263,6 +347,29 @@ namespace skjatextar.BLL
            return moep;
        }
 
+        public List<Models.RequestModel> GetRequests()
+       {
+           SkjatextiEntities contex = new SkjatextiEntities();
+           var list = new List<Models.RequestModel>();
+
+           var result = from item in contex.Request
+                        orderby item.reqDate descending
+                        select item;
+            foreach (var item in result)
+	        {
+		         var reqItem = new Models.RequestModel();
+                 reqItem.reqId = item.reqId;
+                 reqItem.reqDate = item.reqDate;
+                 reqItem.reqTitle = item.reqTitle;
+                 reqItem.reqSeasonNr = item.reqSeasonNr;
+                 reqItem.reqEpisodeNr = item.reqEpisodeNr;
+                 reqItem.reqEpisodeTitle = item.reqEpisodeTitle;
+                 list.Add(reqItem);
+	        }
+
+            return list;
+       }
+
        /*public Models.SrtFileModel DownloadCount()
        {
            SkjatextiEntities contex = new SkjatextiEntities();
@@ -275,5 +382,21 @@ namespace skjatextar.BLL
            contex.SrtFile.Add(srtF);
            contex.SaveChanges();
        }*/
+
+       public void DeleteRequest(int? reqId)
+       {
+           SkjatextiEntities context = new SkjatextiEntities();
+
+           var result = (from item in context.Request
+                         where item.reqId == reqId
+                         select item).FirstOrDefault();
+
+           context.Request.Remove(result);
+
+           context.SaveChanges();
+           //context.Request.DeleteOnSubmit(result);  
+                      
+       }
     }
+
 }

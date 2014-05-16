@@ -20,6 +20,17 @@ namespace skjatextar.Controllers
         {
             var query = bll.GetTopTenSrt();
 
+           // ViewBag["requests"] = bll.GetRequests();
+            //ViewBag["tvpopular"] = bll.GetAllTvshows();
+            //bll.GetAllTvshows() = ViewBag["tvpopular"];
+
+            ViewBag.tvpopular = bll.GetAllTvshows();
+            ViewBag.request = bll.GetRequests();
+            ViewBag.moviepopular = bll.GetAllMovies();
+            ViewBag.newest = bll.GetNewBothTvshowsAndMovies();
+
+            
+
             //return View(users);
             return View(query);
         }
@@ -42,6 +53,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
+        //[Authorize]
         [HttpGet]
         public ActionResult Upload()
         {
@@ -49,6 +61,7 @@ namespace skjatextar.Controllers
             return View();
         }
 
+       // [Authorize]
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file, FormCollection col)
         {
@@ -148,6 +161,7 @@ namespace skjatextar.Controllers
             return View("EditFile",srtModel);
         }
 
+        //[Authorize]
         [HttpPost]
         [ValidateInput(false)]
         // Takes changes made in textbox, pushes it to db and overwrites current data
@@ -263,6 +277,7 @@ namespace skjatextar.Controllers
             return View(results);
         }
 
+        [HttpGet]
         public ActionResult GetComments()
         {
             CommentRepository cmm = new CommentRepository();
@@ -325,46 +340,52 @@ namespace skjatextar.Controllers
             [HttpGet]
             public ActionResult NewRequest()
             {
+                SkjatextiRepository repo = new SkjatextiRepository();
+
+                ViewData["requests"] = repo.GetAllRequests();
                 
                 return View();
             }
 
-       /* [HttpPost]
-        public ActionResult newRequest(FormCollection col)
+        [HttpPost]
+        public ActionResult NewRequest(FormCollection col)
             {
-                SkjatextiRepository req = new SkjatextiRepository();
+                //SkjatextiRepository req = new SkjatextiRepository();
 
-                var radioType= col["type"];
-                string title = col["title"];
+                string title = col["reqTitle"];
+                string episodeTitle = col["reqEpisodeTitle"];
+           
+                int? year = string.IsNullOrEmpty(col["reqYear"] ) ? 0 : Convert.ToInt32(col["reqYear"]);
+                int? season = string.IsNullOrEmpty(col["reqSeasonNr"]) ? 0 : Convert.ToInt32(col["reqSeasonNr"]);
+                int? episode = string.IsNullOrEmpty(col["reqEpisodeNr"]) ? 0 : Convert.ToInt32(col["reqEpisodeNr"]);
+                
+                using(var db = new SkjatextiEntities())
+                {
+                    var request = new Request();
 
-                if ("1".Equals(radioType))
-                {
-                    int year = Convert.ToInt32(col["year"]);
-                    movieItem.year = year;
-                    db.Movie.Add(movieItem);
-                    srtItem.movieId = movieItem.movieId;
-                    // Type 1 if movie.
-                    srtItem.type = 1;
-                }
-                else if ("2".Equals(radioType))
-                {
-                    // Vantar að setja inn að episodeNr og seasonNr er skylda.
-                    // Vantar að setja inn að episodeTite og episodeAbout er ekki skylda.
-                    string episodeTitle = col["episodeTitle"];
-                    string episodeAbout = col["episodeAbout"];
-                    int episodeNr = Convert.ToInt32(col["episode"]);
-                    int seasonNr = Convert.ToInt32(col["season"]);
-                    tvItem.episode = episodeNr;
-                    tvItem.season = seasonNr;
-                    tvItem.episodeTitle = episodeTitle;
-                    tvItem.episodeAbout = episodeAbout;
-                    db.TvShow.Add(tvItem);
-                    srtItem.tvId = tvItem.tvId;
-                    srtItem.type = 2;
+                    request.reqTitle = title;
+                    request.reqEpisodeTitle = episodeTitle;
+                    request.reqYear = year;
+                    request.reqSeasonNr = season;
+                    request.reqEpisodeNr = episode;
+                    request.reqDate = DateTime.Now;
+                    db.Request.Add(request);
+
+                    db.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
-            }*/
+             return RedirectToAction("NewRequest");
+            }
+
+           // [Authorize]
+            public ActionResult DeleteRequest(int? reqId)
+            {
+                SkjatextiRepository repo = new SkjatextiRepository();
+
+                repo.DeleteRequest(reqId);
+
+                return RedirectToAction("NewRequest");
+            }
         }
     
 }
