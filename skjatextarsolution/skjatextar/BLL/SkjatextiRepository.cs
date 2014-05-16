@@ -293,7 +293,7 @@ namespace skjatextar.BLL
            // Sql query thats selects all in SrtCollection and orders it by title
            var query = (from item in contex.SrtCollection
                         where item.type == 2
-                        orderby item.srtCounter descending //breytti var áður title Alex ívar
+                        orderby item.srtCounter descending 
                         select item).Take(10);
            // Loops through every item in query.
            foreach (var item in query)
@@ -321,7 +321,7 @@ namespace skjatextar.BLL
            // Sql query thats selects all in SrtCollection and orders it by title
            var query = (from item in contex.SrtCollection
                         where item.type == 1
-                        orderby item.srtCounter descending //breytti var áður title Alex ívar
+                        orderby item.srtCounter descending 
                         select item).Take(10);
            // Loops through every item in query.
            foreach (var item in query)
