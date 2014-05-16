@@ -47,7 +47,7 @@ namespace skjatextar.Models
 
         [Display(Name = "Um þátt")]
         public string episodeAbout { get; set; }
-        public int dataId { get; set; }
+        public int? dataId { get; set; }
 
         [Display(Name = "Athugasemd")]
         [Required(ErrorMessage = "Verður að skrá athugasemd!")]
