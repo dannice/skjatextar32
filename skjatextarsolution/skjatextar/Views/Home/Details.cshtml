@@ -34,6 +34,11 @@
                 </div>
                 
                 }
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="checkReady" value="2" @(Model.dataReady == 2 ? "checked=\"checked\"" : "")> Þýðing tilbúin
+                    </label>
+                </div> 
                 <!--Download linkur-->
                 <div>
                     <a href="@Url.Action("Download", new { id = @Model.srtId })" class="btn btn-success - btn pull-left">Niðurhala</a>

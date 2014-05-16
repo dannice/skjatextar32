@@ -81,7 +81,6 @@ namespace skjatextar.BLL
             var result = (from item in contex.SrtCollection
                          where item.tvId == epId
                          select item).FirstOrDefault();
-
                     var episode = new Models.CollectionOfSrt();
                     episode.srtId = result.srtId;
                     episode.episodeTitle = result.episodeTitle;
@@ -135,6 +134,7 @@ namespace skjatextar.BLL
                 show.tvId = item.tvId;
                 show.movieId = item.movieId;
                 show.type = item.type;
+                show.dataReady = item.dataReady;
                 list.Add(show);
 
             }
@@ -258,6 +258,7 @@ namespace skjatextar.BLL
            moep.episode = result.episode;
            moep.episodeTitle = result.episodeTitle;
            moep.type = result.type;
+           moep.dataReady = result.dataReady;
 
            return moep;
        }

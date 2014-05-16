@@ -78,6 +78,8 @@ namespace skjatextar.Controllers
                     dataItem.dataName = fileName;
                     // Puts all text from file to db
                     dataItem.dataText = text;
+                    dataItem.dataReady = 1;
+                    dataItem.dataSize = file.ContentLength;
                     db.SrtData.Add(dataItem);
                     srtItem.dataId = dataItem.dataId;
                     if ("1".Equals(radioType))
@@ -126,14 +128,23 @@ namespace skjatextar.Controllers
         public ActionResult EditFile(int id)
         {
             var model = new SrtData();
+            SrtDataModel srtModel;
             using (var db = new SkjatextiEntities())
             {
                 var query = (from s in db.SrtData
                             where s.dataId == id
                             select s).FirstOrDefault();
                 model.dataText = query.dataText;
+                srtModel = new SrtDataModel
+                {
+                    dataId = query.dataId,
+                    dataText = query.dataText,
+                    dataName = query.dataName,
+                    dataSize = query.dataSize,
+                    dataReady = query.dataReady
+                };
             }
-            var srtModel = new SrtDataModel { dataId = model.dataId, dataText = model.dataText, dataName = model.dataName, dataSize = model.dataSize };
+            
             return View("EditFile",srtModel);
         }
 
@@ -143,6 +154,8 @@ namespace skjatextar.Controllers
         public ActionResult EditFile(FormCollection col, int id)
         {
             string dataText = col["dataText"];
+            var dataReady = col["checkReady"];
+
             using (var db = new SkjatextiEntities())
             {
                 var edit = (from sr in db.SrtData
@@ -150,6 +163,14 @@ namespace skjatextar.Controllers
                            select sr).FirstOrDefault();
 
                 edit.dataText = dataText;
+                if (String.IsNullOrEmpty(dataReady))
+                {
+                    edit.dataReady = 1;
+                }
+                else
+                {
+                    edit.dataReady = 2;
+                }
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
@@ -157,15 +178,19 @@ namespace skjatextar.Controllers
 
         public ActionResult Details(int? id)
         {
-            var getDetails = bll.GetBothTvshowsAndMovies();
 
-            var result = (from elem in getDetails
+            var getDetails = bll.GetMovieAndEpisodeById(Convert.ToInt32(id));
+
+            /*var result = (from elem in getDetails
                           where elem.srtId == id
                           select elem).SingleOrDefault();
+
+            /*var detailsIt = new CollectionOfSrt();
+            detailsIt.dataReady = result.dataReady;*/
             
             if (id != null)
 	        {
-		        return View(result);
+                return View(getDetails);
 	        }
             
             return View("error");

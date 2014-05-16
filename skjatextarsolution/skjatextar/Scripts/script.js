@@ -1,5 +1,13 @@
 ﻿$(document).ready(function () {
+    // Syncronized scrolling textarea in EditFile
+    $('#dataTextReadOnly').scroll(function (){
+        $('#dataText').scrollTop($('#dataTextReadOnly').scrollTop());
+    });
 
+    $('#dataText').scroll(function (){
+        $('#dataTextReadOnly').scrollTop($('#dataText').scrollTop());
+    });
+    // Syncronized scrolling ends
     var tvDetails;
 
    

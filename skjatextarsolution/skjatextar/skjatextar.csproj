@@ -188,6 +188,7 @@
       <DependentUpon>Skjatexti.tt</DependentUpon>
     </Compile>
     <Compile Include="BLL\CommentRepository.cs" />
+    <Compile Include="BLL\Helper.cs" />
     <Compile Include="BLL\UserRepository.cs" />
     <Compile Include="Comment.cs">
       <DependentUpon>Skjatexti.tt</DependentUpon>

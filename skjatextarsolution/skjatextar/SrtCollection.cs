@@ -17,7 +17,6 @@ namespace skjatextar
         public int srtId { get; set; }
         public string title { get; set; }
         public Nullable<System.DateTime> srtDate { get; set; }
-        public Nullable<int> srtReady { get; set; }
         public Nullable<System.DateTime> rdDate { get; set; }
         public Nullable<int> srtCounter { get; set; }
         public Nullable<int> srtLike { get; set; }
@@ -36,5 +35,6 @@ namespace skjatextar
         public Nullable<int> dataSize { get; set; }
         public string dataText { get; set; }
         public string dataName { get; set; }
+        public Nullable<int> dataReady { get; set; }
     }
 }
