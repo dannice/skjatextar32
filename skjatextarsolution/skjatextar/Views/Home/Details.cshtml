@@ -13,7 +13,7 @@
         <blockquote>
             <h2>Árgerð: @Model.year</h2>
         </blockquote>
-                }
+    }
 
                 if (@Model.type == 2)
                 {
@@ -32,10 +32,10 @@
                         </textarea>
 
                     </div>
-                
-                    <a href="@Url.Action("EditFile", new {id = @Model.srtId})"><div class="glyphicon glyphicon-edit" id="icontakkialex"></div></a>
+                   
 
                 }
+                <a href="@Url.Action("EditFile", new {id = @Model.srtId})"><div class="glyphicon glyphicon-edit" id="icontakkialex"></div></a>
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="checkReady" value="2" @(Model.dataReady == 2 ? "checked=\"checked\"" : "")> Þýðing tilbúin
