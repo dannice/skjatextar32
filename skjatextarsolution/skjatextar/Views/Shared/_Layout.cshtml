@@ -23,7 +23,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Forsíða", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Um ístexta", "About", "Home")</li>
+                    <li>@Html.ActionLink("Siðareglur", "About", "Home")</li>
                     <li>@Html.ActionLink("Upphlaða", "Upload", "Home")</li>
                     <li>@Html.ActionLink("Hafa samband", "Contact", "Home")</li>
                 </ul>
@@ -83,6 +83,19 @@
 
 
 
+    </div>
+    <div id="footer" class="container">
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="navbar-inner navbar-content-center">
+                <p class="text-muted credit">
+                    <ul class="list-inline text-center">
+                        <li>Ístextar</li>
+                        <li>Ísgötu 7, Reykjavík, Ísland</li>
+                        <li>Sími: 565-4567 </li>
+                    </ul>
+                </p>
+            </div>
+        </nav>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
