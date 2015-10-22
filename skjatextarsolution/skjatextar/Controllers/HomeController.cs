@@ -33,7 +33,7 @@ namespace skjatextar.Controllers
 
         public ActionResult About()
         {
-			ViewBag.Main = "Um Ístexta";
+            ViewBag.Main = "Um Ístexta";
             ViewBag.Message = "Siðareglur Ístexta";
 
             return View();
@@ -43,6 +43,11 @@ namespace skjatextar.Controllers
         {
             return View();
         }
+
+
+
+
+
 
         [Authorize]
         [HttpGet]
@@ -67,10 +72,10 @@ namespace skjatextar.Controllers
                 StreamReader streamReader = new StreamReader(file.InputStream);
                 // Reads until end of the file.
                 string text = streamReader.ReadToEnd();
-                
-                var radioType= col["type"];
+
+                var radioType = col["type"];
                 string title = col["title"];
-                
+
                 // Connects to database
                 using (var db = new SkjatextiEntities())
                 {
@@ -106,6 +111,7 @@ namespace skjatextar.Controllers
                         tvItem.episodeTitle = episodeTitle;
                         tvItem.episodeAbout = episodeAbout;
                         db.TvShow.Add(tvItem);
+                    
                         srtItem.tvId = tvItem.tvId;
                         srtItem.type = 2;
                     }
@@ -113,8 +119,8 @@ namespace skjatextar.Controllers
                     srtItem.title = title;
                     srtItem.srtDate = DateTime.Now;
 
-                   db.SrtFile.Add(srtItem);
-                   db.SaveChanges();
+                    db.SrtFile.Add(srtItem);
+                    db.SaveChanges();
                 }
                 streamReader.Close();
             }
@@ -134,13 +140,13 @@ namespace skjatextar.Controllers
             using (var db = new SkjatextiEntities())
             {
                 var query = (from s in db.SrtCollection
-                            where s.srtId == id
-                            select s).FirstOrDefault();
-               
+                             where s.srtId == id
+                             select s).FirstOrDefault();
+
                 model.dataText = query.dataText;
                 model.dataReady = query.dataReady;
             }
-            
+
             return View("EditFile", model);
         }
 
@@ -162,7 +168,7 @@ namespace skjatextar.Controllers
                             on sr.dataId equals dt.dataId
                             where sr.srtId == id
                             select dt).SingleOrDefault();
-                            
+
                 edit.dataText = dataText;
 
                 if (String.IsNullOrEmpty(dataReady))
@@ -184,12 +190,12 @@ namespace skjatextar.Controllers
         public ActionResult Details(int? id)
         {
             var getDetails = bll.GetMovieAndEpisodeById(Convert.ToInt32(id));
-            
+
             if (id != null)
-	        {
+            {
                 return View(getDetails);
-	        }
-            
+            }
+
             return View("error");
         }
 
@@ -202,7 +208,7 @@ namespace skjatextar.Controllers
             string text = "";
             // New empty filename.
             string filename = "";
-            
+
             // Gets connected to database and gets data that matches id.
             using (var db = new SkjatextiEntities())
             {
@@ -214,7 +220,7 @@ namespace skjatextar.Controllers
                 filename = query.dataName;
             }
 
-           UpDownloadCounter(id);
+            UpDownloadCounter(id);
 
             // Returns files with UTF-8 encoding, changes it to Bytes and exports it to .srt file.
             return File(new System.Text.UTF8Encoding().GetBytes(text), "text/plain; charset=utf-8", filename);
@@ -227,21 +233,21 @@ namespace skjatextar.Controllers
         {
             using (var db = new SkjatextiEntities())
             {
-                  var query = (from s in db.SrtFile
-                               where s.srtId == srtId
-                               select s).FirstOrDefault();
-                  int? count = query.srtCounter;
-                  if (count == null)
-                  {
-                      query.srtCounter = 1;
-                  }
-                  else
-                  {
-                      query.srtCounter++;
-                  }
-                       
-                  db.SaveChanges();
-              }
+                var query = (from s in db.SrtFile
+                             where s.srtId == srtId
+                             select s).FirstOrDefault();
+                int? count = query.srtCounter;
+                if (count == null)
+                {
+                    query.srtCounter = 1;
+                }
+                else
+                {
+                    query.srtCounter++;
+                }
+
+                db.SaveChanges();
+            }
         }
 
         /// <summary>
@@ -335,7 +341,7 @@ namespace skjatextar.Controllers
             SkjatextiRepository repo = new SkjatextiRepository();
 
             ViewData["requests"] = repo.GetAllRequests();
-                
+
             return View();
         }
 
@@ -344,30 +350,30 @@ namespace skjatextar.Controllers
         /// </summary>
         [HttpPost]
         public ActionResult NewRequest(FormCollection col)
+        {
+            string title = col["reqTitle"];
+            string episodeTitle = col["reqEpisodeTitle"];
+
+            int? year = string.IsNullOrEmpty(col["reqYear"]) ? 0 : Convert.ToInt32(col["reqYear"]);
+            int? season = string.IsNullOrEmpty(col["reqSeasonNr"]) ? 0 : Convert.ToInt32(col["reqSeasonNr"]);
+            int? episode = string.IsNullOrEmpty(col["reqEpisodeNr"]) ? 0 : Convert.ToInt32(col["reqEpisodeNr"]);
+
+            using (var db = new SkjatextiEntities())
             {
-                string title = col["reqTitle"];
-                string episodeTitle = col["reqEpisodeTitle"];
-           
-                int? year = string.IsNullOrEmpty(col["reqYear"] ) ? 0 : Convert.ToInt32(col["reqYear"]);
-                int? season = string.IsNullOrEmpty(col["reqSeasonNr"]) ? 0 : Convert.ToInt32(col["reqSeasonNr"]);
-                int? episode = string.IsNullOrEmpty(col["reqEpisodeNr"]) ? 0 : Convert.ToInt32(col["reqEpisodeNr"]);
-                
-                using(var db = new SkjatextiEntities())
-                {
-                    var request = new Request();
+                var request = new Request();
 
-                    request.reqTitle = title;
-                    request.reqEpisodeTitle = episodeTitle;
-                    request.reqYear = year;
-                    request.reqSeasonNr = season;
-                    request.reqEpisodeNr = episode;
-                    request.reqDate = DateTime.Now;
-                    db.Request.Add(request);
+                request.reqTitle = title;
+                request.reqEpisodeTitle = episodeTitle;
+                request.reqYear = year;
+                request.reqSeasonNr = season;
+                request.reqEpisodeNr = episode;
+                request.reqDate = DateTime.Now;
+                db.Request.Add(request);
 
-                    db.SaveChanges();
-                }
+                db.SaveChanges();
+            }
 
-             return RedirectToAction("NewRequest");
+            return RedirectToAction("NewRequest");
         }
 
         /// <summary>
@@ -381,6 +387,8 @@ namespace skjatextar.Controllers
 
             return RedirectToAction("NewRequest");
         }
-    }
-    
+       
+
+
+    }   
 }
